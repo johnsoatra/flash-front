@@ -25,6 +25,10 @@ export const TableName = {
   Order: 'order'
 }
 
+export const Label = {
+  LastCardCode: 'last-card-code',
+} as const;
+
 export const Amount = {
   Allow_Amount: 4,
   Price_Khmer: 2000,
