@@ -59,3 +59,42 @@ export function useMainContext() {
   if (!context) throw new Error("useUser must be inside MainProvider");
   return context;
 }
+------
+'use client';
+import { useEffect, useRef } from "react";
+import useCurrent, { useTrack } from "react-use-current";
+
+// function useTrack() {
+//   const symbol = useRef(Symbol());
+//   return function track() {
+//     return symbol.current;
+//   }
+// }
+
+export default function User() {
+  // const [state, setState] = useState(0);
+  const a = useCurrent(0);
+  const track = useTrack();
+
+  useEffect(() => {
+    setInterval(() => {
+      console.log('updated');
+      a.value += 1;
+      // newValue += 1;
+      // setState(s => s + 1);
+    }, 3000);
+  }, []);
+
+  // console.log(track(a));
+
+  useEffect(() => {
+    console.log('useEffect ran = ', Date.now());
+  }, [track(a)]);
+
+  return (
+    <div>
+      <p>a = {a.value}</p>
+    </div>
+  );
+}
+

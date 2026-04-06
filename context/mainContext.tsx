@@ -1,54 +1,51 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from "react";
-import useCurrent from "react-use-current";
+import { createContext, useContext, useEffect, useRef } from "react";
+import useCurrent, { useTrack } from "react-use-current";
+import { getLastCardCode, removeLastCardCode, setLastCardCode } from "@/utils/localStorage";
 
 export type MainContextType = {
-  lastCardCode?: string;
+  lastCardCode?: string | null;
 };
 
 const MainContext = createContext<{ value: MainContextType } | null>(null);
+
+function useMainContextValue(context: MainContextType) {
+  const ref = useRef({ value: context });
+  ref.current = { value: context };
+  return ref.current;
+}
 
 export function MainContextProvider({
   children
 }: {
   children: React.ReactNode
 }) {
-  const { value: context } = useCurrent<MainContextType>({
-    lastCardCode: undefined,
-  });
-  const [state, setState] = useState<{ value: MainContextType }>({
-    value: context,
-  });
-
-  function setNew() {
-    console.log('herer');
-    return {}
-  }
+  const { value: context } = useCurrent<MainContextType>({});
+  const contextValue = useMainContextValue(context);
+  const track = useTrack();
 
   useEffect(() => {
-    setTimeout(() => {
-      context.lastCardCode = Date.now().toString()
-    }, 2000);
-  })
-
+    context.lastCardCode = getLastCardCode();
+  }, []);
   useEffect(() => {
-    setState({ value: context });
-  }, [context.lastCardCode]);
-
-  console.log('changed');
-  const a = {test: Date.now()}
-
+    if (context.lastCardCode !== undefined) {
+      if (context.lastCardCode !== null) {
+        setLastCardCode(context.lastCardCode);
+      } else {
+        removeLastCardCode();
+      }
+    }
+  }, [track(context.lastCardCode)]);
 
   return (
-    <MainContext.Provider value={a}>
+    <MainContext.Provider value={contextValue}>
       {children}
     </MainContext.Provider>
   );
 }
 
 export function useMainContext() {
-  console.log('sdfsdf');
-  const context = useContext(MainContext);
+  const context = useContext(MainContext)?.value;
   if (!context) throw new Error("useUser must be inside MainProvider");
   return context;
 }

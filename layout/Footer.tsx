@@ -22,7 +22,7 @@ const Sections: Section[] = [
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-y-3 text-center text-xs">
+    <div className="flex flex-col items-center gap-y-3 text-center text-xs text-three">
       <p className="uppercase underline underline-offset-4">{title}:</p>
       <span>{children}</span>
     </div>
@@ -32,7 +32,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export default function Footer() {
   return (
     <footer
-      className="w-full flex items-center justify-center bg-back border-t py-3 px-2">
+      className="w-full flex items-center justify-center bg-back border-t py-3 px-4">
       <div className="w-full max-w-119 flex flex-col items-center gap-y-6">
         {Sections.map(section => <Section
           key={section.title}

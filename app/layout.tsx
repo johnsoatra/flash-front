@@ -26,7 +26,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${poppins.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-poppins bg-frame">
+      <body className="min-h-full flex flex-col font-poppins">
         <MainContextProvider>
           <Header />
           <div className="w-full max-w-253 flex-1 self-center px-4">

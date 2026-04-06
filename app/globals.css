@@ -7,6 +7,8 @@
   --color-border: #ccc;
   --color-danger: red;
   --color-three: #333;
+  --color-good: #009843;
+  --color-shadow: #C2C2C240;
 }
 
 @theme inline {
@@ -16,15 +18,21 @@
   --color-border: var(--color-border);
   --color-danger: var(--color-danger);
   --color-three: var(--color-three);
+  --color-good: var(--color-good);
+  --color-shadow: var(--color-shadow);
   --font-poppins: var(--font-poppins);
 }
 
-body {
-  background: var(--color-back);
-  color: var(--color-front);
+@layer base {
+  body {
+    background: var(--color-frame);
+    color: var(--color-front);
+  }
+  * {
+    border-color: var(--color-border);
+  }
 }
 
 * {
-  border-color: var(--color-border);
   line-height: 160%;
 }
