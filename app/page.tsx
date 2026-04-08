@@ -1,8 +1,8 @@
 'use client'
+import { useState } from "react";
+import { Amount } from "@/constants/configs";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
-import { Amount } from "@/constants/configs";
-import { useState } from "react";
 
 export default function Home() {
   const [openScanQR, setOpenScanQR] = useState(false);

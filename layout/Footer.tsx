@@ -16,11 +16,17 @@ const Sections: Section[] = [
   },
   {
     title: 'Contracts',
-    content: 'johnsoatra@gmail.com'
+    content: 'flash-contact@gmail.com',
   }
 ];
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col items-center gap-y-3 text-center text-xs text-three">
       <p className="uppercase underline underline-offset-4">{title}:</p>
@@ -31,14 +37,12 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export default function Footer() {
   return (
-    <footer
-      className="w-full flex items-center justify-center bg-back border-t py-3 px-4">
+    <footer className="w-full flex items-center justify-center bg-back border-t py-3 px-4">
       <div className="w-full max-w-119 flex flex-col items-center gap-y-6">
         {Sections.map(section => <Section
           key={section.title}
           title={section.title}>
-          {section.title === 'Notation' ?
-            section.content.trim() :
+          {section.title === 'Notation' ? section.content.trim() :
             <a
               href={`mailto:${section.content}`}
               target="_blank">

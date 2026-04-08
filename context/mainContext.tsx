@@ -16,9 +16,9 @@ function useMainContextValue(context: MainContextType) {
 }
 
 export function MainContextProvider({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   const { value: context } = useCurrent<MainContextType>({});
   const contextValue = useMainContextValue(context);
