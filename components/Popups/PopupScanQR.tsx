@@ -6,12 +6,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'>) {
   return (
     <Popup {...props}>
       <div className="w-full flex flex-col items-center gap-y-5 pt-13 pb-10.5">
-        <Image
-          alt='qr-scan' 
-          src={SampleScanQR}
-          sizes="100%"
-          width={257} 
-        />
+        <KhQr />
         <span className="text-center">
           Please scan this QR code to get the card top up code
         </span>

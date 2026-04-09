@@ -41,19 +41,19 @@ export function MainContextProvider({
       }
     }
   }, [track(context.lastCardCode)]);
-  useEffect(() => {
-    requestCheckToken()
-      .then(res => {
-        if (!res.existed) {
-          requestResetToken()
-            .then(res => {
-              context.tokenExisted = true;
-            })
-        } else {
-          context.tokenExisted = true;
-        }
-      })
-  }, []);
+  // useEffect(() => {
+  //   requestCheckToken()
+  //     .then(res => {
+  //       if (!res.existed) {
+  //         requestResetToken()
+  //           .then(res => {
+  //             context.tokenExisted = true;
+  //           })
+  //       } else {
+  //         context.tokenExisted = true;
+  //       }
+  //     })
+  // }, []);
 
   return (
     <MainContext.Provider value={contextValue}>
