@@ -4,10 +4,11 @@ export const Status = {
 } as const;
 
 export const Label = {
-  LastCardCode: 'last-card-code',
+  CardId: 'card-id',
+  Token: 'token',
 } as const;
 
 export const Amount = {
-  Allow_Amount: 4,
-  Price_Khmer: 2000,
+  AllowAmount: 4,
+  PriceKhmer: 2000,
 }

@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useRef } from "react";
 import useCurrent, { useTrack } from "react-use-current";
-import { getLastCardCode, removeLastCardCode, setLastCardCode } from "@/utils/localStorage";
+import { getCardId, removeCardId, setCardId } from "@/utils/localStorage/card-id";
 
 export type MainContextType = {
   lastCardCode?: string | null;
@@ -25,14 +25,14 @@ export function MainContextProvider({
   const track = useTrack();
 
   useEffect(() => {
-    context.lastCardCode = getLastCardCode();
+    context.lastCardCode = getCardId();
   }, []);
   useEffect(() => {
     if (context.lastCardCode !== undefined) {
       if (context.lastCardCode !== null) {
-        setLastCardCode(context.lastCardCode);
+        setCardId(context.lastCardCode);
       } else {
-        removeLastCardCode();
+        removeCardId();
       }
     }
   }, [track(context.lastCardCode)]);

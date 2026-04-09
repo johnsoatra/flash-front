@@ -19,7 +19,7 @@ export default function Home() {
       <div className="w-full max-w-168.5 flex flex-col items-center gap-y-16 mt-12">
         <h1 className="text-5xl text-center">
           Flash provides you one<br />
-          <b>Smart 1$ top up card</b> every month for only <b>{Amount.Price_Khmer}៛</b>
+          <b>Smart 1$ top up card</b> every month for only <b>{Amount.PriceKhmer}៛</b>
         </h1>
         <ButtonGetTopUp onClick={handleClickGetTopUp} />
       </div>
