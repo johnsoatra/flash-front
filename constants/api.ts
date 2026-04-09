@@ -1,5 +1,6 @@
 const Api = {
-  GenerateToken: 'generate-token',
+  CheckToken: 'check-token',
+  ResetToken: 'reset-token',
   IsAllowed: 'is-allowed',
   AvailableCardAmount: 'available-card-amount',
   AddLock: 'add-lock',

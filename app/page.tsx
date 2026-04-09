@@ -3,9 +3,11 @@ import { useState } from "react";
 import { Amount } from "@/constants/configs";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
+import { useMainContext } from "@/context/mainContext";
 
 export default function Home() {
   const [openScanQR, setOpenScanQR] = useState(false);
+  const context = useMainContext();
 
   function handleClickGetTopUp() {
     setOpenScanQR(true);
@@ -21,7 +23,7 @@ export default function Home() {
           Flash provides you one<br />
           <b>Smart 1$ top up card</b> every month for only <b>{Amount.PriceKhmer}៛</b>
         </h1>
-        <ButtonGetTopUp onClick={handleClickGetTopUp} />
+        {context.tokenExisted && <ButtonGetTopUp onClick={handleClickGetTopUp} />}
       </div>
       <PopupScanQR
         open={openScanQR}

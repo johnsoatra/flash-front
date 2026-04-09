@@ -1,15 +1,13 @@
 import Env from "@/constants/env";
-import { getToken } from "./localStorage/token";
 
-export default function request(endpoint: string, requestInit?: RequestInit) {
-  const token = getToken();
+export default async function request(endpoint: string, requestInit?: RequestInit) {
   return fetch(`${Env.ApiBaseUrl}/${endpoint}`, {
     ...requestInit,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token ?? ''}`,
       ...requestInit?.headers,
     },
     body: JSON.stringify(requestInit?.body),
-  });
+  }).then(res => res.json());
 }

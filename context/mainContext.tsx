@@ -2,8 +2,11 @@
 import { createContext, useContext, useEffect, useRef } from "react";
 import useCurrent, { useTrack } from "react-use-current";
 import { getCardId, removeCardId, setCardId } from "@/utils/localStorage/card-id";
+import useCheckToken from "@/service/useCheckToken";
+import useResetToken from "@/service/useResetToken";
 
 export type MainContextType = {
+  tokenExisted?: true;
   lastCardCode?: string | null;
 };
 
@@ -23,6 +26,8 @@ export function MainContextProvider({
   const { value: context } = useCurrent<MainContextType>({});
   const contextValue = useMainContextValue(context);
   const track = useTrack();
+  const { request: requestCheckToken } = useCheckToken();
+  const { request: requestResetToken } = useResetToken();
 
   useEffect(() => {
     context.lastCardCode = getCardId();
@@ -36,6 +41,19 @@ export function MainContextProvider({
       }
     }
   }, [track(context.lastCardCode)]);
+  useEffect(() => {
+    requestCheckToken()
+      .then(res => {
+        if (!res.existed) {
+          requestResetToken()
+            .then(res => {
+              context.tokenExisted = true;
+            })
+        } else {
+          context.tokenExisted = true;
+        }
+      })
+  }, []);
 
   return (
     <MainContext.Provider value={contextValue}>

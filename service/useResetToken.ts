@@ -1,10 +1,10 @@
 import Api from "@/constants/api";
 import useRequest, { RequestInitial } from "../hooks/useRequest";
-import { GenerateTokenResponse } from "@/dto/generateToken";
+import { ResetTokenResponse } from "@/dto/resetToken";
 
-export default function useGenerateToken() {
-  const data = useRequest<GenerateTokenResponse>({
-    endpoint: Api.GenerateToken,
+export default function useResetToken() {
+  const data = useRequest<ResetTokenResponse>({
+    endpoint: Api.ResetToken,
     options: () => ({}),
   });
   return {
