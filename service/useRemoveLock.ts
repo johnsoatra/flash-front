@@ -1,18 +1,15 @@
 import Api from "@/constants/api";
-import useRequest, { RequestInitial } from "../hooks/useRequest";
-import { RemoveLockResponse } from "@/dto/removeLock";
+import useRequest from "../hooks/useRequest";
+import { RemoveLockRequest, RemoveLockResponse } from "@/dto/removeLock";
 
 export default function useRemoveLock() {
-  const data = useRequest<RemoveLockResponse>({
+  return useRequest<RemoveLockResponse, RemoveLockRequest>({
     endpoint: Api.RemoveLock,
-    options: () => ({
+    options: ({ slot }) => ({
       method: 'post',
+      body: {
+        slot,
+      }
     }),
   });
-  return {
-    ...data,
-    request(options?: RequestInitial) {
-      return data.request(null, options);
-    }
-  };
 }

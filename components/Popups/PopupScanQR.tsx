@@ -37,7 +37,9 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
   }
 
   useEffect(() => {
-    requestGenerateQr();
+    if (props.open) {
+      requestGenerateQr();
+    }
   }, [props.open]);
 
   return (

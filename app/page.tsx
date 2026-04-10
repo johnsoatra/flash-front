@@ -13,7 +13,7 @@ import { SaveOrderResponse } from "@/dto/saveOrder";
 export default function Home() {
   const [openScanQR, setOpenScanQR] = useState(false);
   const context = useMainContext();
-  const { request: requestAddLock } = useAddLock();
+  const { data: lock, request: requestAddLock } = useAddLock();
   const { request: requestRemoveLock } = useRemoveLock();
   const {
     data: availableAmount,
@@ -40,7 +40,7 @@ export default function Home() {
       });
   }
   function handleCloseScanQR() {
-    requestRemoveLock()
+    requestRemoveLock({ slot: lock!.slot })
       .then(res => {
         setOpenScanQR(false);
       });

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { Amount } from "@/constants";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
 import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
@@ -23,6 +24,18 @@ export default function KhQr({
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
 
+  async function checkTransaction() {
+    return requestCheckTransaction({ md5: qrCode.data.md5, })
+      .then(res => {
+        const transactionId = res["transaction-id"];
+        if (transactionId) {
+          onSuccess(transactionId);
+          clearInterval(interval.current);
+        }
+        return res;
+      });
+  }
+
   useEffect(() => {
     startCountdown(60 * 2.5);
     generateQrCode(qrCode.data.qr);
@@ -35,15 +48,14 @@ export default function KhQr({
   useEffect(() => {
     if (qrCodeUrl) {
       interval.current = setInterval(() => {
-        requestCheckTransaction({ md5: qrCode.data.md5, })
-          .then(res => {
-            const transactionId = res["transaction-id"];
-            if (transactionId) {
-              onSuccess(transactionId);
+        checkTransaction()
+          .finally(() => {
+            if (!countdown) {
               clearInterval(interval.current);
+              checkTransaction();
             }
           });
-      }, 500);
+      }, 3000);
       return () => {
         clearInterval(interval.current);
       }
@@ -64,7 +76,7 @@ export default function KhQr({
         <span className="text-xs">FLASH</span>
         <div className="w-full flex items-center justify-between gap-x-1">
           <div className="w-full flex items-center gap-x-1.25">
-            <span className="font-bold text-xl">{commaSeparator(countdown ?? 0)}</span>
+            <span className="font-bold text-xl">{commaSeparator(Amount.PriceKhmer)}</span>
             <span className="text-xs">KHR</span>
           </div>
           {<span className="font-semibold text-bk-red text-sm">{secondToTime(countdown ?? 0)}</span>}
