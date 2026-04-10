@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import { Amount } from "@/constants";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
@@ -9,6 +9,7 @@ import useQrCode from "@/hooks/useQrCode";
 import { GenerateQrData } from "@/dto/generateQr";
 import { commaSeparator, secondToTime } from "@/utils/utils";
 import useCheckTransaction from "@/service/useCheckTransaction";
+import Config from "@/constants/config";
 
 export default function KhQr({
   qrCode,
@@ -19,7 +20,7 @@ export default function KhQr({
   onExpired: () => void;
   onSuccess: (transactionId: number) => void;
 }) {
-  const interval = useRef<NodeJS.Timeout>(undefined);
+  const timeout = useRef<NodeJS.Timeout>(undefined);
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
@@ -30,14 +31,16 @@ export default function KhQr({
         const transactionId = res["transaction-id"];
         if (transactionId) {
           onSuccess(transactionId);
-          clearInterval(interval.current);
         }
         return res;
+      }).catch(error => {
+        console.log(error);
+        return undefined;
       });
   }
 
   useEffect(() => {
-    startCountdown(60 * 2.5);
+    startCountdown(Config.QrExpiredIn / 1000);
     generateQrCode(qrCode.data.qr);
   }, [qrCode]);
   useEffect(() => {
@@ -47,18 +50,12 @@ export default function KhQr({
   }, [countdown]);
   useEffect(() => {
     if (qrCodeUrl) {
-      interval.current = setInterval(() => {
-        checkTransaction()
-          .finally(() => {
-            if (!countdown) {
-              clearInterval(interval.current);
-              checkTransaction();
-            }
-          });
-      }, 3000);
-      return () => {
-        clearInterval(interval.current);
-      }
+      checkTransaction().then(res => {
+        if (!res?.["transaction-id"]) {
+          timeout.current = setTimeout(checkTransaction, 2000);
+        }
+      });
+      return () => clearTimeout(timeout.current)
     }
   }, [qrCodeUrl]);
 
