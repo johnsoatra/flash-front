@@ -1,4 +1,4 @@
-import { Label } from "@/constants/configs";
+import { Label } from "@/constants";
 
 export function getCardId() {
   return localStorage.getItem(Label.CardId);

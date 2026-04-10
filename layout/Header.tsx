@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useMainContext } from "@/context/mainContext";
 import Badge from "@/components/Badge";
 import PopupLastCode from "@/components/Popups/PopupLastCode";
-import Product from "@/assets/svg/product";
+import Product from "@/assets/svg/Product";
 
 export default function Header() {
   const context = useMainContext();

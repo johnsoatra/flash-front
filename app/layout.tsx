@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Nunito_Sans } from "next/font/google";
 import { MainContextProvider } from "@/context/mainContext";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
@@ -9,7 +9,13 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-poppins",
-  display: "block",
+  display: "swap",
+});
+const nunito = Nunito_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-nunito",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} h-full antialiased`}>
+      className={`${poppins.variable} ${nunito.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-poppins">
         <MainContextProvider>
           <Header />

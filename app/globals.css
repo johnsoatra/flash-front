@@ -9,6 +9,8 @@
   --color-three: #333;
   --color-good: #009843;
   --color-shadow: #C2C2C240;
+  --color-bk-red: #E1232E;
+  --color-five: #555555;
 }
 
 @theme inline {
@@ -20,7 +22,10 @@
   --color-three: var(--color-three);
   --color-good: var(--color-good);
   --color-shadow: var(--color-shadow);
+  --color-bk-red: var(--color-bk-red);
+  --color-five: var(--color-five);
   --font-poppins: var(--font-poppins);
+  --font-nunito: var(--font-nunito);
 }
 
 @layer base {

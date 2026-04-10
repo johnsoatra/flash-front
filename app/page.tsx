@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from "react";
-import { Amount } from "@/constants/configs";
+import { Amount } from "@/constants";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
 import { useMainContext } from "@/context/mainContext";
