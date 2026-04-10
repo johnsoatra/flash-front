@@ -8,6 +8,7 @@ import useAvailableCardAmount from "@/service/useAvailableCardAmount";
 import useIsAllowed from "@/service/useIsAllowed";
 import useAddLock from "@/service/useAddLock";
 import useRemoveLock from "@/service/useRemoveLock";
+import { SaveOrderResponse } from "@/dto/saveOrder";
 
 export default function Home() {
   const [openScanQR, setOpenScanQR] = useState(false);
@@ -44,6 +45,11 @@ export default function Home() {
         setOpenScanQR(false);
       });
   }
+  function handleCompletedOrder(res: SaveOrderResponse) {
+    setOpenScanQR(false);
+    context.lastCardId = res.card.id;
+    context.openLastCard = true;
+  }
 
   useEffect(() => {
     if (context.tokenExisted) {
@@ -76,6 +82,7 @@ export default function Home() {
         open={openScanQR}
         onClose={handleCloseScanQR}
         onClickMask={handleCloseScanQR}
+        onCompletedOrder={handleCompletedOrder}
       />
     </div>
   )

@@ -12,3 +12,7 @@ export const Amount = {
   AllowAmount: 4,
   PriceKhmer: 1500,
 }
+
+export const ProviderCode = {
+  'smart': '*1203*',
+} as const;

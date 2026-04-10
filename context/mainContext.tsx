@@ -5,8 +5,8 @@ import useCurrent, { useTrack } from "react-use-current";
 export type MainContextType = {
   value: {
     tokenExisted?: true;
-    lastCardCode?: string | null;
-    openLastCode?: boolean;
+    lastCardId?: string | null;
+    openLastCard?: boolean;
   }
 };
 

@@ -12,9 +12,9 @@ export default function useResetToken() {
   return {
     ...data,
     request(options?: RequestInitial) {
-      if (context.lastCardCode) {
+      if (context.lastCardId) {
         alert('Clear your last card first to renew token!');
-        context.openLastCode = true;
+        context.openLastCard = true;
         return;
       }
       return data.request(null, options);

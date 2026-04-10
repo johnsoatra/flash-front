@@ -16,7 +16,7 @@ export default function KhQr({
 }: {
   qrCode: GenerateQrData;
   onExpired: () => void;
-  onSuccess: () => void;
+  onSuccess: (transactionId: number) => void;
 }) {
   const interval = useRef<NodeJS.Timeout>(undefined);
   const { value: countdown, start: startCountdown } = useCountdown();
@@ -37,8 +37,9 @@ export default function KhQr({
       interval.current = setInterval(() => {
         requestCheckTransaction({ md5: qrCode.data.md5, })
           .then(res => {
-            if (res["transaction-id"]) {
-              onSuccess(res.data);
+            const transactionId = res["transaction-id"];
+            if (transactionId) {
+              onSuccess(transactionId);
               clearInterval(interval.current);
             }
           });

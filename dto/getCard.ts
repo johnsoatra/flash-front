@@ -1,7 +1,9 @@
+export type CardProvider = 'smart';
+
 export type GetCardData = {
   id: string;
   created_at: string;
-  provider: string;
+  provider: CardProvider;
   number_order: string;
   code: string;
   data_amount: number;

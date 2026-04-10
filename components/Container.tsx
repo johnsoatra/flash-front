@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect } from "react";
-import { useTrack } from "react-use-current";
 import { useMainContext } from "@/context/mainContext";
 import useCheckToken from "@/service/useCheckToken";
 import useResetToken from "@/service/useResetToken";
@@ -12,25 +11,21 @@ export default function Container({
   children: React.ReactNode;
 }) {
   const context = useMainContext();
-  const track = useTrack();
   const { request: requestCheckToken } = useCheckToken();
   const { request: requestResetToken } = useResetToken();
 
   useEffect(() => {
-    context.lastCardCode = getCardId();
+    context.lastCardId = getCardId();
   }, []);
   useEffect(() => {
-    if (context.lastCardCode !== undefined) {
-      if (context.lastCardCode !== null) {
-        setCardId(context.lastCardCode);
+    if (context.lastCardId !== undefined) {
+      if (context.lastCardId !== null) {
+        setCardId(context.lastCardId);
       } else {
         removeCardId();
       }
     }
-  }, [track(context.lastCardCode)]);
-  useEffect(() => {
-    console.log('context', context.openLastCode);
-  }, [track(context.openLastCode)]);
+  }, [context.lastCardId]);
   useEffect(() => {
     requestCheckToken()
       .then(res => {
