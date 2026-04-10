@@ -5,13 +5,11 @@ import requestApi from '@/utils/request';
 type RecordAny = Record<string, any>;
 export type RequestInitial = Omit<RequestInit, 'body'> & {
   body?: RecordAny;
+  params?: RecordAny;
 }
 export type UseRequestProps<Res, Req, Data> = {
   endpoint: string,
-  options: (payload: Req) => RequestInitial & {
-    query?: RecordAny,
-    params?: RecordAny
-  }
+  options: (payload: Req) => RequestInitial;
   retry?: (error: any) => boolean;
 } & ([Data] extends [never] ? {} : {
   pick: (response: Res) => Data;

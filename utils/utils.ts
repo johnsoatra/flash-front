@@ -14,3 +14,7 @@ export function secondToTime(seconds: number) {
   const second = seconds % 60;
   return `${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
 }
+
+export function commaSeparator(amount: number) {
+  return amount.toLocaleString('en-US');
+}

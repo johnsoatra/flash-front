@@ -1,5 +1,4 @@
 'use client';
-import { useState } from "react";
 import { useMainContext } from "@/context/mainContext";
 import Badge from "@/components/Badge";
 import PopupLastCode from "@/components/Popups/PopupLastCode";
@@ -7,17 +6,17 @@ import Product from "@/assets/svg/Product";
 
 export default function Header() {
   const context = useMainContext();
-  const [openLastQRCode, setOpenLastQRCode] = useState(false);
 
   function handleClickBadge() {
-    setOpenLastQRCode(true);
+    context.openLastCode = true;
   }
   function handleCloseScanQR() {
-    setOpenLastQRCode(false);
+    context.openLastCode = false;
   }
   function handleClickClear() {
     context.lastCardCode = null;
-    setOpenLastQRCode(false);
+    context.openLastCode = false;
+    window.location.reload();
   }
 
   return (<>
@@ -34,7 +33,7 @@ export default function Header() {
       </div>
     </header>
     <PopupLastCode
-      open={openLastQRCode}
+      open={context.openLastCode ?? false}
       onClose={handleCloseScanQR}
       onClickMask={handleCloseScanQR}
       onClickClear={handleClickClear}

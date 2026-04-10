@@ -1,26 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import useCountdown from "@/hooks/useCountdown";
-import { secondToTime } from "@/utils/utils";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
 import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
+import useCountdown from "@/hooks/useCountdown";
 import useQrCode from "@/hooks/useQrCode";
+import { GenerateQrData } from "@/dto/generateQr";
+import { commaSeparator, secondToTime } from "@/utils/utils";
+import useCheckTransaction from "@/service/useCheckTransaction";
 
-function commaSeparator(amount: number) {
-  return amount.toLocaleString('en-US');
-}
-
-export default function KhQr() {
+export default function KhQr({
+  qrCode,
+  onExpired,
+  onSuccess,
+}: {
+  qrCode: GenerateQrData;
+  onExpired: () => void;
+  onSuccess: () => void;
+}) {
+  const interval = useRef<NodeJS.Timeout>(undefined);
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
+  const { request: requestCheckTransaction } = useCheckTransaction();
 
   useEffect(() => {
     startCountdown(60 * 2.5);
-  }, []);
+    generateQrCode(qrCode.data.qr);
+  }, [qrCode]);
   useEffect(() => {
-    generateQrCode('00020101021230510016abaakhppxxx@abaa01151210919202623870208ABA Bank520457325303116540420005802KH5911JOHN');
-  }, []);
+    if (countdown === 0) {
+      onExpired();
+    }
+  }, [countdown]);
+  useEffect(() => {
+    if (qrCodeUrl) {
+      interval.current = setInterval(() => {
+        requestCheckTransaction({ md5: qrCode.data.md5, })
+          .then(res => {
+            if (res["transaction-id"]) {
+              onSuccess(res.data);
+              clearInterval(interval.current);
+            }
+          });
+      }, 500);
+      return () => {
+        clearInterval(interval.current);
+      }
+    }
+  }, [qrCodeUrl]);
 
   return (
     <div className="w-80 aspect-20/29 font-nunito bg-white rounded-2xl overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">
@@ -36,7 +63,7 @@ export default function KhQr() {
         <span className="text-xs">FLASH</span>
         <div className="w-full flex items-center justify-between gap-x-1">
           <div className="w-full flex items-center gap-x-1.25">
-            <span className="font-bold text-xl">{commaSeparator(1000)}</span>
+            <span className="font-bold text-xl">{commaSeparator(countdown ?? 0)}</span>
             <span className="text-xs">KHR</span>
           </div>
           {<span className="font-semibold text-bk-red text-sm">{secondToTime(countdown ?? 0)}</span>}

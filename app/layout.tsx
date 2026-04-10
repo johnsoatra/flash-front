@@ -4,6 +4,7 @@ import { Poppins, Nunito_Sans } from "next/font/google";
 import { MainContextProvider } from "@/context/mainContext";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
+import Container from "@/components/Container";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -34,11 +35,13 @@ export default function RootLayout({
       className={`${poppins.variable} ${nunito.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-poppins">
         <MainContextProvider>
-          <Header />
-          <div className="w-full max-w-253 flex-1 self-center px-4">
-            {children}
-          </div>
-          <Footer />
+          <Container>
+            <Header />
+            <div className="w-full max-w-253 flex-1 self-center px-4">
+              {children}
+            </div>
+            <Footer />
+          </Container>
         </MainContextProvider>
       </body>
     </html>

@@ -1,62 +1,27 @@
 'use client';
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext } from "react";
 import useCurrent, { useTrack } from "react-use-current";
-import { getCardId, removeCardId, setCardId } from "@/utils/localStorage/card-id";
-import useCheckToken from "@/service/useCheckToken";
-import useResetToken from "@/service/useResetToken";
 
 export type MainContextType = {
-  tokenExisted?: true;
-  lastCardCode?: string | null;
+  value: {
+    tokenExisted?: true;
+    lastCardCode?: string | null;
+    openLastCode?: boolean;
+  }
 };
 
-const MainContext = createContext<{ value: MainContextType } | null>(null);
-
-function useMainContextValue(context: MainContextType) {
-  const ref = useRef({ value: context });
-  ref.current = { value: context };
-  return ref.current;
-}
+const MainContext = createContext<MainContextType | null>(null);
 
 export function MainContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { value: context } = useCurrent<MainContextType>({});
-  const contextValue = useMainContextValue(context);
+  const { value: context } = useCurrent<MainContextType['value']>({});
   const track = useTrack();
-  const { request: requestCheckToken } = useCheckToken();
-  const { request: requestResetToken } = useResetToken();
-
-  useEffect(() => {
-    context.lastCardCode = getCardId();
-  }, []);
-  useEffect(() => {
-    if (context.lastCardCode !== undefined) {
-      if (context.lastCardCode !== null) {
-        setCardId(context.lastCardCode);
-      } else {
-        removeCardId();
-      }
-    }
-  }, [track(context.lastCardCode)]);
-  // useEffect(() => {
-  //   requestCheckToken()
-  //     .then(res => {
-  //       if (!res.existed) {
-  //         requestResetToken()
-  //           .then(res => {
-  //             context.tokenExisted = true;
-  //           })
-  //       } else {
-  //         context.tokenExisted = true;
-  //       }
-  //     })
-  // }, []);
 
   return (
-    <MainContext.Provider value={contextValue}>
+    <MainContext.Provider value={track({ value: context }) as MainContextType}>
       {children}
     </MainContext.Provider>
   );
