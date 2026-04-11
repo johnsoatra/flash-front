@@ -42,8 +42,8 @@ export default function KhQr({
     expired.current = undefined;
     generateQrCode(qrCode.data.data.qr)
       .then(() => {
-        const period = qrCode.expired_at - Date.now();
-        startCountdown(period / 1000);
+        const duration = Math.floor((qrCode.expired_at - Date.now()) / 1000);
+        startCountdown(duration);
       });
   }, [qrCode]);
   useEffect(() => {
