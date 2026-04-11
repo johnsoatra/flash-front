@@ -31,7 +31,7 @@ export default function Container({
       .then(res => {
         if (!res.existed) {
           requestResetToken()
-            ?.then(res => {
+            ?.then(() => {
               context.tokenExisted = true;
             });
         } else {

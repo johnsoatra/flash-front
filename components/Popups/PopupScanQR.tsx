@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Popup, { PopupProps } from "../Popup";
 import KhQr from "../KhQr";
 import QrExpired from "../QrExpired";
@@ -15,6 +15,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
     data: qrCode,
     pending: pendingGenerateQr,
     request: requestGenerateQr,
+    reset: resetGenerateQr,
   } = useGenerateQr();
   const {
     pending: pendingSaveOrder,
@@ -39,6 +40,12 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
   useEffect(() => {
     if (props.open) {
       requestGenerateQr();
+    }
+  }, [props.open]);
+  useLayoutEffect(() => {
+    if (props.open) {
+      setShowExpired(false);
+      resetGenerateQr();
     }
   }, [props.open]);
 
