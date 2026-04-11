@@ -8,7 +8,7 @@ export default function useSaveOrder() {
     options: ({ transactionId }) => ({
       method: 'post',
       body: {
-        'transaction-id': transactionId,
+        transaction_id: transactionId,
       },
     }),
   });

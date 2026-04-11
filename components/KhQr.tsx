@@ -18,46 +18,45 @@ export default function KhQr({
 }: {
   qrCode: GenerateQrData;
   onExpired: () => void;
-  onSuccess: (transactionId: number) => void;
+  onSuccess: (transactionId: string) => void;
 }) {
-  const timeout = useRef<NodeJS.Timeout>(undefined);
+  const interval = useRef<NodeJS.Timeout>(undefined);
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
 
-  async function checkTransaction() {
-    return requestCheckTransaction({ md5: qrCode.data.md5, })
-      .then(res => {
-        const transactionId = res["transaction-id"];
-        if (transactionId) {
-          onSuccess(transactionId);
-        }
-        return res;
-      }).catch(error => {
-        console.log(error);
-        return undefined;
-      });
-  }
+  const expired = useMemo(() => {
+    if (countdown !== undefined) {
+      return countdown === 0;
+    }
+  }, [countdown]);
 
   useEffect(() => {
     startCountdown(Config.QrExpiredIn / 1000);
     generateQrCode(qrCode.data.qr);
   }, [qrCode]);
   useEffect(() => {
-    if (countdown === 0) {
-      onExpired();
-    }
-  }, [countdown]);
-  useEffect(() => {
     if (qrCodeUrl) {
-      checkTransaction().then(res => {
-        if (!res?.["transaction-id"]) {
-          timeout.current = setTimeout(checkTransaction, 2000);
-        }
-      });
-      return () => clearTimeout(timeout.current)
+      interval.current = setInterval(() => {
+        requestCheckTransaction({ md5: qrCode.data.md5, })
+          .then(res => {
+            const transactionId = res.transaction_id;
+            if (transactionId) {
+              onSuccess(transactionId);
+              clearInterval(interval.current);
+            } else if (expired) {
+              clearInterval(interval.current);
+              onExpired();
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            clearInterval(interval.current);
+          });
+      }, Config.DelayCheckTransaction);
+      return () => clearTimeout(interval.current)
     }
-  }, [qrCodeUrl]);
+  }, [qrCodeUrl, expired]);
 
   return (
     <div className="w-80 aspect-20/29 font-nunito bg-white rounded-2xl overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">

@@ -17,11 +17,10 @@ export default async function request(endpoint: string, requestInit?: RequestIni
     },
     body: JSON.stringify(restOptions?.body),
   })
-    .then(res => res.json())
-    .then(data => {
-      if (data.error) {
-        throw data;
+    .then(res => {
+      if (!res.ok) {
+        throw res;
       }
-      return data;
+      return res.json();
     });
 }

@@ -28,7 +28,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
   function handleQrCodeExpired() {
     setShowExpired(true);
   }
-  function handleSuccessTransaction(transactionId: number) {
+  function handleSuccessTransaction(transactionId: string) {
     requestSaveOrder({
       transactionId,
     }).then(res => {

@@ -1,5 +1,5 @@
 export type CheckTransactionResponse = {
-  "transaction-id": number;
+  transaction_id: string;
   data: {
     responseCode: number;
     responseMessage: string;
