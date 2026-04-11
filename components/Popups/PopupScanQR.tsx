@@ -3,6 +3,7 @@ import Popup, { PopupProps } from "../Popup";
 import KhQr from "../KhQr";
 import QrExpired from "../QrExpired";
 import StatusText from "../StatusText";
+import CenterCol from "../Center/CenterCol";
 import useGenerateQr from "@/service/useGenerateQr";
 import useSaveOrder from "@/service/useSaveOrder";
 import { SaveOrderResponse } from "@/dto/saveOrder";
@@ -51,15 +52,18 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
 
   return (
     <Popup {...props}>
-      <div className="w-full min-h-50 flex flex-col items-center gap-y-6.5 pt-7 pb-10.5">
+      <div className="w-full min-h-67 flex flex-col items-center gap-y-6.5 pt-7 pb-10.5">
         {showExpired ?
-          <QrExpired
-            disabled={!!pendingGenerateQr}
-            onClickTryAgain={handleClickTryAgain} /> :
+          <CenterCol>
+            <QrExpired
+              disabled={!!pendingGenerateQr}
+              onClickTryAgain={handleClickTryAgain}
+            />
+          </CenterCol> :
           pendingGenerateQr !== false ?
-            <StatusText>Generating QR Code...</StatusText> :
+            <CenterCol><StatusText>Generating QR Code...</StatusText></CenterCol> :
             !qrCode ?
-              <StatusText>Fail to generate QR Code!</StatusText> :
+              <CenterCol><StatusText>Fail to generate QR Code!</StatusText></CenterCol> :
               <>
                 <span className="font-medium text-xl text-center">KHQR Payment</span>
                 <div className="w-full flex flex-col items-center gap-y-6.5">

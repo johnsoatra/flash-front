@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Amount } from "@/constants";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
@@ -24,17 +24,18 @@ export default function KhQr({
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
-
-  const expired = useMemo(() => {
-    if (countdown !== undefined) {
-      return countdown === 0;
-    }
-  }, [countdown]);
+  const expired = useRef<boolean>(undefined);
 
   useEffect(() => {
+    expired.current = undefined;
     startCountdown(Config.QrExpiredIn / 1000);
     generateQrCode(qrCode.data.qr);
   }, [qrCode]);
+  useEffect(() => {
+    if (countdown !== undefined) {
+      expired.current = countdown === 0;
+    }
+  }, [countdown]);
   useEffect(() => {
     if (qrCodeUrl) {
       interval.current = setInterval(() => {
@@ -44,7 +45,7 @@ export default function KhQr({
             if (transactionId) {
               onSuccess(transactionId);
               clearInterval(interval.current);
-            } else if (expired) {
+            } else if (expired.current) {
               clearInterval(interval.current);
               onExpired();
             }
@@ -54,9 +55,9 @@ export default function KhQr({
             clearInterval(interval.current);
           });
       }, Config.DelayCheckTransaction);
-      return () => clearTimeout(interval.current)
+      return () => clearInterval(interval.current);
     }
-  }, [qrCodeUrl, expired]);
+  }, [qrCodeUrl]);
 
   return (
     <div className="w-80 aspect-20/29 font-nunito bg-white rounded-2xl overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">
