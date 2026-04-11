@@ -1,4 +1,5 @@
 import Api from "@/constants/api";
+import Message from "@/constants/message";
 import useRequest, { RequestInitial } from "../hooks/useRequest";
 import { ResetTokenResponse } from "@/dto/resetToken";
 import { useMainContext } from "@/context/mainContext";
@@ -13,7 +14,7 @@ export default function useResetToken() {
     ...data,
     request(options?: RequestInitial) {
       if (context.lastCardId) {
-        alert('Clear your last card first to renew token!');
+        alert(Message.Clear_Your_Card);
         context.openLastCard = true;
         return;
       }

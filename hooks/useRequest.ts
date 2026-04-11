@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react';
 import { ErrorResponse } from '@/types';
+import Api from '@/constants/api';
+import Message from '@/constants/message';
+import { useMainContext } from '@/context/mainContext';
 import requestApi from '@/utils/request';
 
 type RecordAny = Record<string, any>;
@@ -25,6 +28,7 @@ export type UseRequest<Res, Req, Data> = {
 export default function useRequest<Res, Req = unknown, Data = never>(
   props: UseRequestProps<Res, Req, Data>,
 ): UseRequest<Res, Req, Data> {
+  const context = useMainContext();
   const [response, setResponse] = useState<Res>();
   const [error, setError] = useState<ErrorResponse>();
   const [pending, setPending] = useState<boolean>();
@@ -54,6 +58,22 @@ export default function useRequest<Res, Req = unknown, Data = never>(
           res(response);
         })
         .catch((error: any) => {
+          if (error.statusCode === 401 && props.endpoint !== Api.ResetToken) {
+            if (context.lastCardId) {
+              alert(Message.Clear_Your_Card);
+              context.openLastCard = true;
+              rej(error);
+            } else {
+              requestApi(Api.ResetToken)
+                .then(() => {
+                  res(request(payload, options));
+                })
+                .catch(error => {
+                  rej(error);
+                });
+            }
+            return;
+          }
           if (props.retry?.(error)) {
             res(request(payload, options));
             return;
