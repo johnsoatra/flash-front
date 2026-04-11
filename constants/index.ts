@@ -10,7 +10,7 @@ export const Label = {
 
 export const Amount = {
   AllowAmount: 4,
-  PriceKhmer: 1500,
+  PriceKhmer: 1000,
 }
 
 export const ProviderCode = {

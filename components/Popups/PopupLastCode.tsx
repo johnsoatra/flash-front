@@ -55,7 +55,7 @@ export default function PopupLastCode({
       open={context.openLastCard ?? false}
       {...props}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6 pt-6 text-center">
-        <h3 className="text-xl underline underline-offset-4">Your Last Top up Card</h3>
+        <h3 className="text-xl font-medium">Your card's information</h3>
         {gettingCard !== false ?
           <CenterCol>
             <StatusText>Getting card...</StatusText>
@@ -64,33 +64,33 @@ export default function PopupLastCode({
             <CenterCol>
               <StatusText>Fail to get card!</StatusText>
             </CenterCol> :
-            <div className="w-full flex flex-col gap-y-6">
-              <div className="w-full flex flex-col gap-y-2.5">
-                <div className="w-full flex flex-col items-center gap-y-5">
-                  <div className="flex flex-col items-center gap-y-3">
-                    <span className="text-xl">Enter Code</span>
-                    <span className="text-lg">{cardCode}</span>
-                  </div>
-                  <hr className="w-full max-w-83" />
-                  <div className="flex flex-col items-center gap-y-3">
-                    <span className="text-xl">Scan QR Code</span>
-                    <div className="w-51 h-51 bg-border">
-                      {cardQrCode && <Image
-                        alt="card-qr-code"
-                        src={cardQrCode}
-                        width={204}
-                        height={204}
-                      />}
-                    </div>
+            <div className="w-full flex flex-col items-center gap-y-6">
+              <div className="w-full flex flex-col items-center gap-y-5">
+                <div className="flex flex-col items-center gap-y-3">
+                  <span className="text-xl">Enter Code</span>
+                  <span className="text-lg">{cardCode}</span>
+                </div>
+                <hr className="w-full max-w-83" />
+                <div className="flex flex-col items-center gap-y-3">
+                  <span className="text-xl">Scan QR Code</span>
+                  <div className="w-39.5 h-39.5 bg-border">
+                    {cardQrCode && <Image
+                      alt="card-qr-code"
+                      src={cardQrCode}
+                      width={158}
+                      height={158}
+                    />}
                   </div>
                 </div>
-                <p className="text-sm mb-5">Expired Date: {localDate(card.expired_date)}</p>
               </div>
-              <button
-                className="self-start border rounded-xl px-4 py-0.5"
-                onClick={onClickClear}>
-                Clear
-              </button>
+              <div className="w-full flex items-end justify-between gap-x-1.5">
+                <button
+                  className="self-start border rounded-xl px-4 py-0.5"
+                  onClick={onClickClear}>
+                  Clear
+                </button>
+                <p className="text-xs mb-5 text-three">Expired date: {localDate(card.expired_date)}</p>
+              </div>
             </div>
         }
       </div>

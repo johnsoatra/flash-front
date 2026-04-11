@@ -1,4 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from "react";
+import { toast } from "sonner";
+import Message from "@/constants/message";
 import Popup, { PopupProps } from "../Popup";
 import KhQr from "../KhQr";
 import QrExpired from "../QrExpired";
@@ -31,10 +33,16 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
     setShowExpired(true);
   }
   function handleSuccessTransaction(transactionId: string) {
-    requestSaveOrder({
+    const process = requestSaveOrder({
       transactionId,
     }).then(res => {
       props.onCompletedOrder(res);
+    });
+    toast.promise(process, {
+      position: 'top-center',
+      loading: Message.Ordering_Card,
+      success: Message.Order_Success,
+      error: Message.Something_Wrong,
     });
   }
 

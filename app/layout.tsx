@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins, Nunito_Sans } from "next/font/google";
+import { Toaster } from "sonner";
 import { MainContextProvider } from "@/context/mainContext";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
@@ -42,6 +43,7 @@ export default function RootLayout({
             </div>
             <Footer />
           </Container>
+          <Toaster />
         </MainContextProvider>
       </body>
     </html>

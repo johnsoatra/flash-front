@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 import { ErrorResponse } from '@/types';
 import Api from '@/constants/api';
 import Message from '@/constants/message';
@@ -9,6 +10,7 @@ type RecordAny = Record<string, any>;
 export type RequestInitial = Omit<RequestInit, 'body'> & {
   body?: RecordAny;
   params?: RecordAny;
+  alertSomethingWrong?: boolean;
 }
 export type UseRequestProps<Res, Req, Data> = {
   endpoint: string,
@@ -47,18 +49,19 @@ export default function useRequest<Res, Req = unknown, Data = never>(
   }
   function request(payload: Req, options?: RequestInitial): Promise<Res> {
     return new Promise((res, rej) => {
-      setPending(true);
-      requestApi(props.endpoint, {
+      const { alertSomethingWrong, ...mergesOptions } = {
         ...(options ?? {}),
         ...props.options?.(payload),
-      } as any)
+      };
+      setPending(true);
+      requestApi(props.endpoint, mergesOptions)
         .then((response: any) => {
           setResponse(response);
           setError(undefined);
           res(response);
         })
         .catch((error: any) => {
-          if (error.statusCode === 401 && props.endpoint !== Api.ResetToken) {
+          if (error.status === 401 && props.endpoint !== Api.ResetToken) {
             if (context.lastCardId) {
               alert(Message.Clear_Your_Card);
               context.openLastCard = true;
@@ -80,6 +83,9 @@ export default function useRequest<Res, Req = unknown, Data = never>(
           }
           if (error.name !== 'AbortError') {
             setResponse(undefined);
+          }
+          if (alertSomethingWrong === undefined || alertSomethingWrong) {
+            toast.error(Message.Something_Wrong);
           }
           setError(error);
           rej(error);

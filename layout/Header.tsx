@@ -1,4 +1,5 @@
 'use client';
+import Message from "@/constants/message";
 import { useMainContext } from "@/context/mainContext";
 import Badge from "@/components/Badge";
 import PopupLastCode from "@/components/Popups/PopupLastCode";
@@ -14,7 +15,7 @@ export default function Header() {
     context.openLastCard = false;
   }
   function handleClickClear() {
-    const okay = confirm("Once you \"confirm\" you will lost this card's information.");
+    const okay = confirm(Message.Click_Ok_Clear);
     if (okay) {
       context.lastCardId = null;
       context.openLastCard = false;

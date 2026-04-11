@@ -10,7 +10,7 @@ const Sections: Section[] = [
   {
     title: 'Notation',
     content: `
-      This website is not official selling Smart Top Up Card, this website is only for promoting itself by providing Top Up cards in a discount price to everyone as long as there are cards available.
+      This website is not official selling SMART Top Up Card, this website is only for promoting itself by providing Top Up Card in discount price to everyone as long as there are cards available.
       We provide only 5 cards per month and 1 person can get only 1 card.
     `,
   },
@@ -37,7 +37,7 @@ function Section({
 
 export default function Footer() {
   return (
-    <footer className="w-full flex items-center justify-center bg-back border-t py-3 px-4">
+    <footer className="w-full flex items-center justify-center bg-back border-t pt-5 pb-6 px-4">
       <div className="w-full max-w-119 flex flex-col items-center gap-y-6">
         {Sections.map(section => <Section
           key={section.title}
