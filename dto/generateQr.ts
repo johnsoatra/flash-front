@@ -11,5 +11,6 @@ export type GenerateQrData = {
 }
 
 export type GenerateQrResponse = {
-  data: GenerateQrData,
+  data: GenerateQrData;
+  expired_at: number;
 }

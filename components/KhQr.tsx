@@ -6,7 +6,7 @@ import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
 import useCountdown from "@/hooks/useCountdown";
 import useQrCode from "@/hooks/useQrCode";
-import { GenerateQrData } from "@/dto/generateQr";
+import { GenerateQrResponse } from "@/dto/generateQr";
 import { commaSeparator, secondToTime } from "@/utils/utils";
 import useCheckTransaction from "@/service/useCheckTransaction";
 import Config from "@/constants/config";
@@ -16,7 +16,7 @@ export default function KhQr({
   onExpired,
   onSuccess,
 }: {
-  qrCode: GenerateQrData;
+  qrCode: GenerateQrResponse;
   onExpired: () => void;
   onSuccess: (transactionId: string) => void;
 }) {
@@ -26,10 +26,25 @@ export default function KhQr({
   const { request: requestCheckTransaction } = useCheckTransaction();
   const expired = useRef<boolean>(undefined);
 
+  async function checkTransaction() {
+    return requestCheckTransaction({ md5: qrCode.data.data.md5, })
+      .then(res => {
+        const transactionId = res.transaction_id;
+        if (transactionId) {
+          onSuccess(transactionId);
+          clearInterval(interval.current);
+          return true;
+        }
+      });
+  }
+
   useEffect(() => {
     expired.current = undefined;
-    startCountdown(Config.QrExpiredIn / 1000);
-    generateQrCode(qrCode.data.qr);
+    generateQrCode(qrCode.data.data.qr)
+      .then(() => {
+        const period = qrCode.expired_at - Date.now();
+        startCountdown(period / 1000);
+      });
   }, [qrCode]);
   useEffect(() => {
     if (countdown !== undefined) {
@@ -39,15 +54,11 @@ export default function KhQr({
   useEffect(() => {
     if (qrCodeUrl) {
       interval.current = setInterval(() => {
-        requestCheckTransaction({ md5: qrCode.data.md5, })
-          .then(res => {
-            const transactionId = res.transaction_id;
-            if (transactionId) {
-              onSuccess(transactionId);
+        checkTransaction()
+          .then(success => {
+            if (!success && expired.current) {
               clearInterval(interval.current);
-            } else if (expired.current) {
-              clearInterval(interval.current);
-              onExpired();
+              checkTransaction().finally(onExpired);
             }
           })
           .catch(error => {

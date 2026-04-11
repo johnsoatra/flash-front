@@ -64,7 +64,7 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-16 mt-12">
+      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-16 mt-12 mb-5">
         <h1 className="text-5xl text-center">
           Flash provides you one<br />
           <b>SMART $1 Top Up Card</b> every month for only <b>៛{Amount.PriceKhmer}</b>

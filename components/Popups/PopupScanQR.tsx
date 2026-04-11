@@ -15,7 +15,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
 }) {
   const [showExpired, setShowExpired] = useState(false);
   const {
-    data: qrCode,
+    response: qrCode,
     pending: pendingGenerateQr,
     request: requestGenerateQr,
     reset: resetGenerateQr,
@@ -35,9 +35,10 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
   function handleSuccessTransaction(transactionId: string) {
     const process = requestSaveOrder({
       transactionId,
-    }).then(res => {
-      props.onCompletedOrder(res);
-    });
+    }, { alertSomethingWrong: false, })
+      .then(res => {
+        props.onCompletedOrder(res);
+      });
     toast.promise(process, {
       position: 'top-center',
       loading: Message.Ordering_Card,
