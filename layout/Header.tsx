@@ -14,9 +14,12 @@ export default function Header() {
     context.openLastCard = false;
   }
   function handleClickClear() {
-    context.lastCardId = null;
-    context.openLastCard = false;
-    window.location.reload();
+    const okay = confirm("Once you \"confirm\" you will lost this card's information.");
+    if (okay) {
+      context.lastCardId = null;
+      context.openLastCard = false;
+      window.location.reload();
+    }
   }
 
   return (<>
