@@ -11,6 +11,7 @@
   --color-shadow: #C2C2C240;
   --color-bk-red: #E1232E;
   --color-five: #555555;
+  --color-smart: #009639;
 }
 
 @theme inline {
@@ -24,6 +25,7 @@
   --color-shadow: var(--color-shadow);
   --color-bk-red: var(--color-bk-red);
   --color-five: var(--color-five);
+  --color-smart: var(--color-smart);
   --font-poppins: var(--font-poppins);
   --font-nunito: var(--font-nunito);
 }

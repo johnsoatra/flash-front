@@ -4,6 +4,7 @@ import { useMainContext } from "@/context/mainContext";
 import Popup, { PopupProps } from "../Popup";
 import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
+import Card from "../Card";
 import useGetCard from "@/service/useGetCard";
 import { ProviderCode } from "@/constants";
 import useQrCode from "@/hooks/useQrCode";
@@ -55,7 +56,17 @@ export default function PopupLastCode({
       open={context.openLastCard ?? false}
       {...props}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6 pt-6 text-center">
-        <h3 className="text-xl font-medium">Your card's information</h3>
+        <Card card={{
+          id: '1',
+          provider: 'smart',
+          code: '123456789101112131',
+          data_amount: 1,
+          number_order: '12124323',
+          order_id: '1',
+          created_at: new Date().toISOString(),
+          expired_date: new Date().toISOString(),
+        }} />
+        {/* <h3 className="text-xl font-medium">Your card's information</h3>
         {gettingCard !== false ?
           <CenterCol>
             <StatusText>Getting card...</StatusText>
@@ -92,7 +103,7 @@ export default function PopupLastCode({
                 <p className="text-xs mb-5 text-three">Expired date: {localDate(card.expired_date)}</p>
               </div>
             </div>
-        }
+        } */}
       </div>
     </Popup>
   )

@@ -4,6 +4,7 @@ const Message = {
   Order_Success: 'Congratulation! your orders is successfully!',
   Ordering_Card: 'Ordering card is in processing...',
   Click_Ok_Clear: 'Once you click "OK" your card\'s information will be cleared.\nClick "Cancel" if you want to keep it.',
+  Copied_To_Clipboard: 'Code was copied successfully!',
 }
 
 export default Message;
