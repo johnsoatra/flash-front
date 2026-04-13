@@ -2,15 +2,15 @@ import { Label } from "@/constants";
 
 export function getCards(): string[] {
   try {
-    const cards = JSON.stringify(localStorage.getItem(Label.Cards));
+    const cards = JSON.parse(localStorage.getItem(Label.Cards) ?? '[]');
     if (Array.isArray(cards)) {
       const validatedCards: string[] = [];
       for (let card of cards) {
-        if (typeof card === 'string') {
+        if (typeof card === 'string' && !validatedCards.includes(card)) {
           validatedCards.push(card);
         }
       }
-      return cards;
+      return validatedCards;
     }
   } catch (error) {
     console.log(error);

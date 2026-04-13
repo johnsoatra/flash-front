@@ -7,7 +7,7 @@ export default function useGetCards() {
     endpoint: Api.GetCards,
     options: ({ cardIds }) => ({
       method: 'post',
-      params: {
+      body: {
         'card_ids': cardIds,
       }
     }),
