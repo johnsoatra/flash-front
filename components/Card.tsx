@@ -55,7 +55,7 @@ export default function Card({
           </div>
         </div>
         <span className="absolute bottom-0 right-2 text-[0.5rem] text-five">expired date: {localDate(card.expired_date)}</span>
-        <div className="absolute left-0 bottom-0">
+        <div className="absolute left-0 bottom-0 -translate-x-px">
           <div className="w-6 h-6 border-b-[1.5rem] border-r-[1.5rem] border-b-smart border-r-transparent" />
         </div>
       </div>

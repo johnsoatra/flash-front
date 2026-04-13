@@ -1,8 +1,7 @@
 'use client';
 import Message from "@/constants/message";
 import { useMainContext } from "@/context/mainContext";
-import Badge from "@/components/Badge";
-import PopupLastCode from "@/components/Popups/PopupLastCode";
+import PopupCards from "@/components/Popups/PopupCards";
 import Product from "@/assets/svg/Product";
 
 export default function Header() {
@@ -35,7 +34,7 @@ export default function Header() {
         </button>}
       </div>
     </header>
-    <PopupLastCode
+    <PopupCards
       onClose={handleCloseScanQR}
       onClickMask={handleCloseScanQR}
       onClickClear={handleClickClear}

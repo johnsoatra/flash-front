@@ -9,6 +9,7 @@ export type MainContextType = {
     cards?: string[];
     openCards?: boolean;
     config?: GetConfigResponse;
+    openProcessing?: boolean;
   }
 };
 

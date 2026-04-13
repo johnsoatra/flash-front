@@ -6,7 +6,7 @@ import CenterCol from "../Center/CenterCol";
 import Card from "../Card";
 import useGetCards from "@/service/useGetCards";
 
-export default function PopupLastCode({
+export default function PopupCards({
   onClickClear,
   ...props
 }: Omit<PopupProps, 'children' | 'open'> & {
@@ -48,18 +48,18 @@ export default function PopupLastCode({
             <CenterCol>
               <StatusText>Fail to get cards!</StatusText>
             </CenterCol> :
-            <div className="w-full flex flex-col items-center gap-y-6">
+            <div className="w-full flex-1 flex flex-col justify-between items-center gap-y-6">
               <ul className="w-full flex flex-col items-center gap-y-5">
                 {cards.map(card => <li
                   key={card.id}
-                  className="w-full flex justify-center">
+                  className="w-full flex justify-center scale-130">
                   <Card card={card} />
                 </li>)}
               </ul>
               <button
-                className="self-start border rounded-xl px-4 py-0.5"
+                className="uppercase rounded-xl px-3 py-1 font-medium transition-bg-danger"
                 onClick={onClickClear}>
-                Clear
+                delete all
               </button>
             </div>
         }

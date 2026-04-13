@@ -1,8 +1,9 @@
+'use client';
 import React, { useMemo } from "react";
 import { useTrack } from "react-use-current";
 import { useMainContext } from "@/context/mainContext";
 
-type SectionTitle = 'Notation' | 'Contracts';
+type SectionTitle = 'Notation' | 'Contacts';
 type Section = {
   title: SectionTitle;
   content: string;
@@ -36,8 +37,8 @@ export default function Footer() {
     `,
     },
     {
-      title: 'Contracts',
-      content: 'flash-contact@gmail.com',
+      title: 'Contacts',
+      content: 'Email: flashcontact10@gmail.com',
     }
   ], [track(context.config)]);
 
@@ -50,7 +51,8 @@ export default function Footer() {
           {section.title === 'Notation' ? section.content.trim() :
             <a
               href={`mailto:${section.content}`}
-              target="_blank">
+              target="_blank"
+              className="hover:underline">
               {section.content}
             </a>
           }

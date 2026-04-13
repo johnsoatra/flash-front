@@ -3,6 +3,7 @@ import XMark from "@/assets/svg/XMark";
 
 export type PopupProps = {
   open: boolean;
+  noCloseButton?: boolean;
   children: React.ReactNode;
   onClose: (evt: React.MouseEvent) => void;
   onClickMask: (evt: React.MouseEvent) => void;
@@ -10,6 +11,7 @@ export type PopupProps = {
 
 export default function Popup({
   open,
+  noCloseButton,
   children,
   onClose,
   onClickMask
@@ -22,13 +24,13 @@ export default function Popup({
       <div
         className="w-full max-w-131 relative mt-28 bg-back rounded-xl border p-4"
         onClick={evt => evt.preventDefault()}>
-        <button
+        {!noCloseButton && <button
           className="absolute top-4 right-4 flex justify-center items-center cursor-pointer font-bold rounded-full text-five p-1 hover:text-front hover:bg-light-gray active:bg-dark-gray"
           onClick={onClose}>
           <div className="w-6 h-6">
             <XMark />
           </div>
-        </button>
+        </button>}
         {children}
       </div>
     </div>

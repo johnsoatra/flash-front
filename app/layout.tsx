@@ -6,6 +6,7 @@ import { MainContextProvider } from "@/context/mainContext";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import Container from "@/components/Container";
+import PopupProcessing from "@/components/Popups/Processing";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default function RootLayout({
               {children}
             </div>
             <Footer />
+            <PopupProcessing />
           </Container>
           <Toaster />
         </MainContextProvider>

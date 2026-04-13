@@ -10,8 +10,9 @@ import useRemoveLock from "@/service/useRemoveLock";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 
 export default function Home() {
-  const [openScanQR, setOpenScanQR] = useState(false);
   const context = useMainContext();
+  const [openScanQR, setOpenScanQR] = useState(false);
+  const [boughtNew, setBoughtNew] = useState(false);
   const { data: lock, request: requestAddLock } = useAddLock();
   const { request: requestRemoveLock } = useRemoveLock();
   const {
@@ -33,21 +34,23 @@ export default function Home() {
   }, [availableAmount])
 
   function handleClickGetTopUp() {
+    context.openProcessing = true;
     requestAddLock()
       .then(res => {
         setOpenScanQR(true);
+      })
+      .finally(() => {
+        context.openProcessing = false;
       });
   }
   function handleCloseScanQR() {
-    requestRemoveLock({ slot: lock!.slot })
-      .then(res => {
-        setOpenScanQR(false);
-      });
+    setOpenScanQR(false);
   }
   function handleCompletedOrder(res: SaveOrderResponse) {
-    setOpenScanQR(false);
     context.cards?.push(res.card.id);
     context.openCards = true;
+    setOpenScanQR(false);
+    setBoughtNew(true);
   }
 
   useEffect(() => {
@@ -60,6 +63,11 @@ export default function Home() {
         });
     }
   }, [context.tokenExisted]);
+  useEffect(() => {
+    if (!openScanQR && lock) {
+      requestRemoveLock({ slot: lock!.slot });
+    }
+  }, [openScanQR, lock]);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -68,7 +76,7 @@ export default function Home() {
           Flash provides you one<br />
           <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
         </h1>
-        {allowedOrder && (allowedOrder?.allowed ?
+        {allowedOrder && ((allowedOrder?.allowed && !boughtNew) ?
           <>
             <ButtonGetTopUp onClick={handleClickGetTopUp} />
             {availableAmount && (availableAmount.amount === 0 ?
