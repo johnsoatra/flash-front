@@ -12,6 +12,8 @@
   --color-bk-red: #E1232E;
   --color-five: #555555;
   --color-smart: #009639;
+  --color-light-gray: #f2f2f2;
+  --color-dark-gray: #e0e0e0;
 }
 
 @theme inline {
@@ -26,6 +28,8 @@
   --color-bk-red: var(--color-bk-red);
   --color-five: var(--color-five);
   --color-smart: var(--color-smart);
+  --color-light-gray: var(--color-light-gray);
+  --color-dark-gray: var(--color-dark-gray);
   --font-poppins: var(--font-poppins);
   --font-nunito: var(--font-nunito);
 }
@@ -37,9 +41,18 @@
   }
   * {
     border-color: var(--color-border);
+    @apply transition-all;
+  }
+  button {
+    cursor: pointer;
   }
 }
 
 * {
   line-height: 160%;
 }
+
+@utility transition-bg-white {
+  @apply bg-white hover:bg-light-gray active:bg-dark-gray;
+}
+

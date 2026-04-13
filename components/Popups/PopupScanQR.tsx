@@ -40,7 +40,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
         props.onCompletedOrder(res);
       });
     toast.promise(process, {
-      position: 'top-center',
+      position: 'top-right',
       loading: Message.Ordering_Card,
       success: Message.Order_Success,
       error: Message.Something_Wrong,

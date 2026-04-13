@@ -85,7 +85,7 @@ export default function useRequest<Res, Req = unknown, Data = never>(
             setResponse(undefined);
           }
           if (alertSomethingWrong === undefined || alertSomethingWrong) {
-            toast.error(Message.Something_Wrong, { position: 'top-center' });
+            toast.error(Message.Something_Wrong, { position: 'top-right' });
           }
           setError(error);
           rej(error);

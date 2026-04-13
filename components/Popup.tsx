@@ -1,4 +1,5 @@
 import React from "react";
+import XMark from "@/assets/svg/XMark";
 
 export type PopupProps = {
   open: boolean;
@@ -22,9 +23,11 @@ export default function Popup({
         className="w-full max-w-131 relative mt-28 bg-back rounded-xl border p-4"
         onClick={evt => evt.preventDefault()}>
         <button
-          className="w-7 h-7 absolute top-4 right-4 flex justify-center items-center font-bold rounded-full border border-front opacity-75"
+          className="absolute top-4 right-4 flex justify-center items-center cursor-pointer font-bold rounded-full text-five p-1 hover:text-front hover:bg-light-gray active:bg-dark-gray"
           onClick={onClose}>
-          <span>X</span>
+          <div className="w-6 h-6">
+            <XMark />
+          </div>
         </button>
         {children}
       </div>

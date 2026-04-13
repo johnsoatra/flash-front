@@ -10,7 +10,7 @@ import { fullCardCode } from "@/utils/card";
 export default function Card({
   card,
 }: {
-  card: GetCardData,
+  card: GetCardData;
 }) {
   function handleClickCard() {
     navigator.clipboard
@@ -24,7 +24,7 @@ export default function Card({
   }
   return (
     <div
-      className="w-67.75 h-19 flex items-center bg-smart rounded-2xl group"
+      className="w-67.75 h-19 group flex items-center bg-smart rounded-2xl cursor-default"
       onClick={handleClickCard}>
       <div className="flex-1 text-white flex flex-col items-center justify-center gap-y-1.25">
         <p className="text-xs leading-none!">{ProviderCode[card.provider]}</p>
@@ -32,7 +32,7 @@ export default function Card({
           <Dollar1 />
         </p>
       </div>
-      <div className="w-54.75 relative self-stretch flex items-center justify-center px-2 bg-white border-t border-r border-b border-smart rounded-tr-2xl group-hover:bg-[#f2f2f2] group-active:bg-[#e0e0e0]">
+      <div className="w-54.75 relative self-stretch flex items-center justify-center px-2 bg-white border-t border-r border-b border-smart rounded-tr-2xl group-hover:bg-light-gray group-active:bg-dark-gray">
         <span className="absolute top-0 left-2 text-smart font-semibold capitalize">{card.provider}</span>
         <div className="flex items-center justify-between gap-x-2.25">
           <span>{card.code}#</span>

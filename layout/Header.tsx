@@ -29,10 +29,10 @@ export default function Header() {
       <div className="w-full max-w-114 relative flex items-center justify-center gap-x-1.5">
         <h2 className="font-bold text-[2rem] tracking-[25%]">FLASH</h2>
         {context.lastCardId && <button
-          className="absolute top-1/2 right-0 -translate-y-1/2"
+          className="absolute top-1/2 right-0 -translate-y-1/2 rounded-full transition-bg-white"
           onClick={handleClickBadge}>
           <Product />
-          <Badge amount={1}/>
+          <Badge />
         </button>}
       </div>
     </header>
