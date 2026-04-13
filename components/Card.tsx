@@ -8,6 +8,7 @@ import useQrCode from "@/hooks/useQrCode";
 import { localDate } from "@/utils/date.";
 import { fullCardCode } from "@/utils/card";
 import { type Card } from "@/dto/getCard";
+import CenterRow from "./Center/CenterRow";
 
 export default function Card({
   card,
@@ -43,9 +44,9 @@ export default function Card({
       </div>
       <div className="w-54.75 relative self-stretch flex items-center justify-center px-2 bg-white border-t border-r border-b border-smart rounded-tr-2xl group-hover:bg-light-gray group-active:bg-dark-gray">
         <span className="absolute top-0 left-2 text-smart font-semibold capitalize">{card.provider}</span>
-        <div className="flex items-center justify-between gap-x-2.25">
-          <span>{card.code}#</span>
-          <div className="w-9.5 h-9.5 bg-border">
+        <div className="w-full flex items-center justify-between gap-x-2.25">
+          <CenterRow>{card.code}#</CenterRow>
+          <div className="min-w-9.5 min-h-9.5 bg-border">
             {cardQrCode && <Image
               alt='qr-code'
               src={cardQrCode}

@@ -53,7 +53,7 @@ export default function PopupCards({
                 <ul className="w-full flex flex-col items-center gap-y-5">
                   {cards.map(card => <li
                     key={card.id}
-                    className="w-full flex justify-center ">
+                    className="w-full flex justify-center">
                     <Card card={card} />
                   </li>
                   )}

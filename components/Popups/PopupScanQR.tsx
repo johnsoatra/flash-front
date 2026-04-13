@@ -21,7 +21,6 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
     reset: resetGenerateQr,
   } = useGenerateQr();
   const {
-    pending: pendingSaveOrder,
     request: requestSaveOrder,
   } = useSaveOrder();
 
