@@ -13,9 +13,9 @@ export default function useResetToken() {
   return {
     ...data,
     request(options?: RequestInitial) {
-      if (context.lastCardId) {
+      if (context.cards?.length) {
         alert(Message.Clear_Your_Card);
-        context.openLastCard = true;
+        context.openCards = true;
         return;
       }
       return data.request(null, options);

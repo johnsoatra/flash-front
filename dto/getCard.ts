@@ -1,6 +1,6 @@
 export type CardProvider = 'smart';
 
-export type GetCardData = {
+export type Card = {
   id: string;
   created_at: string;
   provider: CardProvider;
@@ -12,9 +12,9 @@ export type GetCardData = {
 }
 
 export type GetCardResponse = {
-  data: GetCardData,
+  data: Card[],
 }
 
 export type GetCardRequest = {
-  id: string;
+  cardIds: string[];
 }

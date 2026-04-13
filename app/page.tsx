@@ -47,8 +47,8 @@ export default function Home() {
   }
   function handleCompletedOrder(res: SaveOrderResponse) {
     setOpenScanQR(false);
-    context.lastCardId = res.card.id;
-    context.openLastCard = true;
+    context.cards?.push(res.card.id);
+    context.openCards = true;
   }
 
   useEffect(() => {

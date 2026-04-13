@@ -1,7 +1,7 @@
-import { GetCardData } from "./getCard";
+import { Card } from "./getCard";
 
 export type SaveOrderResponse = {
-  card: GetCardData,
+  card: Card,
 }
 
 export type SaveOrderRequest = {

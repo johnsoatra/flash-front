@@ -62,9 +62,9 @@ export default function useRequest<Res, Req = unknown, Data = never>(
         })
         .catch((error: any) => {
           if (error.status === 401 && props.endpoint !== Api.ResetToken) {
-            if (context.lastCardId) {
+            if (context.cards?.length) {
               alert(Message.Clear_Your_Card);
-              context.openLastCard = true;
+              context.openCards = true;
               rej(error);
             } else {
               requestApi(Api.ResetToken)

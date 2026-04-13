@@ -8,7 +8,7 @@ const Api = {
   GenerateQr: 'generate-qr',
   CheckTransaction: 'check-transaction',
   SaveOrder: 'save-order',
-  GetCard: 'get-card/:id',
+  GetCards: 'get-cards',
 } as const;
 
 export default Api;

@@ -1,14 +1,10 @@
-import { useEffect, useMemo, useRef } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { useMainContext } from "@/context/mainContext";
 import Popup, { PopupProps } from "../Popup";
 import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
 import Card from "../Card";
-import useGetCard from "@/service/useGetCard";
-import { ProviderCode } from "@/constants";
-import useQrCode from "@/hooks/useQrCode";
-import { localDate } from "@/utils/date.";
+import useGetCards from "@/service/useGetCards";
 
 export default function PopupLastCode({
   onClickClear,
@@ -17,94 +13,57 @@ export default function PopupLastCode({
   onClickClear: () => void;
 }) {
   const context = useMainContext();
-  const lastId = useRef<string>(undefined);
-  const { value: cardQrCode, generate: generateCardQrCode } = useQrCode();
+  const lastOpenCards = useRef<string[]>(undefined);
   const {
-    data: card,
-    pending: gettingCard,
-    request: requestCard,
-  } = useGetCard();
-
-  const cardCode = useMemo(() => {
-    if (card) {
-      return `${ProviderCode[card.provider]}${card.code}#`;
-    }
-  }, [card]);
+    data: cards,
+    pending: gettingCards,
+    request: requestCards,
+  } = useGetCards();
 
   useEffect(() => {
     if (
-      context.openLastCard &&
-      context.lastCardId &&
-      lastId.current !== context.lastCardId
+      context.openCards &&
+      context.cards &&
+      lastOpenCards.current !== context.cards
     ) {
-      const savedId = context.lastCardId;
-      requestCard({
-        id: context.lastCardId,
+      const savedId = context.cards;
+      requestCards({
+        cardIds: context.cards,
       }).then(() => {
-        lastId.current = savedId;
+        lastOpenCards.current = savedId;
       });
     }
-  }, [context.openLastCard, context.lastCardId]);
-  useEffect(() => {
-    if (cardCode) {
-      generateCardQrCode(`tel:${encodeURIComponent(cardCode)}`);
-    }
-  }, [cardCode]);
+  }, [context.openCards, context.cards]);
 
   return (
     <Popup
-      open={context.openLastCard ?? false}
+      open={context.openCards ?? false}
       {...props}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6 pt-6 text-center">
-        <Card card={{
-          id: '1',
-          provider: 'smart',
-          code: '123456789101112131',
-          data_amount: 1,
-          number_order: '12124323',
-          order_id: '1',
-          created_at: new Date().toISOString(),
-          expired_date: new Date().toISOString(),
-        }} />
-        {/* <h3 className="text-xl font-medium">Your card's information</h3>
-        {gettingCard !== false ?
+        {gettingCards !== false ?
           <CenterCol>
-            <StatusText>Getting card...</StatusText>
+            <StatusText>Getting cards...</StatusText>
           </CenterCol> :
-          !card ?
+          !cards ?
             <CenterCol>
-              <StatusText>Fail to get card!</StatusText>
+              <StatusText>Fail to get cards!</StatusText>
             </CenterCol> :
             <div className="w-full flex flex-col items-center gap-y-6">
-              <div className="w-full flex flex-col items-center gap-y-5">
-                <div className="flex flex-col items-center gap-y-3">
-                  <span className="text-xl">Enter Code</span>
-                  <span className="text-lg">{cardCode}</span>
-                </div>
-                <hr className="w-full max-w-83" />
-                <div className="flex flex-col items-center gap-y-3">
-                  <span className="text-xl">Scan QR Code</span>
-                  <div className="w-39.5 h-39.5 bg-border">
-                    {cardQrCode && <Image
-                      alt="card-qr-code"
-                      src={cardQrCode}
-                      width={158}
-                      height={158}
-                    />}
-                  </div>
-                </div>
-              </div>
-              <div className="w-full flex items-end justify-between gap-x-1.5">
-                <button
-                  className="self-start border rounded-xl px-4 py-0.5"
-                  onClick={onClickClear}>
-                  Clear
-                </button>
-                <p className="text-xs mb-5 text-three">Expired date: {localDate(card.expired_date)}</p>
-              </div>
+              <ul className="w-full flex flex-col items-center gap-y-5">
+                {cards.map(card => <li
+                  key={card.id}
+                  className="w-full flex justify-center">
+                  <Card card={card} />
+                </li>)}
+              </ul>
+              <button
+                className="self-start border rounded-xl px-4 py-0.5"
+                onClick={onClickClear}>
+                Clear
+              </button>
             </div>
-        } */}
+        }
       </div>
     </Popup>
-  )
+  );
 }

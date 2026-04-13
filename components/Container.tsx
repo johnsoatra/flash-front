@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useMainContext } from "@/context/mainContext";
 import useCheckToken from "@/service/useCheckToken";
 import useResetToken from "@/service/useResetToken";
-import { getCardId, removeCardId, setCardId } from "@/utils/localStorage/card-id";
+import { getCards, setCards } from "@/utils/localStorage/cards";
 
 export default function Container({
   children,
@@ -15,17 +15,13 @@ export default function Container({
   const { request: requestResetToken } = useResetToken();
 
   useEffect(() => {
-    context.lastCardId = getCardId();
+    context.cards = getCards();
   }, []);
   useEffect(() => {
-    if (context.lastCardId !== undefined) {
-      if (context.lastCardId !== null) {
-        setCardId(context.lastCardId);
-      } else {
-        removeCardId();
-      }
+    if (context.cards !== undefined) {
+      setCards(context.cards);
     }
-  }, [context.lastCardId]);
+  }, [context.cards]);
   useEffect(() => {
     requestCheckToken()
       .then(res => {

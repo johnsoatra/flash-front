@@ -4,7 +4,7 @@ export const Status = {
 } as const;
 
 export const Label = {
-  CardId: 'card-id',
+  Cards: 'cards',
   Token: 'token',
 } as const;
 

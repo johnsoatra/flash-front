@@ -1,27 +1,36 @@
+import { useEffect } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { ProviderCode } from "@/constants";
 import Message from "@/constants/message";
-import { GetCardData } from "@/dto/getCard";
 import Dollar1 from "@/assets/svg/Dollar1";
+import useQrCode from "@/hooks/useQrCode";
 import { localDate } from "@/utils/date.";
 import { fullCardCode } from "@/utils/card";
+import { type Card } from "@/dto/getCard";
 
 export default function Card({
   card,
 }: {
-  card: GetCardData;
+  card: Card;
 }) {
+  const { value: cardQrCode, generate: generateCardQrCode } = useQrCode();
+
   function handleClickCard() {
     navigator.clipboard
-    .writeText(fullCardCode(card))
-    .then(() => {
-      toast.success(Message.Copied_To_Clipboard, { position: 'top-right' });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .writeText(fullCardCode(card))
+      .then(() => {
+        toast.success(Message.Copied_To_Clipboard, { position: 'top-right' });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+
+  useEffect(() => {
+    generateCardQrCode(`tel:${encodeURIComponent(fullCardCode(card))}`);
+  }, []);
+
   return (
     <div
       className="w-67.75 h-19 group flex items-center bg-smart rounded-2xl cursor-default"
@@ -36,16 +45,18 @@ export default function Card({
         <span className="absolute top-0 left-2 text-smart font-semibold capitalize">{card.provider}</span>
         <div className="flex items-center justify-between gap-x-2.25">
           <span>{card.code}#</span>
-          <Image
-            alt='qr-code'
-            src='/qr-code.png'
-            width={38}
-            height={38}
-          />
+          <div className="w-9.5 h-9.5 bg-border">
+            {cardQrCode && <Image
+              alt='qr-code'
+              src={cardQrCode}
+              width={38}
+              height={38}
+            />}
+          </div>
         </div>
         <span className="absolute bottom-0 right-2 text-[0.5rem] text-five">expired date: {localDate(card.expired_date)}</span>
         <div className="absolute left-0 bottom-0">
-          <div className="w-6 h-6 border-b-[1.5rem] border-r-[1.5rem] border-b-smart border-r-transparent"/>
+          <div className="w-6 h-6 border-b-[1.5rem] border-r-[1.5rem] border-b-smart border-r-transparent" />
         </div>
       </div>
     </div>
