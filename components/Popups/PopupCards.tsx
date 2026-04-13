@@ -48,16 +48,19 @@ export default function PopupCards({
             <CenterCol>
               <StatusText>Fail to get cards!</StatusText>
             </CenterCol> :
-            <div className="w-full flex-1 flex flex-col justify-between items-center gap-y-6">
-              <ul className="w-full flex flex-col items-center gap-y-5">
-                {cards.map(card => <li
-                  key={card.id}
-                  className="w-full flex justify-center scale-130">
-                  <Card card={card} />
-                </li>)}
-              </ul>
+            <div className="w-full flex-1 flex flex-col justify-center items-center gap-y-6">
+              <CenterCol>
+                <ul className="w-full flex flex-col items-center gap-y-5">
+                  {cards.map(card => <li
+                    key={card.id}
+                    className="w-full flex justify-center ">
+                    <Card card={card} />
+                  </li>
+                  )}
+                </ul>
+              </CenterCol>
               <button
-                className="uppercase rounded-xl px-3 py-1 font-medium transition-bg-danger"
+                className="uppercase text-sm rounded-lg px-3 py-1 font-medium text-danger-500 transition-bg-danger"
                 onClick={onClickClear}>
                 delete all
               </button>

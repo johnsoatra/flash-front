@@ -72,7 +72,7 @@ export default function KhQr({
   }, [qrCodeUrl]);
 
   return (
-    <div className="w-80 aspect-20/29 font-nunito bg-white rounded-2xl overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">
+    <div className="w-full max-w-80 font-nunito bg-white rounded-2xl border border-border/50 overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">
       <div className="w-full">
         <div className="w-full h-13.75 bg-bk-red flex justify-center items-center">
           <KhQrLogo />
@@ -93,13 +93,13 @@ export default function KhQr({
       </div>
       <Dash />
       <div className="w-full relative px-11.5 py-9.25 flex justify-center items-center">
-        <div className="w-57 h-57 bg-border">
+        <div className="w-50 h-50 bg-border">
           {qrCodeUrl && <>
             <Image
               alt="qr-code"
               src={qrCodeUrl}
-              width={228}
-              height={228}
+              width={200}
+              height={200}
             />
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <CurrencyRiel />

@@ -121,5 +121,5 @@
 }
 
 @utility transition-bg-danger {
-  @apply bg-white hover:bg-danger-200 active:bg-danger-400;
+  @apply bg-white hover:bg-danger-50 active:bg-danger-100;
 }

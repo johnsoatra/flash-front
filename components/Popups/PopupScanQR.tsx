@@ -61,7 +61,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
 
   return (
     <Popup {...props}>
-      <div className="w-full min-h-67 flex flex-col items-center gap-y-6.5 pt-7 pb-10.5">
+      <div className="w-full min-h-67 flex flex-col items-center gap-y-6.5 pt-7 pb-7.5">
         {showExpired ?
           <CenterCol>
             <QrExpired
@@ -81,7 +81,7 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
                     onExpired={handleQrCodeExpired}
                     onSuccess={handleSuccessTransaction}
                   />
-                  <span className="text-five text-center">Scan with any banking app that supports KHQR</span>
+                  <span className="text-five text-center text-sm">Scan with any banking app that supports KHQR</span>
                 </div>
               </>
         }

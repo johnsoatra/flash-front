@@ -17,8 +17,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center gap-y-3 text-center text-xs text-three">
-      <p className="uppercase underline underline-offset-4">{title}:</p>
+    <div className="flex flex-col items-center gap-y-1 text-center text-xs text-three">
+      <p className="uppercase">{title}:</p>
       <span>{children}</span>
     </div>
   );
@@ -32,7 +32,7 @@ export default function Footer() {
     {
       title: 'Notation',
       content: `
-      This website is not official selling SMART Top Up Card, this website is only for promoting itself by providing Top Up Card in discount price to everyone as long as there are cards available.
+      This website is not official selling Smart Top Up Card, this website is only for promoting itself by providing Top Up Card in discount price to everyone as long as there are cards available.
       We provide only ${context.config?.allow_amount} cards per month and 1 person can get only 1 card.
     `,
     },
