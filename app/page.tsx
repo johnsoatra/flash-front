@@ -66,7 +66,7 @@ export default function Home() {
       <div className="w-full max-w-168.5 flex flex-col items-center gap-y-16 mt-12 mb-5">
         <h1 className="text-5xl text-center">
           Flash provides you one<br />
-          <b>SMART $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
+          <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
         </h1>
         {allowedOrder && (allowedOrder?.allowed ?
           <>

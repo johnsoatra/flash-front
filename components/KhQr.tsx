@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { useMainContext } from "@/context/mainContext";
+import Config from "@/constants/config";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
 import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
@@ -9,7 +10,6 @@ import useQrCode from "@/hooks/useQrCode";
 import { GenerateQrResponse } from "@/dto/generateQr";
 import { commaSeparator, secondToTime } from "@/utils/utils";
 import useCheckTransaction from "@/service/useCheckTransaction";
-import Config from "@/constants/config";
 
 export default function KhQr({
   qrCode,
