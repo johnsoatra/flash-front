@@ -1,12 +1,14 @@
 'use client';
 import { createContext, useContext } from "react";
 import useCurrent, { useTrack } from "react-use-current";
+import { GetConfigResponse } from "@/dto/getConfig";
 
 export type MainContextType = {
   value: {
     tokenExisted?: true;
     cards?: string[];
     openCards?: boolean;
+    config?: GetConfigResponse;
   }
 };
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { Amount } from "@/constants";
+import { useMainContext } from "@/context/mainContext";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
 import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
@@ -20,6 +20,7 @@ export default function KhQr({
   onExpired: () => void;
   onSuccess: (transactionId: string) => void;
 }) {
+  const context = useMainContext();
   const interval = useRef<NodeJS.Timeout>(undefined);
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
@@ -84,7 +85,7 @@ export default function KhQr({
         <span className="text-xs">FLASH</span>
         <div className="w-full flex items-center justify-between gap-x-1">
           <div className="w-full flex items-center gap-x-1.25">
-            <span className="font-bold text-xl">{commaSeparator(Amount.PriceKhmer)}</span>
+            <span className="font-bold text-xl">{commaSeparator(context.config?.card_price ?? 0)}</span>
             <span className="text-xs">KHR</span>
           </div>
           {<span className="font-semibold text-bk-red text-sm">{secondToTime(countdown ?? 0)}</span>}

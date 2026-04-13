@@ -8,11 +8,6 @@ export const Label = {
   Token: 'token',
 } as const;
 
-export const Amount = {
-  AllowAmount: 4,
-  PriceKhmer: 1000,
-}
-
 export const ProviderCode = {
   'smart': '*1203*',
 } as const;
