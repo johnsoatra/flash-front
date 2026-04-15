@@ -11,10 +11,10 @@ export type Card = {
   expired_date: string;
 }
 
-export type GetCardResponse = {
+export type GetCardsResponse = {
   data: Card[],
 }
 
-export type GetCardRequest = {
+export type GetCardsRequest = {
   cardIds: string[];
 }

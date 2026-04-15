@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useMemo, useState } from "react";
+import { useMainContext } from "@/context/mainContext";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
-import { useMainContext } from "@/context/mainContext";
+import PopupQrExpired from "@/components/Popups/PopupQrExpired";
 import useAvailableCardAmount from "@/service/useAvailableCardAmount";
 import useIsAllowed from "@/service/useIsAllowed";
 import useAddLock from "@/service/useAddLock";
@@ -12,6 +13,7 @@ import { SaveOrderResponse } from "@/dto/saveOrder";
 export default function Home() {
   const context = useMainContext();
   const [openScanQR, setOpenScanQR] = useState(false);
+  const [openQrExpired, setOpenQrExpired] = useState(false);
   const [boughtNew, setBoughtNew] = useState(false);
   const { data: lock, request: requestAddLock } = useAddLock();
   const { request: requestRemoveLock } = useRemoveLock();
@@ -33,7 +35,7 @@ export default function Home() {
     }
   }, [availableAmount])
 
-  function handleClickGetTopUp() {
+  function openQr() {
     context.openProcessing = true;
     requestAddLock()
       .then(res => {
@@ -43,6 +45,9 @@ export default function Home() {
         context.openProcessing = false;
       });
   }
+  function handleClickGetTopUp() {
+    openQr();
+  }
   function handleCloseScanQR() {
     setOpenScanQR(false);
   }
@@ -51,6 +56,17 @@ export default function Home() {
     context.openCards = true;
     setOpenScanQR(false);
     setBoughtNew(true);
+  }
+  function handleExpiredQr() {
+    setOpenScanQR(false);
+    setOpenQrExpired(true);
+  }
+  function handleCloseQrExpired() {
+    setOpenQrExpired(false);
+  }
+  function handleClickTryAgain() {
+    setOpenQrExpired(false);
+    openQr();
   }
 
   useEffect(() => {
@@ -97,6 +113,13 @@ export default function Home() {
         onClose={handleCloseScanQR}
         onClickMask={handleCloseScanQR}
         onCompletedOrder={handleCompletedOrder}
+        onExpired={handleExpiredQr}
+      />
+      <PopupQrExpired
+        open={openQrExpired}
+        onClose={handleCloseQrExpired}
+        onClickMask={handleCloseQrExpired}
+        handleClickTryAgain={handleClickTryAgain}
       />
     </div>
   )

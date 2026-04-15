@@ -1,42 +1,42 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import Message from "@/constants/message";
 import Popup, { PopupProps } from "../Popup";
 import KhQr from "../KhQr";
-import QrExpired from "../QrExpired";
 import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
 import useGenerateQr from "@/service/useGenerateQr";
 import useSaveOrder from "@/service/useSaveOrder";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 
-export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
+export default function PopupScanQR({
+  onCompletedOrder,
+  onExpired,
+  ...props
+}: Omit<PopupProps, 'children'> & {
   onCompletedOrder: (res: SaveOrderResponse) => void;
+  onExpired: () => void;
 }) {
-  const [showExpired, setShowExpired] = useState(false);
   const {
     response: qrCode,
     pending: pendingGenerateQr,
     request: requestGenerateQr,
-    reset: resetGenerateQr,
   } = useGenerateQr();
   const {
     request: requestSaveOrder,
   } = useSaveOrder();
 
-  function handleClickTryAgain() {
-    requestGenerateQr();
-    setShowExpired(false);
-  }
   function handleQrCodeExpired() {
-    setShowExpired(true);
+    onExpired();
   }
   function handleSuccessTransaction(transactionId: string) {
     const process = requestSaveOrder({
       transactionId,
-    }, { alertSomethingWrong: false, })
+    }, {
+      alertSomethingWrong: false,
+    })
       .then(res => {
-        props.onCompletedOrder(res);
+        onCompletedOrder(res);
       });
     toast.promise(process, {
       position: 'top-right',
@@ -51,38 +51,25 @@ export default function PopupScanQR(props: Omit<PopupProps, 'children'> & {
       requestGenerateQr();
     }
   }, [props.open]);
-  useLayoutEffect(() => {
-    if (props.open) {
-      setShowExpired(false);
-      resetGenerateQr();
-    }
-  }, [props.open]);
 
   return (
     <Popup {...props}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6.5 pt-7 pb-7.5">
-        {showExpired ?
-          <CenterCol>
-            <QrExpired
-              disabled={!!pendingGenerateQr}
-              onClickTryAgain={handleClickTryAgain}
-            />
-          </CenterCol> :
-          pendingGenerateQr !== false ?
-            <CenterCol><StatusText>Generating QR Code...</StatusText></CenterCol> :
-            !qrCode ?
-              <CenterCol><StatusText>Fail to generate QR Code!</StatusText></CenterCol> :
-              <>
-                <span className="font-medium text-xl text-center">KHQR Payment</span>
-                <div className="w-full flex flex-col items-center gap-y-6.5">
-                  <KhQr
-                    qrCode={qrCode}
-                    onExpired={handleQrCodeExpired}
-                    onSuccess={handleSuccessTransaction}
-                  />
-                  <span className="text-five text-center text-sm">Scan with any banking app that supports KHQR</span>
-                </div>
-              </>
+        {pendingGenerateQr !== false ?
+          <CenterCol><StatusText>Generating QR Code...</StatusText></CenterCol> :
+          !qrCode ?
+            <CenterCol><StatusText>Fail to generate QR Code!</StatusText></CenterCol> :
+            <>
+              <span className="font-medium text-xl text-center">KHQR Payment</span>
+              <div className="w-full flex flex-col items-center gap-y-6.5">
+                <KhQr
+                  qrCode={qrCode}
+                  onExpired={handleQrCodeExpired}
+                  onSuccess={handleSuccessTransaction}
+                />
+                <span className="text-five text-center text-sm">Scan with any banking app that supports KHQR</span>
+              </div>
+            </>
         }
       </div>
     </Popup>

@@ -6,7 +6,7 @@ import { MainContextProvider } from "@/context/mainContext";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import Container from "@/components/Container";
-import PopupProcessing from "@/components/Popups/Processing";
+import PopupProcessing from "@/components/Popups/PopupProcessing";
 
 const poppins = Poppins({
   subsets: ["latin"],

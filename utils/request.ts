@@ -2,12 +2,16 @@ import Env from "@/constants/env";
 import { fillParams } from "./url";
 import { RequestInitial } from "@/hooks/useRequest";
 
+function appendProtocol(endpoint: string) {
+  if (/^https?:\/\//.test(endpoint)) {
+    return endpoint;
+  }
+  return `${Env.ApiBaseUrl}/${endpoint}`;
+}
+
 export default async function request(endpoint: string, requestInit?: RequestInitial) {
   const { params, ...restOptions } = requestInit ?? {};
-  const url = fillParams(
-    `${Env.ApiBaseUrl}/${endpoint}`,
-    params ?? {},
-  );
+  const url = fillParams(appendProtocol(endpoint), params ?? {});
   return fetch(url, {
     ...restOptions,
     credentials: 'include',

@@ -1,8 +1,6 @@
 export default function QrExpired({
-  disabled,
   onClickTryAgain,
 }: {
-  disabled: boolean;
   onClickTryAgain: () => void;
 }) {
   return (
@@ -15,7 +13,6 @@ export default function QrExpired({
       </div>
       <button
         className="border rounded-xl py-1 px-8"
-        disabled={disabled}
         onClick={onClickTryAgain}>
         Try Again
       </button>

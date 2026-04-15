@@ -7,8 +7,8 @@ import Dollar1 from "@/assets/svg/Dollar1";
 import useQrCode from "@/hooks/useQrCode";
 import { localDate } from "@/utils/date.";
 import { fullCardCode } from "@/utils/card";
-import { type Card } from "@/dto/getCard";
 import CenterRow from "./Center/CenterRow";
+import { type Card } from "@/dto/getCards";
 
 export default function Card({
   card,

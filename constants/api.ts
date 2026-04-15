@@ -7,9 +7,10 @@ const Api = {
   AddLock: 'add-lock',
   RemoveLock: 'remove-lock',
   GenerateQr: 'generate-qr',
-  CheckTransaction: 'check-transaction',
+  VerifyTransaction: 'verify-transaction',
   SaveOrder: 'save-order',
   GetCards: 'get-cards',
+  CheckTransaction: 'v1/check_transaction_by_md5',
 } as const;
 
 export default Api;

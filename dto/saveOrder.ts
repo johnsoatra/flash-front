@@ -1,4 +1,4 @@
-import { Card } from "./getCard";
+import { Card } from "./getCards";
 
 export type SaveOrderResponse = {
   card: Card,
