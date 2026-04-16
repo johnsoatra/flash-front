@@ -1,5 +1,5 @@
 const Config = {
-  DelayCheckTransaction: 1500,
+  DelayCheckTransaction: 2000,
 } as const;
 
 export default Config;

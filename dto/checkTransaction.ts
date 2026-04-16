@@ -1,10 +1,10 @@
 export type CheckTransactionResponse = {
-  responseCode: number;
-  responseMessage: string;
-  errorCode: number | null;
-  data: Record<string, any> | null;
+  verified: false;
+} | {
+  verified: true;
+  transaction_id: string;
 }
 
 export type CheckTransactionRequest = {
-  md5: string;
+  qrId: string;
 }

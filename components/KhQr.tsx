@@ -9,7 +9,6 @@ import useCountdown from "@/hooks/useCountdown";
 import useQrCode from "@/hooks/useQrCode";
 import { GenerateQrResponse } from "@/dto/generateQr";
 import { commaSeparator, secondToTime } from "@/utils/utils";
-import useVerifyTransaction from "@/service/useVerifyTransaction";
 import useCheckTransaction from "@/service/useCheckTransaction";
 
 export default function KhQr({
@@ -26,22 +25,16 @@ export default function KhQr({
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
-  const { request: requestVerifyTransaction } = useVerifyTransaction();
   const expired = useRef<boolean>(undefined);
 
   async function checkTransaction() {
-    return requestCheckTransaction({ md5: qrCode.data.data.md5, })
+    return requestCheckTransaction({ qrId: qrCode.id })
       .then(res => {
-        if (res.responseCode === 0 && res.data) {
-          console.log('verify');
-          return false;
+        if (res.verified) {
+          onSuccess(res.transaction_id);
+          clearInterval(interval.current);
+          return true;
         }
-        // const transactionId = res.transaction_id;
-        // if (transactionId) {
-        //   onSuccess(transactionId);
-        //   clearInterval(interval.current);
-        //   return true;
-        // }
       });
   }
 
