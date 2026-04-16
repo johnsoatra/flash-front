@@ -33,7 +33,7 @@ export default function Home() {
       }
       return 'card';
     }
-  }, [availableAmount])
+  }, [availableAmount]);
 
   function openQr() {
     context.openProcessing = true;
@@ -81,7 +81,11 @@ export default function Home() {
   }, [context.tokenExisted]);
   useEffect(() => {
     if (!openScanQR && lock) {
-      requestRemoveLock({ slot: lock!.slot });
+      requestRemoveLock({
+        slot: lock!.slot,
+      }, {
+        alertSomethingWrong: false,
+      });
     }
   }, [openScanQR, lock]);
 
@@ -92,8 +96,8 @@ export default function Home() {
           Flash provides you one<br />
           <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
         </h1>
-        {allowedOrder && availableAmount && ((allowedOrder.allowed && !boughtNew) ?
-          (availableAmount.amount === 0 ?
+        {allowedOrder && ((allowedOrder.allowed && !boughtNew) ?
+          (availableAmount && (availableAmount.amount === 0 ?
             <p>There are no card left.</p> :
             <>
               <ButtonGetTopUp onClick={handleClickGetTopUp} />
@@ -101,7 +105,7 @@ export default function Home() {
                 There are only <span className="text-[4rem]">{availableAmount.amount}</span> {cardWord} left.
               </p>
             </>
-          ) :
+          )) :
           <div className="text-center">
             <p>You've already made an order for this month.</p>
             <p>Please check again on next month.</p>

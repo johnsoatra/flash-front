@@ -21,7 +21,7 @@ export default function KhQr({
   onSuccess: (transactionId: string) => void;
 }) {
   const context = useMainContext();
-  const interval = useRef<NodeJS.Timeout>(undefined);
+  const timeout = useRef<NodeJS.Timeout>(undefined);
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
@@ -32,7 +32,6 @@ export default function KhQr({
       .then(res => {
         if (res.verified) {
           onSuccess(res.transaction_id);
-          clearInterval(interval.current);
           return true;
         }
       });
@@ -53,20 +52,25 @@ export default function KhQr({
   }, [countdown]);
   useEffect(() => {
     if (qrCodeUrl) {
-      interval.current = setInterval(() => {
-        checkTransaction()
-          .then(success => {
-            if (!success && expired.current) {
-              clearInterval(interval.current);
-              checkTransaction().finally(onExpired);
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            clearInterval(interval.current);
-          });
-      }, Config.DelayCheckTransaction);
-      return () => clearInterval(interval.current);
+      function job() {
+        timeout.current = setTimeout(() => {
+          checkTransaction()
+            .then(success => {
+              if (!success) {
+                if (!expired.current) {
+                  job();
+                } else {
+                  checkTransaction().finally(onExpired);
+                }
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }, Config.DelayCheckTransaction);
+      }
+      job();
+      return () => clearTimeout(timeout.current);
     }
   }, [qrCodeUrl]);
 
