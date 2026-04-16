@@ -92,16 +92,16 @@ export default function Home() {
           Flash provides you one<br />
           <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
         </h1>
-        {allowedOrder && ((allowedOrder?.allowed && !boughtNew) ?
-          <>
-            <ButtonGetTopUp onClick={handleClickGetTopUp} />
-            {availableAmount && (availableAmount.amount === 0 ?
-              <p>There are no card left.</p> :
+        {allowedOrder && availableAmount && ((allowedOrder.allowed && !boughtNew) ?
+          (availableAmount.amount === 0 ?
+            <p>There are no card left.</p> :
+            <>
+              <ButtonGetTopUp onClick={handleClickGetTopUp} />
               <p className="text-center text-4xl">
                 There are only <span className="text-[4rem]">{availableAmount.amount}</span> {cardWord} left.
               </p>
-            )}
-          </> :
+            </>
+          ) :
           <div className="text-center">
             <p>You've already made an order for this month.</p>
             <p>Please check again on next month.</p>

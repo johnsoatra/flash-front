@@ -10,6 +10,7 @@ const Api = {
   VerifyTransaction: 'verify-transaction',
   SaveOrder: 'save-order',
   GetCards: 'get-cards',
+  GetBakongToken: 'get-bakong-token',
   CheckTransaction: 'v1/check_transaction_by_md5',
 } as const;
 

@@ -10,6 +10,7 @@ export type MainContextType = {
     openCards?: boolean;
     config?: GetConfigResponse;
     openProcessing?: boolean;
+    bakongToken?: string | null;
   }
 };
 
