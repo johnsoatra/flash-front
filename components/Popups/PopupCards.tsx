@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTrack } from "react-use-current";
 import { useMainContext } from "@/context/mainContext";
 import Popup, { PopupProps } from "../Popup";
 import StatusText from "../StatusText";
@@ -13,6 +14,7 @@ export default function PopupCards({
   onClickClear: () => void;
 }) {
   const context = useMainContext();
+  const track = useTrack();
   const lastOpenCards = useRef<string[]>(undefined);
   const {
     data: cards,
@@ -23,17 +25,16 @@ export default function PopupCards({
   useEffect(() => {
     if (
       context.openCards &&
-      context.cards &&
       lastOpenCards.current !== context.cards
     ) {
-      const savedId = context.cards;
+      const savedCards = context.cards;
       requestCards({
         cardIds: context.cards,
       }).then(() => {
-        lastOpenCards.current = savedId;
+        lastOpenCards.current = savedCards;
       });
     }
-  }, [context.openCards, context.cards]);
+  }, [context.openCards, track(context.cards)]);
 
   return (
     <Popup
@@ -44,11 +45,11 @@ export default function PopupCards({
           <CenterCol>
             <StatusText>Getting cards...</StatusText>
           </CenterCol> :
-          !cards ?
-            <CenterCol>
-              <StatusText>Fail to get cards!</StatusText>
-            </CenterCol> :
-            <div className="w-full flex-1 flex flex-col justify-center items-center gap-y-6">
+          <div className="w-full flex-1 flex flex-col justify-center items-center gap-y-6">
+            {!cards ?
+              <CenterCol>
+                <StatusText>Fail to get cards!</StatusText>
+              </CenterCol> :
               <CenterCol>
                 <ul className="w-full flex flex-col items-center gap-y-5">
                   {cards.map(card => <li
@@ -59,12 +60,13 @@ export default function PopupCards({
                   )}
                 </ul>
               </CenterCol>
-              <button
-                className="uppercase text-sm rounded-lg px-3 py-1 font-medium text-danger-500 transition-bg-danger"
-                onClick={onClickClear}>
-                delete all
-              </button>
-            </div>
+            }
+            <button
+              className="uppercase text-sm rounded-lg px-3 py-1 font-medium text-danger-500 transition-bg-danger"
+              onClick={onClickClear}>
+              delete all
+            </button>
+          </div>
         }
       </div>
     </Popup>

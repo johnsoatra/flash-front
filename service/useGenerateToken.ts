@@ -1,10 +1,10 @@
 import Api from "@/constants/api";
 import useRequest, { RequestInitial } from "../hooks/useRequest";
-import { CheckTokenResponse } from "@/dto/checkToken";
+import { GenerateTokenResponse } from "@/dto/generateToken";
 
-export default function useCheckToken() {
-  const data = useRequest<CheckTokenResponse>({
-    endpoint: Api.CheckToken,
+export default function useGenerateToken() {
+  const data = useRequest<GenerateTokenResponse>({
+    endpoint: Api.GenerateToken,
     options: () => ({}),
   });
   return {

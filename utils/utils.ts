@@ -1,10 +1,5 @@
 import Env from "@/constants/env";
 
-export function monthStamp() {
-  const date = new Date();
-  return date.getUTCFullYear() * 12 + date.getUTCMonth();
-}
-
 export function isDevelopment() {
   return Env.NodeEnv === 'development';
 }

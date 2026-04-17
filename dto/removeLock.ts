@@ -3,5 +3,5 @@ export type RemoveLockResponse = {
 }
 
 export type RemoveLockRequest = {
-  slot: number;
+  lockId: string;
 }

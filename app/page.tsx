@@ -38,7 +38,7 @@ export default function Home() {
   function openQr() {
     context.openProcessing = true;
     requestAddLock()
-      .then(res => {
+      .then(() => {
         setOpenScanQR(true);
       })
       .finally(() => {
@@ -52,7 +52,7 @@ export default function Home() {
     setOpenScanQR(false);
   }
   function handleCompletedOrder(res: SaveOrderResponse) {
-    context.cards?.push(res.card.id);
+    context.cards.push(res.card.id);
     context.openCards = true;
     setOpenScanQR(false);
     setBoughtNew(true);
@@ -70,7 +70,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (context.tokenExisted) {
+    if (context.token) {
       requestAllowedOrder()
         .then(res => {
           if (res.allowed) {
@@ -78,11 +78,11 @@ export default function Home() {
           }
         });
     }
-  }, [context.tokenExisted]);
+  }, [context.token]);
   useEffect(() => {
     if (!openScanQR && lock) {
       requestRemoveLock({
-        slot: lock!.slot,
+        lockId: lock.lock_id,
       }, {
         alertSomethingWrong: false,
       });
@@ -112,13 +112,14 @@ export default function Home() {
           </div>
         )}
       </div>
-      <PopupScanQR
+      {lock && <PopupScanQR
         open={openScanQR}
+        lock={lock}
         onClose={handleCloseScanQR}
         onClickMask={handleCloseScanQR}
         onCompletedOrder={handleCompletedOrder}
         onExpired={handleExpiredQr}
-      />
+      />}
       <PopupQrExpired
         open={openQrExpired}
         onClose={handleCloseQrExpired}

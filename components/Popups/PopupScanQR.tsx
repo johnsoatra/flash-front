@@ -8,12 +8,15 @@ import CenterCol from "../Center/CenterCol";
 import useGenerateQr from "@/service/useGenerateQr";
 import useSaveOrder from "@/service/useSaveOrder";
 import { SaveOrderResponse } from "@/dto/saveOrder";
+import { AddLockResponse } from "@/dto/addLock";
 
 export default function PopupScanQR({
+  lock,
   onCompletedOrder,
   onExpired,
   ...props
 }: Omit<PopupProps, 'children'> & {
+  lock: AddLockResponse,
   onCompletedOrder: (res: SaveOrderResponse) => void;
   onExpired: () => void;
 }) {
@@ -48,9 +51,11 @@ export default function PopupScanQR({
 
   useEffect(() => {
     if (props.open) {
-      requestGenerateQr();
+      requestGenerateQr({
+        lockId: lock.lock_id,
+      });
     }
-  }, [props.open]);
+  }, [props.open, lock]);
 
   return (
     <Popup {...props}>

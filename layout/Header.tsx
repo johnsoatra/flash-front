@@ -27,7 +27,7 @@ export default function Header() {
       className="w-full min-h-18 flex items-center justify-center bg-back border-b px-4">
       <div className="w-full max-w-114 relative flex items-center justify-center gap-x-1.5">
         <h2 className="font-bold text-[2rem] tracking-[25%]">FLASH</h2>
-        {context.cards && context.cards.length > 0 && <button
+        {context.cards.length > 0 && <button
           className="absolute top-1/2 right-0 -translate-y-1/2 rounded-full transition-bg-white"
           onClick={handleClickBadge}>
           <Product />

@@ -1,15 +1,17 @@
 'use client';
 import { createContext, useContext } from "react";
 import useCurrent, { useTrack } from "react-use-current";
+import { getCards } from "@/utils/localStorage/cards";
+import { getToken } from "@/utils/localStorage/token";
 import { GetConfigResponse } from "@/dto/getConfig";
 
 export type MainContextType = {
   value: {
-    tokenExisted?: true;
-    cards?: string[];
-    openCards?: boolean;
+    token: string | null;
+    cards: string[];
+    openCards: boolean;
+    openProcessing: boolean;
     config?: GetConfigResponse;
-    openProcessing?: boolean;
   }
 };
 
@@ -20,7 +22,12 @@ export function MainContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { value: context } = useCurrent<MainContextType['value']>({});
+  const { value: context } = useCurrent<MainContextType['value']>({
+    token: getToken(),
+    cards: getCards(),
+    openCards: false,
+    openProcessing: false,
+  });
   const track = useTrack();
 
   return (

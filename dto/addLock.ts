@@ -1,3 +1,3 @@
 export type AddLockResponse = {
-  slot: number;
+  lock_id: string;
 }

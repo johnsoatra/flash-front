@@ -1,19 +1,18 @@
 import Api from "@/constants/api";
-import useRequest, { RequestInitial } from "../hooks/useRequest";
-import { GenerateQrData, GenerateQrResponse } from "@/dto/generateQr";
+import useRequest from "../hooks/useRequest";
+import { GenerateQrData, GenerateQrRequest, GenerateQrResponse } from "@/dto/generateQr";
 
 export default function useGenerateQr() {
-  const data = useRequest<GenerateQrResponse, null, GenerateQrData>({
+  return useRequest<GenerateQrResponse, GenerateQrRequest, GenerateQrData>({
     endpoint: Api.GenerateQr,
-    options: () => ({}),
+    options: ({ lockId }) => ({
+      method: 'post',
+      body: {
+        lock_id: lockId,
+      },
+    }),
     pick(response) {
       return response.data;
     },
   });
-  return {
-    ...data,
-    request(options?: RequestInitial) {
-      return data.request(null, options);
-    }
-  };
 }

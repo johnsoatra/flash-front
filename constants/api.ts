@@ -1,6 +1,6 @@
 const Api = {
-  CheckToken: 'check-token',
-  ResetToken: 'reset-token',
+  GenerateToken: 'generate-token',
+  GetConfig: 'get-config',
   IsAllowed: 'is-allowed',
   AvailableCardAmount: 'available-card-amount',
   AddLock: 'add-lock',
@@ -9,7 +9,6 @@ const Api = {
   CheckTransaction: 'check-transaction',
   SaveOrder: 'save-order',
   GetCards: 'get-cards',
-  GetConfig: 'get-config',
 } as const;
 
 export default Api;

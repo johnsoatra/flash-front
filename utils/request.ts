@@ -14,7 +14,6 @@ export default async function request(endpoint: string, requestInit?: RequestIni
   const url = fillParams(appendProtocol(endpoint), params ?? {});
   return fetch(url, {
     ...restOptions,
-    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       ...restOptions?.headers,

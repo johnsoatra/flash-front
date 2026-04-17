@@ -15,3 +15,7 @@ export type GenerateQrResponse = {
   data: GenerateQrData;
   expired_at: number;
 }
+
+export type GenerateQrRequest = {
+  lockId: string;
+}

@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
+import { useMainContext } from '@/context/mainContext';
 import { ErrorResponse } from '@/types';
 import Api from '@/constants/api';
 import Message from '@/constants/message';
-import { useMainContext } from '@/context/mainContext';
 import requestApi from '@/utils/request';
 
 type RecordAny = Record<string, any>;
@@ -54,21 +54,28 @@ export default function useRequest<Res, Req = unknown, Data = never>(
         ...props.options?.(payload),
       };
       setPending(true);
-      requestApi(props.endpoint, mergesOptions)
+      requestApi(props.endpoint, {
+        ...mergesOptions,
+        headers: {
+          ...mergesOptions.headers,
+          'Authorization': context.token ?? '',
+        }
+      })
         .then((response: any) => {
           setResponse(response);
           setError(undefined);
           res(response);
         })
         .catch((error: any) => {
-          if (error.status === 401 && props.endpoint !== Api.ResetToken) {
-            if (context.cards?.length) {
+          if (error.status === 401) {
+            if (context.cards.length) {
               alert(Message.Clear_Your_Card);
               context.openCards = true;
               rej(error);
             } else {
-              requestApi(Api.ResetToken)
-                .then(() => {
+              requestApi(Api.GenerateToken)
+                .then((res) => {
+                  context.token = res.token;
                   res(request(payload, options));
                 })
                 .catch(error => {

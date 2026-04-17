@@ -2,10 +2,10 @@
 import React, { useEffect } from "react";
 import { useTrack } from "react-use-current";
 import { useMainContext } from "@/context/mainContext";
-import useCheckToken from "@/service/useCheckToken";
-import useResetToken from "@/service/useResetToken";
 import useGetConfig from "@/service/useGetConfig";
-import { getCards, setCards } from "@/utils/localStorage/cards";
+import useGenerateToken from "@/service/useGenerateToken";
+import { setCards } from "@/utils/localStorage/cards";
+import { setToken } from "@/utils/localStorage/token";
 
 export default function Container({
   children,
@@ -14,37 +14,27 @@ export default function Container({
 }) {
   const context = useMainContext();
   const track = useTrack();
-  const { request: requestCheckToken } = useCheckToken();
-  const { request: requestResetToken } = useResetToken();
+  const { request: requestGenerateToken } = useGenerateToken();
   const { request: requestConfig } = useGetConfig();
 
   useEffect(() => {
-    context.cards = getCards();
-  }, []);
+    setToken(context.token);
+  }, [context.token]);
   useEffect(() => {
-    requestCheckToken()
-      .then(res => {
-        if (!res.existed) {
-          requestResetToken()
-            ?.then(() => {
-              context.tokenExisted = true;
-            });
-        } else {
-          context.tokenExisted = true;
-        }
-      })
-  }, []);
-  useEffect(() => {
-    if (context.cards !== undefined) {
-      setCards(context.cards);
-    }
+    setCards(context.cards);
   }, [track(context.cards)]);
-
   useEffect(() => {
-    if (context.tokenExisted) {
-      requestConfig().then(config => context.config = config);
+    if (!context.token) {
+      requestGenerateToken()
+        .then(res => {
+          context.token = res.token;
+        });
     }
-  }, [context.tokenExisted]);
+    requestConfig()
+      .then(config => {
+        context.config = config
+      });
+  }, []);
 
   return (
     <>{children}</>
