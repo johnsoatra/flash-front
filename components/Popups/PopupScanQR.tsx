@@ -52,7 +52,7 @@ export default function PopupScanQR({
   useEffect(() => {
     if (props.open) {
       requestGenerateQr({
-        lockId: lock.lock_id,
+        lockId: lock.id,
       });
     }
   }, [props.open, lock]);

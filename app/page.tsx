@@ -82,7 +82,7 @@ export default function Home() {
   useEffect(() => {
     if (!openScanQR && lock) {
       requestRemoveLock({
-        lockId: lock.lock_id,
+        lockId: lock.id,
       }, {
         alertSomethingWrong: false,
       });
@@ -91,7 +91,7 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-16 mt-12 mb-5">
+      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-12.5 mt-12 mb-5">
         <h1 className="text-5xl text-center">
           Flash provides you one<br />
           <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>

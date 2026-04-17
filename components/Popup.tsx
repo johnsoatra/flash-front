@@ -17,12 +17,12 @@ export default function Popup({
   onClickMask
 }: PopupProps) {
   return (open &&
-    <div className={'fixed inset-0 flex justify-center items-start z-50 p-4'}>
+    <div className={'fixed inset-0 flex justify-center items-center z-50 p-4'}>
       <div
         className="absolute inset-0 bg-black/30 z-[-1]"
         onClick={onClickMask} />
       <div
-        className="w-full max-w-131 max-h-[calc(100%-7rem)] relative mt-28 bg-back rounded-xl border p-4 overflow-auto"
+        className="w-full max-w-131 max-h-[calc(100%-7rem)] relative bg-back rounded-xl border p-4 overflow-auto"
         onClick={evt => evt.preventDefault()}>
         {!noCloseButton && <button
           className="absolute top-4 right-4 flex justify-center items-center cursor-pointer font-bold rounded-full text-five p-1 hover:text-front hover:bg-light-gray active:bg-dark-gray"

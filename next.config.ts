@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   devIndicators: false,
-  // reactStrictMode: false,
+
+  reactStrictMode: false,
 };
 
 export default nextConfig;
