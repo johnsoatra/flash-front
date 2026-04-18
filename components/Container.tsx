@@ -6,6 +6,7 @@ import useGetConfig from "@/service/useGetConfig";
 import useGenerateToken from "@/service/useGenerateToken";
 import { setCards } from "@/utils/localStorage/cards";
 import { setToken } from "@/utils/localStorage/token";
+import { setChecked } from "@/utils/localStorage/checked";
 
 export default function Container({
   children,
@@ -23,6 +24,9 @@ export default function Container({
   useEffect(() => {
     setCards(context.cards);
   }, [track(context.cards)]);
+  useEffect(() => {
+    setChecked(context.checkedCard);
+  }, [context.checkedCard]);
   useEffect(() => {
     if (!context.token) {
       requestGenerateToken()

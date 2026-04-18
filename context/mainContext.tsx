@@ -3,12 +3,14 @@ import { createContext, useContext } from "react";
 import useCurrent, { useTrack } from "react-use-current";
 import { getCards } from "@/utils/localStorage/cards";
 import { getToken } from "@/utils/localStorage/token";
+import { getChecked } from "@/utils/localStorage/checked";
 import { GetConfigResponse } from "@/dto/getConfig";
 
 export type MainContextType = {
   value: {
     token: string | null;
     cards: string[];
+    checkedCard: boolean | null;
     openCards: boolean;
     openProcessing: boolean;
     config?: GetConfigResponse;
@@ -25,6 +27,7 @@ export function MainContextProvider({
   const { value: context } = useCurrent<MainContextType['value']>({
     token: getToken(),
     cards: getCards(),
+    checkedCard: getChecked(),
     openCards: false,
     openProcessing: false,
   });

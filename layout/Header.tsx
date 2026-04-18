@@ -2,6 +2,7 @@
 import Message from "@/constants/message";
 import { useMainContext } from "@/context/mainContext";
 import PopupCards from "@/components/Popups/PopupCards";
+import Badge from "@/components/Badge";
 import Product from "@/assets/svg/Product";
 
 export default function Header() {
@@ -9,6 +10,7 @@ export default function Header() {
 
   function handleClickBadge() {
     context.openCards = true;
+    context.checkedCard = true;
   }
   function handleCloseScanQR() {
     context.openCards = false;
@@ -31,6 +33,7 @@ export default function Header() {
           className="absolute top-1/2 right-0 -translate-y-1/2 rounded-full transition-bg-white"
           onClick={handleClickBadge}>
           <Product />
+          {!context.checkedCard && <Badge />}
         </button>}
       </div>
     </header>

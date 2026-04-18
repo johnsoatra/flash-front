@@ -6,6 +6,7 @@ export const Status = {
 export const Label = {
   Cards: 'cards',
   Token: 'token',
+  Checked: 'checked',
 } as const;
 
 export const ProviderCode = {
