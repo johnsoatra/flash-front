@@ -88,11 +88,11 @@ export default function useRequest<Res, Req = unknown, Data = never>(
             res(request(payload, options));
             return;
           }
-          if (error.name !== 'AbortError') {
+          if (error.message !== Message.AbortError) {
             setResponse(undefined);
-          }
-          if (alertSomethingWrong === undefined || alertSomethingWrong) {
-            toast.error(Message.Something_Wrong, { position: 'top-right' });
+            if (alertSomethingWrong === undefined || alertSomethingWrong) {
+              toast.error(Message.Something_Wrong);
+            }
           }
           setError(error);
           rej(error);

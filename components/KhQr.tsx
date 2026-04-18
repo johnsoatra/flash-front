@@ -66,10 +66,10 @@ export default function KhQr({
           checkTransaction()
             .then(success => {
               if (!success) {
-                if (!expired.current && !unmounted.value) {
-                  job();
-                } else {
+                if (expired.current) {
                   checkTransaction().finally(onExpired);
+                } else if (!unmounted.value) {
+                  job();
                 }
               }
             })

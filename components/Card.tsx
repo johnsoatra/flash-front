@@ -21,7 +21,7 @@ export default function Card({
     navigator.clipboard
       .writeText(fullCardCode(card))
       .then(() => {
-        toast.success(Message.Copied_To_Clipboard, { position: 'top-right' });
+        toast.success(Message.Copied_To_Clipboard);
       })
       .catch((error) => {
         console.log(error);
