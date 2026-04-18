@@ -7,6 +7,9 @@ import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
 import useCountdown from "@/hooks/useCountdown";
 import useQrCode from "@/hooks/useQrCode";
+import useTimeout from "@/hooks/useTimeout";
+import useSignal from "@/hooks/useSignal";
+import useUnmounted from "@/hooks/useUnmounted";
 import { GenerateQrResponse } from "@/dto/generateQr";
 import { commaSeparator, secondToTime } from "@/utils/utils";
 import useCheckTransaction from "@/service/useCheckTransaction";
@@ -21,14 +24,20 @@ export default function KhQr({
   onSuccess: (transactionId: string) => void;
 }) {
   const context = useMainContext();
-  const timeout = useRef<NodeJS.Timeout>(undefined);
+  const timeout = useTimeout(['checkTransaction']);
+  const signal = useSignal();
+  const unmounted = useUnmounted();
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
   const { request: requestCheckTransaction } = useCheckTransaction();
   const expired = useRef<boolean>(undefined);
 
   async function checkTransaction() {
-    return requestCheckTransaction({ qrId: qrCode.id })
+    return requestCheckTransaction({
+      qrId: qrCode.id,
+    }, {
+      signal: signal.value,
+    })
       .then(res => {
         if (res.verified) {
           onSuccess(res.transaction_id);
@@ -53,11 +62,11 @@ export default function KhQr({
   useEffect(() => {
     if (qrCodeUrl) {
       function job() {
-        timeout.current = setTimeout(() => {
+        timeout.checkTransaction = setTimeout(() => {
           checkTransaction()
             .then(success => {
               if (!success) {
-                if (!expired.current) {
+                if (!expired.current && !unmounted.value) {
                   job();
                 } else {
                   checkTransaction().finally(onExpired);
@@ -70,7 +79,10 @@ export default function KhQr({
         }, Config.DelayCheckTransaction);
       }
       job();
-      return () => clearTimeout(timeout.current);
+      return () => {
+        clearTimeout(timeout.checkTransaction);
+        signal.renew();
+      }
     }
   }, [qrCodeUrl]);
 
