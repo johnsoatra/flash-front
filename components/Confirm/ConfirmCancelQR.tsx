@@ -16,7 +16,7 @@ export default function ConfirmCancelQR({
       description={
         <span>
           Are you sure to close this qr code scanning?<br />
-          Since you haven’t <span className="font-medium">verify transaction</span> yet.
+          Since you haven’t <span className="font-medium">verified transaction</span> yet.
         </span>
       }
       danger={true}

@@ -28,15 +28,17 @@ export default function Confirm({
         <div className="flex-1 mt-6 mb-11.5 text-start">{description}</div>
         <div className="w-full flex items-center justify-end gap-x-2">
           <button
+            title="Proceed this action"
             className={`
-              border rounded-xl py-1 px-8 text-back
-              ${danger ? 'border-danger-600 bg-danger-600' : 'border-primary-600 bg-primary-600'}
+              rounded-xl py-1 px-8 text-back
+              ${danger ? 'tran-bg-danger' : 'bg-primary-600'}
             `}
             onClick={onClickYes}>
             Yes
           </button>
           <button
-            className="border rounded-xl py-1 px-8 transition-bg-white"
+            title="Cancel this action"
+            className="border rounded-xl py-1 px-8 tran-bg-white"
             onClick={onClickNo}>
             No
           </button>

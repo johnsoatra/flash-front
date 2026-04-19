@@ -135,8 +135,9 @@ export default function PopupScanQR({
               </div>
               <span className="text-five text-center text-sm mt-4">Scan with any banking app that supports KHQR</span>
               <button
+                title="Let us know your transaction"
                 disabled={!!checkingTransaction}
-                className="rounded-xl py-1.5 px-8 mt-6 bg-front text-back"
+                className="rounded-xl py-1.5 px-8 mt-6 text-back tran-bg-front"
                 onClick={handleClickVerify}>
                 Verify Transaction
               </button>

@@ -66,9 +66,10 @@ export default function PopupCards({
               </CenterCol>
             }
             <button
-              className="text-sm rounded-lg px-3 py-1 font-medium text-danger-500 transition-bg-danger"
+              title="Delete your card(s)"
+              className="text-sm rounded-lg px-3 py-1 text-danger-500 tran-bg-white-danger"
               onClick={onClickClear}>
-              delete all
+              delete {cards && cards.length > 1 && 'all'}
             </button>
           </div>
         }

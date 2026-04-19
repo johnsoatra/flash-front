@@ -4,6 +4,7 @@
   --color-frame: #f5f5f5;
   --color-back: #fff;
   --color-front: #070707;
+  --color-front-gray: #383838;
   --color-border: #ccc;
   --color-three: #333;
   --color-good: #009843;
@@ -59,6 +60,7 @@
   --color-frame: var(--color-frame);
   --color-back: var(--color-back);
   --color-front: var(--color-front);
+  --color-front-gray: var(--color-front-gray);
   --color-border: var(--color-border);
   --color-danger: var(--color-danger);
   --color-three: var(--color-three);
@@ -122,6 +124,7 @@
   button {
     cursor: pointer;
     text-transform: uppercase;
+    font-weight: 500;
   }
 }
 
@@ -141,10 +144,15 @@
   line-height: 160%;
 }
 
-@utility transition-bg-white {
+@utility tran-bg-white {
   @apply bg-white hover:bg-light-gray active:bg-dark-gray;
 }
-
-@utility transition-bg-danger {
+@utility tran-bg-front {
+  @apply bg-front hover:bg-front-gray active:bg-five;
+}
+@utility tran-bg-white-danger {
   @apply bg-white hover:bg-danger-50 active:bg-danger-100;
+}
+@utility tran-bg-danger {
+  @apply bg-danger-600 hover:bg-danger-500 active:bg-danger-400;
 }
