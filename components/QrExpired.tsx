@@ -13,7 +13,7 @@ export default function QrExpired({
       </div>
       <button
         title="Generate new qr code"
-        className="border rounded-xl py-1 px-8 tran-bg-white"
+        className="border rounded-xl py-1 px-8 tran-bg-back"
         onClick={onClickTryAgain}>
         Try Again
       </button>

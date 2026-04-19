@@ -38,7 +38,7 @@ export default function Confirm({
           </button>
           <button
             title="Cancel this action"
-            className="border rounded-xl py-1 px-8 tran-bg-white"
+            className="border rounded-xl py-1 px-8 tran-bg-back"
             onClick={onClickNo}>
             No
           </button>

@@ -31,7 +31,7 @@ export default function Header() {
         <h2 className="font-bold text-[2rem] tracking-[25%]">FLASH</h2>
         {context.cards.length > 0 && <button
           title="Show your card(s)"
-          className="absolute top-1/2 right-0 -translate-y-1/2 rounded-full tran-bg-white"
+          className="absolute top-1/2 right-0 -translate-y-1/2 rounded-full tran-bg-back"
           onClick={handleClickBadge}>
           <Product />
           {!context.checkedCard && <Badge />}

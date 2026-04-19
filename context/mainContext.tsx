@@ -42,6 +42,6 @@ export function MainContextProvider({
 
 export function useMainContext() {
   const context = useContext(MainContext)?.value;
-  if (!context) throw new Error("useUser must be inside MainProvider");
+  if (!context) throw new Error("useMainContext must be inside MainProvider");
   return context;
 }

@@ -6,8 +6,8 @@ export default function Blocker({
   className?: string,
 }) {
   return (
-    <div className={"absolute inset-0 flex justify-center items-center bg-white/30 " + (className ?? '')}>
-      <HalfCircle className="animate-spin"/>
+    <div className={"absolute inset-0 flex justify-center items-center bg-back/30 " + (className ?? '')}>
+      <HalfCircle className="text-five animate-spin"/>
     </div>
   );
 }

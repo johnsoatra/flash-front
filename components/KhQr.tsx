@@ -34,7 +34,7 @@ export default function KhQr({
   }, [countdown]);
 
   return (
-    <div className="w-full max-w-80 font-nunito bg-white rounded-2xl border border-border/50 overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">
+    <div className="w-full max-w-80 font-nunito bg-back rounded-2xl border border-border/50 overflow-hidden shadow-[0px_0px_16px_0px] shadow-front/10">
       <div className="w-full">
         <div className="w-full h-13.75 bg-bk-red flex justify-center items-center">
           <KhQrLogo />

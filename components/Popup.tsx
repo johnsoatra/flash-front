@@ -21,7 +21,7 @@ export default function Popup({
   return (open &&
     <div className={'fixed inset-0 flex justify-center items-center z-50 p-4'}>
       <div
-        className="absolute inset-0 bg-black/30 z-[-1] backdrop-blur-[2px]"
+        className="absolute inset-0 bg-front/30 z-[-1] backdrop-blur-[2px]"
         onClick={onClickMask} />
       <div
         className={"w-full max-w-131 max-h-[calc(100%-7rem)] relative bg-back rounded-xl border p-4 overflow-auto " + (className ?? '')}
