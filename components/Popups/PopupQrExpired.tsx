@@ -5,7 +5,7 @@ import CenterCol from "../Center/CenterCol";
 export default function PopupQrExpired({
   handleClickTryAgain,
   ...props
-}: Omit<PopupProps, 'children'> & {
+}: Omit<PopupProps, 'children' | 'noCloseButton'> & {
   handleClickTryAgain: () => void;
 }) {
   return (

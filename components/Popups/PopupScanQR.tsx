@@ -1,25 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Message from "@/constants/message";
-import Popup, { PopupProps } from "../Popup";
+import Popup from "../Popup";
 import KhQr from "../KhQr";
 import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
+import ConfirmCancelQR from "../Confirm/ConfirmCancelQR";
 import useGenerateQr from "@/service/useGenerateQr";
 import useSaveOrder from "@/service/useSaveOrder";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 import { AddLockResponse } from "@/dto/addLock";
 
 export default function PopupScanQR({
+  open,
   lock,
   onCompletedOrder,
   onExpired,
-  ...props
-}: Omit<PopupProps, 'children'> & {
-  lock: AddLockResponse,
+  onClose,
+}: {
+  open: boolean;
+  lock: AddLockResponse;
   onCompletedOrder: (res: SaveOrderResponse) => void;
   onExpired: () => void;
+  onClose: () => void;
 }) {
+  const [openConfirmCancel, setOpenConfirmCancel] = useState(false);
   const {
     response: qrCode,
     pending: pendingGenerateQr,
@@ -47,17 +52,30 @@ export default function PopupScanQR({
       error: Message.Something_Wrong,
     });
   }
+  function handleClickClose() {
+    setOpenConfirmCancel(true);
+  }
+  function handleConfirmNo() {
+    setOpenConfirmCancel(false);
+  }
+  function handleConfirmYes() {
+    setOpenConfirmCancel(false);
+    onClose();
+  }
 
   useEffect(() => {
-    if (props.open) {
+    if (open) {
       requestGenerateQr({
         lockId: lock.id,
       });
     }
-  }, [props.open, lock]);
+  }, [open, lock]);
 
   return (
-    <Popup {...props}>
+    <Popup
+      open={open}
+      onClickMask={() => { }}
+      onClose={handleClickClose}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6.5 pt-7 pb-7.5">
         {pendingGenerateQr !== false ?
           <CenterCol><StatusText>Generating QR Code...</StatusText></CenterCol> :
@@ -76,6 +94,11 @@ export default function PopupScanQR({
             </>
         }
       </div>
+      <ConfirmCancelQR
+        open={openConfirmCancel}
+        onClickNo={handleConfirmNo}
+        onClickYes={handleConfirmYes}
+      />
     </Popup>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useTrack } from "react-use-current";
 import { useMainContext } from "@/context/mainContext";
-import Popup, { PopupProps } from "../Popup";
+import Popup from "../Popup";
 import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
 import Card from "../Card";
@@ -9,9 +9,12 @@ import useGetCards from "@/service/useGetCards";
 
 export default function PopupCards({
   onClickClear,
-  ...props
-}: Omit<PopupProps, 'children' | 'open'> & {
+  onClose,
+  onClickMask,
+}: {
   onClickClear: () => void;
+  onClose: () => void;
+  onClickMask: () => void;
 }) {
   const context = useMainContext();
   const track = useTrack();
@@ -39,7 +42,8 @@ export default function PopupCards({
   return (
     <Popup
       open={context.openCards ?? false}
-      {...props}>
+      onClose={onClose}
+      onClickMask={onClickMask}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6 pt-6 text-center">
         {gettingCards !== false ?
           <CenterCol>
@@ -62,7 +66,7 @@ export default function PopupCards({
               </CenterCol>
             }
             <button
-              className="uppercase text-sm rounded-lg px-3 py-1 font-medium text-danger-500 transition-bg-danger"
+              className="text-sm rounded-lg px-3 py-1 font-medium text-danger-500 transition-bg-danger"
               onClick={onClickClear}>
               delete all
             </button>
