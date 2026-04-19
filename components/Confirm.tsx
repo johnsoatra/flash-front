@@ -20,22 +20,23 @@ export default function Confirm({
     <Popup
       open={open}
       noCloseButton={true}
+      className="max-w-116!"
       onClose={() => { }}
       onClickMask={() => { }}>
-      <div className="w-full min-h-67 flex flex-col items-start gap-y-1.5 pt-0.5 pb-1 px-4">
-        <h3 className="font-bold text-[1.625rem]">{title}</h3>
-        <div className="flex-1 mt-10 text-start">{description}</div>
+      <div className="w-full flex flex-col items-start pt-0.5 pb-1 px-4">
+        <h3 className="font-medium text-2xl">{title}</h3>
+        <div className="flex-1 mt-6 mb-11.5 text-start">{description}</div>
         <div className="w-full flex items-center justify-end gap-x-2">
           <button
             className={`
               border rounded-xl py-1 px-8 text-back
-              ${danger ? 'border-danger-500 bg-danger-500' : 'border-primary-600 bg-primary-600'}
+              ${danger ? 'border-danger-600 bg-danger-600' : 'border-primary-600 bg-primary-600'}
             `}
             onClick={onClickYes}>
             Yes
           </button>
           <button
-            className="border rounded-xl py-1 px-8"
+            className="border rounded-xl py-1 px-8 transition-bg-white"
             onClick={onClickNo}>
             No
           </button>

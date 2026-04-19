@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import Message from "@/constants/message";
 import Popup from "../Popup";
@@ -47,7 +47,7 @@ export default function PopupScanQR({
 
   async function checkTransaction() {
     return requestCheckTransaction({
-      qrId: qrCode!.id,
+      qrId: qrCode?.id ?? '',
     })
       .then(res => {
         if (res.verified) {
@@ -98,7 +98,15 @@ export default function PopupScanQR({
     setOpenConfirmCancel(false);
     onClose();
   }
+  function resetStates() {
+    setOpenConfirmCancel(false);
+  }
 
+  useLayoutEffect(() => {
+    if (open) {
+      resetStates();
+    }
+  }, [open]);
   useEffect(() => {
     if (open) {
       requestGenerateQr({
@@ -128,7 +136,7 @@ export default function PopupScanQR({
               <span className="text-five text-center text-sm mt-4">Scan with any banking app that supports KHQR</span>
               <button
                 disabled={!!checkingTransaction}
-                className="rounded-xl py-1 px-8 mt-6 bg-front text-back"
+                className="rounded-xl py-1.5 px-8 mt-6 bg-front text-back"
                 onClick={handleClickVerify}>
                 Verify Transaction
               </button>

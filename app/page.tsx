@@ -4,6 +4,7 @@ import { useMainContext } from "@/context/mainContext";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
 import PopupQrExpired from "@/components/Popups/PopupQrExpired";
+import Blocker from "@/components/Blocker";
 import useAvailableCardAmount from "@/service/useAvailableCardAmount";
 import useIsAllowed from "@/service/useIsAllowed";
 import useAddLock from "@/service/useAddLock";
@@ -15,8 +16,15 @@ export default function Home() {
   const [openScanQR, setOpenScanQR] = useState(false);
   const [openQrExpired, setOpenQrExpired] = useState(false);
   const [boughtNew, setBoughtNew] = useState(false);
-  const { data: lock, request: requestAddLock } = useAddLock();
-  const { request: requestRemoveLock } = useRemoveLock();
+  const {
+    data: lock,
+    pending: locking,
+    request: requestAddLock,
+  } = useAddLock();
+  const {
+    pending: removingLock,
+    request: requestRemoveLock,
+  } = useRemoveLock();
   const {
     data: availableAmount,
     request: requestAvailableAmount,
@@ -36,13 +44,9 @@ export default function Home() {
   }, [availableAmount]);
 
   function openQr() {
-    context.openProcessing = true;
     requestAddLock()
       .then(() => {
         setOpenScanQR(true);
-      })
-      .finally(() => {
-        context.openProcessing = false;
       });
   }
   function handleClickGetTopUp() {
@@ -54,6 +58,7 @@ export default function Home() {
   function handleCompletedOrder(res: SaveOrderResponse) {
     context.cards.push(res.card.id);
     context.openCards = true;
+    context.checkedCard = false;
     setOpenScanQR(false);
     setBoughtNew(true);
   }
@@ -125,6 +130,7 @@ export default function Home() {
         onClickMask={handleCloseQrExpired}
         handleClickTryAgain={handleClickTryAgain}
       />
+      {!!locking || !!removingLock && <Blocker />}
     </div>
   )
 }
