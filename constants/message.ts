@@ -6,6 +6,7 @@ const Message = {
   Click_Ok_Clear: 'Once you click "OK" your all cards\'s information will be deleted.\nClick "Cancel" if you want to keep them.',
   Copied_To_Clipboard: 'Code was copied successfully!',
   AbortError: 'AbortError',
+  No_Transaction_Found: 'No transaction found for this qr code',
 } as const;
 
 export default Message;

@@ -29,7 +29,7 @@ export default function Confirm({
           <button
             className={`
               border rounded-xl py-1 px-8 text-back
-              ${danger ? 'border-danger-500 bg-danger-500' : 'border-primary-500 bg-primary-500'}
+              ${danger ? 'border-danger-500 bg-danger-500' : 'border-primary-600 bg-primary-600'}
             `}
             onClick={onClickYes}>
             Yes
