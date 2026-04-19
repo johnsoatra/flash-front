@@ -115,10 +115,9 @@ export default function Home() {
       {lock && <PopupScanQR
         open={openScanQR}
         lock={lock}
-        onClose={handleCloseScanQR}
-        onClickMask={handleCloseScanQR}
-        onCompletedOrder={handleCompletedOrder}
         onExpired={handleExpiredQr}
+        onClose={handleCloseScanQR}
+        onCompletedOrder={handleCompletedOrder}
       />}
       <PopupQrExpired
         open={openQrExpired}

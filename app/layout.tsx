@@ -45,7 +45,7 @@ export default function RootLayout({
             <Footer />
             <PopupProcessing />
           </Container>
-          <Toaster position="top-right" richColors={true} />
+          <Toaster position="top-right" />
         </MainContextProvider>
       </body>
     </html>

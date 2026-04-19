@@ -115,15 +115,25 @@
     background: var(--color-frame);
     color: var(--color-front);
   }
-
   * {
     border-color: var(--color-border);
     @apply transition-all;
   }
-
   button {
     cursor: pointer;
     text-transform: uppercase;
+  }
+}
+
+@layer base {
+  [data-sonner-toast][data-type="success"] svg {
+    @apply text-success-500;
+  }
+  [data-sonner-toast][data-type="warning"] svg {
+    @apply text-warning-500;
+  }
+  [data-sonner-toast][data-type="error"] svg {
+    @apply text-danger-500;
   }
 }
 
