@@ -10,7 +10,7 @@ export default function ButtonGetTopUp({
       title="Show qr code to scan"
       className="border border-good rounded-xl py-1 px-8 tran-bg-back text-xl text-good text-center"
       onClick={onClick}>
-      Get 1$ Top Up
+      Get 1$ Card
     </button>
   );
 }

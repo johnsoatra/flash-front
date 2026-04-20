@@ -55,7 +55,7 @@ export default function KhQr({
       </div>
       <Dash />
       <div className="w-full relative px-11.5 py-9.25 flex justify-center items-center">
-        <div className="w-50 h-50 bg-border">
+        <div className="w-50 h-50 relative bg-border">
           {qrCodeUrl && <>
             <Image
               alt="qr-code"

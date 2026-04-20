@@ -89,7 +89,11 @@ export default function PopupScanQR({
     checkTransaction();
   }
   function handleClickClose() {
-    setOpenConfirmCancel(true);
+    if (qrCode) {
+      setOpenConfirmCancel(true);
+    } else {
+      onClose();
+    }
   }
   function handleConfirmNo() {
     setOpenConfirmCancel(false);
@@ -122,9 +126,9 @@ export default function PopupScanQR({
       onClose={handleClickClose}>
       <div className="w-full min-h-67 flex flex-col items-center pt-7 pb-7.5">
         {pendingGenerateQr !== false ?
-          <CenterCol><StatusText>Generating QR Code...</StatusText></CenterCol> :
+          <CenterCol><StatusText>Generating qr code...</StatusText></CenterCol> :
           !qrCode ?
-            <CenterCol><StatusText>Fail to generate QR Code!</StatusText></CenterCol> :
+            <CenterCol><StatusText>Fail to generate qr code!</StatusText></CenterCol> :
             <div className="w-full flex flex-col items-center">
               <span className="font-medium text-xl text-center">KHQR Payment</span>
               <div className="w-full flex justify-center mt-6.5">
@@ -135,10 +139,10 @@ export default function PopupScanQR({
               </div>
               <span className="text-five text-center text-sm mt-4">
                 Scan with any banking app that supports KHQR,<br />
-                then click <span className="font-medium uppercase">Verify Transaction</span> to verify your payment.
+                then click <span className=" font-bold uppercase">Verify Transaction</span> to verify your payment.
               </span>
               <button
-                title="Let us know your transaction"
+                title="Let us know your payment"
                 disabled={!!checkingTransaction}
                 className="rounded-xl py-1.5 px-8 mt-6 text-back tran-bg-front"
                 onClick={handleClickVerify}>

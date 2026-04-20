@@ -16,7 +16,7 @@ export default function ConfirmClearCards({
       title='Delete Cards!'
       description={
         <span>
-          Once you click "YES" your all cards\'s information will be deleted.
+          Once you click "YES" your all cards's information will be deleted.
         </span>
       }
       onClickNo={onClickNo}
