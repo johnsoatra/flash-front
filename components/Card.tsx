@@ -21,7 +21,7 @@ export default function Card({
     navigator.clipboard
       .writeText(fullCardCode(card))
       .then(() => {
-        toast.message(Message.Copied_To_Clipboard);
+        toast.success(Message.Copied_To_Clipboard);
       })
       .catch((error) => {
         console.log(error);

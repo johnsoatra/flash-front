@@ -60,8 +60,7 @@ export default function KhQr({
             <Image
               alt="qr-code"
               src={qrCodeUrl}
-              width={200}
-              height={200}
+              fill={true}
             />
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <CurrencyRiel />

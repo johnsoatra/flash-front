@@ -133,7 +133,10 @@ export default function PopupScanQR({
                   onExpired={handleQrCodeExpired}
                 />
               </div>
-              <span className="text-five text-center text-sm mt-4">Scan with any banking app that supports KHQR</span>
+              <span className="text-five text-center text-sm mt-4">
+                Scan with any banking app that supports KHQR,<br />
+                then click <span className="font-medium uppercase">Verify Transaction</span> to verify your payment.
+              </span>
               <button
                 title="Let us know your transaction"
                 disabled={!!checkingTransaction}

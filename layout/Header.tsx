@@ -1,12 +1,14 @@
 'use client';
-import Message from "@/constants/message";
+import { useState } from "react";
 import { useMainContext } from "@/context/mainContext";
+import Product from "@/assets/svg/Product";
 import PopupCards from "@/components/Popups/PopupCards";
 import Badge from "@/components/Badge";
-import Product from "@/assets/svg/Product";
+import ConfirmClearCards from "@/components/Confirm/ConfirmClearCards";
 
 export default function Header() {
   const context = useMainContext();
+  const [openClearCards, setOpenClearCards] = useState(false);
 
   function handleClickBadge() {
     context.openCards = true;
@@ -16,12 +18,16 @@ export default function Header() {
     context.openCards = false;
   }
   function handleClickClear() {
-    const okay = confirm(Message.Click_Ok_Clear);
-    if (okay) {
-      context.cards = [];
-      context.openCards = false;
-      window.location.reload();
-    }
+    setOpenClearCards(true);
+  }
+  function handleClickNo() {
+    setOpenClearCards(false);
+  }
+  function handleClickYes() {
+    context.cards = [];
+    context.openCards = false;
+    setOpenClearCards(false);
+    window.location.reload();
   }
 
   return (<>
@@ -42,6 +48,11 @@ export default function Header() {
       onClose={handleCloseScanQR}
       onClickMask={handleCloseScanQR}
       onClickClear={handleClickClear}
+    />
+    <ConfirmClearCards
+      open={openClearCards}
+      onClickNo={handleClickNo}
+      onClickYes={handleClickYes}
     />
   </>);
 }

@@ -1,7 +1,7 @@
 import { Card } from "./getCards";
 
 export type SaveOrderResponse = {
-  card: Card,
+  card: Card;
 }
 
 export type SaveOrderRequest = {
