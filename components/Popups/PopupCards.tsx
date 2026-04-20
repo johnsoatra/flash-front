@@ -1,5 +1,4 @@
-import { useEffect, useRef } from "react";
-import { useTrack } from "react-use-current";
+import { useEffect } from "react";
 import { useMainContext } from "@/context/mainContext";
 import Popup from "../Popup";
 import StatusText from "../StatusText";
@@ -17,8 +16,6 @@ export default function PopupCards({
   onClickMask: () => void;
 }) {
   const context = useMainContext();
-  const track = useTrack();
-  const lastOpenCards = useRef<string[]>(undefined);
   const {
     data: cards,
     pending: gettingCards,
@@ -26,18 +23,12 @@ export default function PopupCards({
   } = useGetCards();
 
   useEffect(() => {
-    if (
-      context.openCards &&
-      lastOpenCards.current !== context.cards
-    ) {
-      const savedCards = context.cards;
+    if (context.openCards) {
       requestCards({
         cardIds: context.cards,
-      }).then(() => {
-        lastOpenCards.current = savedCards;
       });
     }
-  }, [context.openCards, track(context.cards)]);
+  }, [context.openCards]);
 
   return (
     <Popup

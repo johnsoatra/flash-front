@@ -6,6 +6,7 @@ const Message = {
   Copied_To_Clipboard: 'Card\'s code was copied successfully!',
   AbortError: 'AbortError',
   No_Transaction_Found: 'No transaction found for this qr code',
+  Cannot_Get_Config: 'Could get config',
 } as const;
 
 export default Message;

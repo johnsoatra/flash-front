@@ -3,10 +3,13 @@ import type { Metadata } from "next";
 import { Poppins, Nunito_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { MainContextProvider } from "@/context/mainContext";
+import Api from "@/constants/api";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import Container from "@/components/Container";
 import PopupProcessing from "@/components/Popups/PopupProcessing";
+import request from "@/utils/request";
+import { GetConfigResponse } from "@/dto/getConfig";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,17 +29,25 @@ export const metadata: Metadata = {
   description: "Selling software products",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let config: GetConfigResponse | undefined;
+
+  try {
+    config = await request(Api.GetConfig);
+  } catch (error) {
+    console.log(error);
+  }
+
   return (
     <html
       lang="en"
       className={`${poppins.variable} ${nunito.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-poppins">
-        <MainContextProvider>
+        <MainContextProvider config={config}>
           <Container>
             <Header />
             <div className="w-full max-w-253 flex-1 self-center px-4">

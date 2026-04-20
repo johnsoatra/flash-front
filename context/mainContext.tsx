@@ -8,23 +8,26 @@ import { GetConfigResponse } from "@/dto/getConfig";
 
 export type MainContextType = {
   value: {
+    readonly config: GetConfigResponse | undefined;
     token: string | null;
     cards: string[];
     checkedCard: boolean | null;
     openCards: boolean;
     openProcessing: boolean;
-    config?: GetConfigResponse;
   }
 };
 
 const MainContext = createContext<MainContextType | null>(null);
 
 export function MainContextProvider({
+  config,
   children,
 }: {
+  config: GetConfigResponse | undefined,
   children: React.ReactNode;
 }) {
   const { value: context } = useCurrent<MainContextType['value']>({
+    config,
     token: getToken(),
     cards: getCards(),
     checkedCard: getChecked(),
