@@ -51,7 +51,6 @@ export default function Footer() {
           {section.title === 'Notation' ? section.content.trim() :
             <a
               href={`mailto:${section.content}`}
-              target="_blank"
               className="hover:underline">
               {section.content}
             </a>
