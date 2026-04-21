@@ -7,9 +7,10 @@ export default function ButtonGetTopUp({
 }) {
   return (
     <button
-      className="border border-good rounded-xl py-1 px-8 bg-back"
+      title="Show qr code to scan"
+      className="border border-good rounded-xl py-1 px-8 tran-bg-back text-xl text-good text-center"
       onClick={onClick}>
-      <span className="font-medium text-xl uppercase text-good text-center">Get 1$ Top Up</span>
+      Get 1$ Card
     </button>
   );
 }

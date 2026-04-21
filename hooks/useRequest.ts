@@ -1,14 +1,16 @@
 import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
+import { useMainContext } from '@/context/mainContext';
 import { ErrorResponse } from '@/types';
 import Api from '@/constants/api';
 import Message from '@/constants/message';
-import { useMainContext } from '@/context/mainContext';
 import requestApi from '@/utils/request';
 
 type RecordAny = Record<string, any>;
 export type RequestInitial = Omit<RequestInit, 'body'> & {
   body?: RecordAny;
   params?: RecordAny;
+  alertSomethingWrong?: boolean;
 }
 export type UseRequestProps<Res, Req, Data> = {
   endpoint: string,
@@ -47,25 +49,33 @@ export default function useRequest<Res, Req = unknown, Data = never>(
   }
   function request(payload: Req, options?: RequestInitial): Promise<Res> {
     return new Promise((res, rej) => {
-      setPending(true);
-      requestApi(props.endpoint, {
+      const { alertSomethingWrong, ...mergesOptions } = {
         ...(options ?? {}),
         ...props.options?.(payload),
-      } as any)
+      };
+      setPending(true);
+      requestApi(props.endpoint, {
+        ...mergesOptions,
+        headers: {
+          ...mergesOptions.headers,
+          'Authorization': context.token ?? '',
+        }
+      })
         .then((response: any) => {
           setResponse(response);
           setError(undefined);
           res(response);
         })
         .catch((error: any) => {
-          if (error.statusCode === 401 && props.endpoint !== Api.ResetToken) {
-            if (context.lastCardId) {
+          if (error.status === 401) {
+            if (context.cards.length) {
               alert(Message.Clear_Your_Card);
-              context.openLastCard = true;
+              context.openCards = true;
               rej(error);
             } else {
-              requestApi(Api.ResetToken)
-                .then(() => {
+              requestApi(Api.GenerateToken)
+                .then((res) => {
+                  context.token = res.token;
                   res(request(payload, options));
                 })
                 .catch(error => {
@@ -78,8 +88,11 @@ export default function useRequest<Res, Req = unknown, Data = never>(
             res(request(payload, options));
             return;
           }
-          if (error.name !== 'AbortError') {
+          if (error.message !== Message.AbortError) {
             setResponse(undefined);
+            if (alertSomethingWrong === undefined || alertSomethingWrong) {
+              toast.error(Message.Something_Wrong);
+            }
           }
           setError(error);
           rej(error);

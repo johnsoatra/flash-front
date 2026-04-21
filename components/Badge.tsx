@@ -1,11 +1,5 @@
-export default function Badge({
-  amount,
-}: {
-  amount: number;
-}) {
+export default function Badge() {
   return (
-    <span className="w-4 h-4 absolute -top-3 -right-1 flex justify-center items-center bg-danger rounded-full">
-      <span className="text-xs font-medium text-white">{amount}</span>
-    </span>
+    <div className="w-2.25 h-2.25 absolute -top-1.75 -right-0.75 bg-danger-500 rounded-full" />
   );
 }

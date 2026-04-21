@@ -1,9 +1,10 @@
 'use client'
 import { useEffect, useMemo, useState } from "react";
-import { Amount } from "@/constants";
+import { useMainContext } from "@/context/mainContext";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
-import { useMainContext } from "@/context/mainContext";
+import PopupQrExpired from "@/components/Popups/PopupQrExpired";
+import Blocker from "@/components/Blocker";
 import useAvailableCardAmount from "@/service/useAvailableCardAmount";
 import useIsAllowed from "@/service/useIsAllowed";
 import useAddLock from "@/service/useAddLock";
@@ -11,10 +12,19 @@ import useRemoveLock from "@/service/useRemoveLock";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 
 export default function Home() {
-  const [openScanQR, setOpenScanQR] = useState(false);
   const context = useMainContext();
-  const { data: lock, request: requestAddLock } = useAddLock();
-  const { request: requestRemoveLock } = useRemoveLock();
+  const [openScanQR, setOpenScanQR] = useState(false);
+  const [openQrExpired, setOpenQrExpired] = useState(false);
+  const [boughtNew, setBoughtNew] = useState(false);
+  const {
+    data: lock,
+    pending: locking,
+    request: requestAddLock,
+  } = useAddLock();
+  const {
+    pending: removingLock,
+    request: requestRemoveLock,
+  } = useRemoveLock();
   const {
     data: availableAmount,
     request: requestAvailableAmount,
@@ -31,59 +41,96 @@ export default function Home() {
       }
       return 'card';
     }
-  }, [availableAmount])
+  }, [availableAmount]);
 
-  function handleClickGetTopUp() {
+  function openQr() {
     requestAddLock()
-      .then(res => {
+      .then(() => {
         setOpenScanQR(true);
       });
   }
+  function handleClickGetTopUp() {
+    openQr();
+  }
   function handleCloseScanQR() {
-    requestRemoveLock({ slot: lock!.slot })
-      .then(res => {
-        setOpenScanQR(false);
-      });
+    setOpenScanQR(false);
   }
   function handleCompletedOrder(res: SaveOrderResponse) {
+    context.cards.push(res.card.id);
+    context.openCards = true;
+    context.checkedCard = false;
     setOpenScanQR(false);
-    context.lastCardId = res.card.id;
-    context.openLastCard = true;
+    setBoughtNew(true);
+  }
+  function handleExpiredQr() {
+    setOpenScanQR(false);
+    setOpenQrExpired(true);
+  }
+  function handleCloseQrExpired() {
+    setOpenQrExpired(false);
+  }
+  function handleClickTryAgain() {
+    setOpenQrExpired(false);
+    openQr();
   }
 
   useEffect(() => {
-    if (context.tokenExisted) {
-      requestAvailableAmount().then(res => {
-        if (res.amount > 0) {
-          requestAllowedOrder();
-        }
+    if (context.token) {
+      requestAllowedOrder()
+        .then(res => {
+          if (res.allowed) {
+            requestAvailableAmount();
+          }
+        });
+    }
+  }, [context.token]);
+  useEffect(() => {
+    if (!openScanQR && lock) {
+      requestRemoveLock({
+        lockId: lock.id,
+      }, {
+        alertSomethingWrong: false,
       });
     }
-  }, [context.tokenExisted]);
+  }, [openScanQR, lock]);
 
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-16 mt-12">
+      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-12.5 mt-12 mb-5">
         <h1 className="text-5xl text-center">
           Flash provides you one<br />
-          <b>Smart 1$ top up card</b> every month for only <b>{Amount.PriceKhmer}៛</b>
+          <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
         </h1>
-        {context.tokenExisted && <>
-          {allowedOrder?.allowed && <ButtonGetTopUp onClick={handleClickGetTopUp} />}
-          {availableAmount?.amount !== undefined &&
-            availableAmount.amount === 0 ?
+        {allowedOrder && ((allowedOrder.allowed && !boughtNew) ?
+          (availableAmount && (availableAmount.amount === 0 ?
             <p>There are no card left.</p> :
-            <p className="text-center text-4xl">
-              There are only <span className="text-[4rem]">{availableAmount?.amount}</span> {cardWord} left.
-            </p>}
-        </>}
+            <>
+              <ButtonGetTopUp onClick={handleClickGetTopUp} />
+              <p className="text-center text-4xl">
+                There are only <span className="text-[4rem]">{availableAmount.amount}</span> {cardWord} left.
+              </p>
+            </>
+          )) :
+          <div className="text-center">
+            <p>You've already made an order for this month.</p>
+            <p>Please check again on next month.</p>
+          </div>
+        )}
       </div>
-      <PopupScanQR
+      {lock && <PopupScanQR
         open={openScanQR}
+        lock={lock}
+        onExpired={handleExpiredQr}
         onClose={handleCloseScanQR}
-        onClickMask={handleCloseScanQR}
         onCompletedOrder={handleCompletedOrder}
+      />}
+      <PopupQrExpired
+        open={openQrExpired}
+        onClose={handleCloseQrExpired}
+        onClickMask={handleCloseQrExpired}
+        handleClickTryAgain={handleClickTryAgain}
       />
+      {!!locking || !!removingLock && <Blocker />}
     </div>
   )
 }

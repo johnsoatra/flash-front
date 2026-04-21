@@ -5,9 +5,11 @@ import { CheckTransactionRequest, CheckTransactionResponse } from "@/dto/checkTr
 export default function useCheckTransaction() {
   return useRequest<CheckTransactionResponse, CheckTransactionRequest>({
     endpoint: Api.CheckTransaction,
-    options: (payload) => ({
+    options: ({ qrId }) => ({
       method: 'post',
-      body: payload,
+      body: {
+        qr_id: qrId,
+      },
     }),
   });
 }

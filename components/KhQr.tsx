@@ -1,66 +1,40 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
-import { Amount } from "@/constants";
+import { useMainContext } from "@/context/mainContext";
 import KhQrLogo from "@/assets/svg/KhQrLogo";
 import CurrencyRiel from "@/assets/svg/CurrencyRiel";
 import Dash from "@/assets/svg/Dash";
 import useCountdown from "@/hooks/useCountdown";
 import useQrCode from "@/hooks/useQrCode";
-import { GenerateQrData } from "@/dto/generateQr";
+import { GenerateQrResponse } from "@/dto/generateQr";
 import { commaSeparator, secondToTime } from "@/utils/utils";
-import useCheckTransaction from "@/service/useCheckTransaction";
-import Config from "@/constants/config";
 
 export default function KhQr({
   qrCode,
   onExpired,
-  onSuccess,
 }: {
-  qrCode: GenerateQrData;
+  qrCode: GenerateQrResponse;
   onExpired: () => void;
-  onSuccess: (transactionId: string) => void;
 }) {
-  const interval = useRef<NodeJS.Timeout>(undefined);
+  const context = useMainContext();
   const { value: countdown, start: startCountdown } = useCountdown();
   const { value: qrCodeUrl, generate: generateQrCode } = useQrCode();
-  const { request: requestCheckTransaction } = useCheckTransaction();
-  const expired = useRef<boolean>(undefined);
 
   useEffect(() => {
-    expired.current = undefined;
-    startCountdown(Config.QrExpiredIn / 1000);
-    generateQrCode(qrCode.data.qr);
+    generateQrCode(qrCode.data.data.qr)
+      .then(() => {
+        const duration = Math.floor((qrCode.expired_at - Date.now()) / 1000);
+        startCountdown(duration);
+      });
   }, [qrCode]);
   useEffect(() => {
-    if (countdown !== undefined) {
-      expired.current = countdown === 0;
+    if (countdown === 0) {
+      onExpired();
     }
   }, [countdown]);
-  useEffect(() => {
-    if (qrCodeUrl) {
-      interval.current = setInterval(() => {
-        requestCheckTransaction({ md5: qrCode.data.md5, })
-          .then(res => {
-            const transactionId = res.transaction_id;
-            if (transactionId) {
-              onSuccess(transactionId);
-              clearInterval(interval.current);
-            } else if (expired.current) {
-              clearInterval(interval.current);
-              onExpired();
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            clearInterval(interval.current);
-          });
-      }, Config.DelayCheckTransaction);
-      return () => clearInterval(interval.current);
-    }
-  }, [qrCodeUrl]);
 
   return (
-    <div className="w-80 aspect-20/29 font-nunito bg-white rounded-2xl overflow-hidden shadow-[0px_0px_16px_0px_rgb(0,0,0,0.1)]">
+    <div className="w-full max-w-80 font-nunito bg-back rounded-2xl border border-border/50 overflow-hidden shadow-[0px_0px_16px_0px] shadow-front/10">
       <div className="w-full">
         <div className="w-full h-13.75 bg-bk-red flex justify-center items-center">
           <KhQrLogo />
@@ -73,7 +47,7 @@ export default function KhQr({
         <span className="text-xs">FLASH</span>
         <div className="w-full flex items-center justify-between gap-x-1">
           <div className="w-full flex items-center gap-x-1.25">
-            <span className="font-bold text-xl">{commaSeparator(Amount.PriceKhmer)}</span>
+            <span className="font-bold text-xl">{commaSeparator(context.config?.card_price ?? 0)}</span>
             <span className="text-xs">KHR</span>
           </div>
           {<span className="font-semibold text-bk-red text-sm">{secondToTime(countdown ?? 0)}</span>}
@@ -81,13 +55,12 @@ export default function KhQr({
       </div>
       <Dash />
       <div className="w-full relative px-11.5 py-9.25 flex justify-center items-center">
-        <div className="w-57 h-57 bg-border">
+        <div className="w-50 h-50 relative bg-border">
           {qrCodeUrl && <>
             <Image
               alt="qr-code"
               src={qrCodeUrl}
-              width={228}
-              height={228}
+              fill={true}
             />
             <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <CurrencyRiel />

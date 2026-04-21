@@ -5,10 +5,10 @@ import { RemoveLockRequest, RemoveLockResponse } from "@/dto/removeLock";
 export default function useRemoveLock() {
   return useRequest<RemoveLockResponse, RemoveLockRequest>({
     endpoint: Api.RemoveLock,
-    options: ({ slot }) => ({
+    options: ({ lockId }) => ({
       method: 'post',
       body: {
-        slot,
+        lock_id: lockId,
       }
     }),
   });

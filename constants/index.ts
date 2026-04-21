@@ -4,14 +4,10 @@ export const Status = {
 } as const;
 
 export const Label = {
-  CardId: 'card-id',
+  Cards: 'cards',
   Token: 'token',
+  Checked: 'checked',
 } as const;
-
-export const Amount = {
-  AllowAmount: 4,
-  PriceKhmer: 1500,
-}
 
 export const ProviderCode = {
   'smart': '*1203*',

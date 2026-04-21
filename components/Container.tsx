@@ -1,9 +1,13 @@
 'use client';
 import React, { useEffect } from "react";
+import { useTrack } from "react-use-current";
+import { toast } from "sonner";
 import { useMainContext } from "@/context/mainContext";
-import useCheckToken from "@/service/useCheckToken";
-import useResetToken from "@/service/useResetToken";
-import { getCardId, removeCardId, setCardId } from "@/utils/localStorage/card-id";
+import Message from "@/constants/message";
+import useGenerateToken from "@/service/useGenerateToken";
+import { setCards } from "@/utils/localStorage/cards";
+import { setToken } from "@/utils/localStorage/token";
+import { setChecked } from "@/utils/localStorage/checked";
 
 export default function Container({
   children,
@@ -11,33 +15,32 @@ export default function Container({
   children: React.ReactNode;
 }) {
   const context = useMainContext();
-  const { request: requestCheckToken } = useCheckToken();
-  const { request: requestResetToken } = useResetToken();
+  const track = useTrack();
+  const { request: requestGenerateToken } = useGenerateToken();
 
   useEffect(() => {
-    context.lastCardId = getCardId();
-  }, []);
+    setToken(context.token);
+  }, [context.token]);
   useEffect(() => {
-    if (context.lastCardId !== undefined) {
-      if (context.lastCardId !== null) {
-        setCardId(context.lastCardId);
-      } else {
-        removeCardId();
-      }
+    setCards(context.cards);
+  }, [track(context.cards)]);
+  useEffect(() => {
+    setChecked(context.checkedCard);
+  }, [context.checkedCard]);
+  useEffect(() => {
+    if (context.config === undefined) {
+      requestAnimationFrame(() => {
+        toast.error(Message.Cannot_Get_Config);
+      });
     }
-  }, [context.lastCardId]);
+  }, [context.config]);
   useEffect(() => {
-    requestCheckToken()
-      .then(res => {
-        if (!res.existed) {
-          requestResetToken()
-            ?.then(() => {
-              context.tokenExisted = true;
-            });
-        } else {
-          context.tokenExisted = true;
-        }
-      })
+    if (!context.token) {
+      requestGenerateToken()
+        .then(res => {
+          context.token = res.token;
+        });
+    }
   }, []);
 
   return (

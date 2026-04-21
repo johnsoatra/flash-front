@@ -11,5 +11,11 @@ export type GenerateQrData = {
 }
 
 export type GenerateQrResponse = {
-  data: GenerateQrData,
+  id: string;
+  data: GenerateQrData;
+  expired_at: number;
+}
+
+export type GenerateQrRequest = {
+  lockId: string;
 }
