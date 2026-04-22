@@ -21,10 +21,13 @@ const MetaData: Metadata = {
   },
   authors: [
     {
-      name: "John Soatra",
-      url: "https://www.soatra.com",
+      name: "Flash",
+      url: "https://flash.soatra.com",
     },
   ],
+  creator: "Soatra",
+  publisher: "Soatra",
+  applicationName: "Flash",
   alternates: {
     canonical: "/",
   },
@@ -46,7 +49,7 @@ const MetaData: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Flash",
-    description: "Flash discounted top-up platform",
+    description: "Flash is a web app that allows users to purchase top-up cards at a discounted price.",
     images: ["/twitter-image.jpg"],
   },
 };
