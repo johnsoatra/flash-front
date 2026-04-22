@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { useMainContext } from '@/context/mainContext';
-import { ErrorResponse } from '@/types';
 import Api from '@/constants/api';
 import Message from '@/constants/message';
 import requestApi from '@/utils/request';
@@ -23,7 +22,7 @@ export type UseRequest<Res, Req, Data> = {
   pending: boolean | undefined;
   response: Res | undefined;
   data: ([Data] extends [never] ? Res : Data) | undefined,
-  error: ErrorResponse | undefined;
+  error: unknown;
   request: (payload: Req, options?: RequestInitial) => Promise<Res>;
   reset: () => void;
 }
@@ -32,7 +31,7 @@ export default function useRequest<Res, Req = unknown, Data = never>(
 ): UseRequest<Res, Req, Data> {
   const context = useMainContext();
   const [response, setResponse] = useState<Res>();
-  const [error, setError] = useState<ErrorResponse>();
+  const [error, setError] = useState<unknown>();
   const [pending, setPending] = useState<boolean>();
 
   const data = useMemo(() => {

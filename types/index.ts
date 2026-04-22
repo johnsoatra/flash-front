@@ -1,5 +1,6 @@
 export type ErrorResponse = {
-  error: boolean;
-  status: number;
+  error?: string;
+  statusCode: number;
   message: string;
+  url: string;
 }
