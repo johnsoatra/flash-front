@@ -28,7 +28,7 @@ const nunito = Nunito_Sans({
 
 export const metadata: Metadata = {
   title: "Flash",
-  description: "Selling software products",
+  description: "Flash is a web app that allows users to purchase top-up cards at a discounted price as part of a promotional rollout.",
 };
 
 export default async function RootLayout({
