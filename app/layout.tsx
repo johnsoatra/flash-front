@@ -40,7 +40,9 @@ export default async function RootLayout({
   let config: GetConfigResponse | undefined;
 
   try {
-    config = await request(Api.GetConfig);
+    config = await request(Api.GetConfig, {
+      cache: 'no-store',
+    });
   } catch (error: any) {
     const _error = await errorJson(error, Api.GetConfig);
     errors.push(_error);
