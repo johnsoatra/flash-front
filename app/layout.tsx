@@ -28,7 +28,7 @@ const nunito = Nunito_Sans({
 
 export const metadata: Metadata = {
   title: "Flash",
-  description: "Selling software products",
+  description: "Flash is a web app that allows users to purchase top-up cards at a discounted price as part of a promotional rollout.",
 };
 
 export default async function RootLayout({
@@ -40,7 +40,9 @@ export default async function RootLayout({
   let config: GetConfigResponse | undefined;
 
   try {
-    config = await request(Api.GetConfig);
+    config = await request(Api.GetConfig, {
+      cache: 'no-store',
+    });
   } catch (error: any) {
     const _error = await errorJson(error, Api.GetConfig);
     errors.push(_error);
