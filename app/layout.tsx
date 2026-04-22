@@ -1,8 +1,8 @@
 import "./globals.css";
-import type { Metadata } from "next";
 import { Poppins, Nunito_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { MainContextProvider } from "@/context/mainContext";
+import MetaData from "@/constants/metadata";
 import Api from "@/constants/api";
 import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
@@ -26,10 +26,7 @@ const nunito = Nunito_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Flash",
-  description: "Flash is a web app that allows users to purchase top-up cards at a discounted price as part of a promotional rollout.",
-};
+export const metadata = MetaData;
 
 export default async function RootLayout({
   children,
