@@ -8,8 +8,10 @@ import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import Container from "@/components/Container";
 import PopupProcessing from "@/components/Popups/PopupProcessing";
-import request from "@/utils/request";
+import ErrorLogger from "@/components/ErrorLogger";
 import { GetConfigResponse } from "@/dto/getConfig";
+import { ErrorResponse } from "@/types";
+import request, { errorJson } from "@/utils/request";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -34,12 +36,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const errors: ErrorResponse[] = [];
   let config: GetConfigResponse | undefined;
 
   try {
     config = await request(Api.GetConfig);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    const _error = await errorJson(error, Api.GetConfig);
+    errors.push(_error);
   }
 
   return (
@@ -56,6 +60,7 @@ export default async function RootLayout({
             <Footer />
             <PopupProcessing />
           </Container>
+          <ErrorLogger errors={errors} />
           <Toaster position="top-right" />
         </MainContextProvider>
       </body>

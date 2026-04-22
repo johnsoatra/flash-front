@@ -1,6 +1,7 @@
 import Env from "@/constants/env";
 import { fillParams } from "./url";
 import { RequestInitial } from "@/hooks/useRequest";
+import { ErrorResponse } from "@/types";
 
 function appendProtocol(endpoint: string) {
   if (/^https?:\/\//.test(endpoint)) {
@@ -26,4 +27,21 @@ export default async function request(endpoint: string, requestInit?: RequestIni
       }
       return res.json();
     });
+}
+
+export async function errorJson(response: Response, endpoint: string): Promise<ErrorResponse> {
+  try {
+    const data = await response.json();
+    return {
+      ...data,
+      url: response.url,
+    };
+  } catch (error: any) {
+    return {
+      error: String(error),
+      statusCode: 403,
+      message: 'fetch from server',
+      url: appendProtocol(endpoint),
+    };
+  }
 }
