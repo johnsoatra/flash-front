@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Env from "./env";
+import { isProd } from "@/utils/utils";
 
 const MetaData: Metadata = {
   metadataBase: new URL(Env.SiteUrl),
@@ -15,9 +16,21 @@ const MetaData: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  robots: {
+  robots: isProd() ? {
     index: true,
     follow: true,
+  } : {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      "max-snippet": 0,
+      "max-image-preview": "none",
+      "max-video-preview": 0,
+    },
   },
   authors: [
     {

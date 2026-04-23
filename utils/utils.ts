@@ -13,3 +13,7 @@ export function secondToTime(seconds: number) {
 export function commaSeparator(amount: number) {
   return amount.toLocaleString('en-US');
 }
+
+export function isProd() {
+  return Env.SiteUrl === 'https://flash.soatra.com';
+}
