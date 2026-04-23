@@ -53,7 +53,7 @@ export default async function RootLayout({
         <MainContextProvider config={config}>
           <Container>
             <Header />
-            <div className="w-full max-w-253 flex-1 self-center px-4">
+            <div className="w-full max-w-253 flex-1 self-center flex flex-col items-start justify-start px-4">
               {children}
             </div>
             <Footer />
