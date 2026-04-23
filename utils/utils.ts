@@ -1,4 +1,4 @@
-import Env from "@/constants/env";
+import Env from "../constants/env";
 
 export function isDevelopment() {
   return Env.NodeEnv === 'development';
