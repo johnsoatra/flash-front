@@ -2,13 +2,13 @@ const km = {
   "page not found": "មិនអាចស្វែងរកទំព័រឃើញ",
   "flash hero title": (cardPrice: number) => <>
     <span className="font-poppins">Flash</span> ផ្ដល់ជូនលោកអ្នកនូវ<br />
-    <b>កាតបញ្ចូលទូរស័ព្ទស្មាត<span className="font-poppins">$1</span></b>ជារៀងរាល់ខែក្នុងតម្លៃត្រឹមតែ<b>៛{cardPrice}</b>ប៉ុណ្ណោះ
+    <b>កាតបញ្ចូលទូរស័ព្ទស្មាត <span className="font-poppins">$1</span> </b>ជារៀងរាល់ខែក្នុងតម្លៃត្រឹមតែ <b className="font-poppins">៛{cardPrice}</b> ប៉ុណ្ណោះ
   </>,
   "no card left": "មិនមានកាតនៅសល់ទេ។",
   "card only left": (amount: number) => {
     return (
       <>
-        ចំនួនកាតនៅសល់តែ<span className="text-[4rem]">{amount}</span>សន្លឹកទៀតប៉ុណ្ណោះ។
+        ចំនួនកាតនៅសល់តែ <span className="text-[4rem] font-poppins">{amount}</span> សន្លឹកទៀតប៉ុណ្ណោះ។
       </>
     );
   },
@@ -19,7 +19,7 @@ const km = {
   "orders successful": "អបអរសាទរ! ការជាវរបស់អ្នកទទួលបានជោគជ័យ!",
   "ordering processing": "កំពុងដំណើរការការជាវ...",
   "copy successful": "លេខកូដរបស់កាតត្រូវបានចម្លង!",
-  "no transaction": "មិនទាន់មានការទូទាត់សម្រាប់ qr code នេះនៅឡើយ",
+  "no transaction": "មិនទាន់មានការទូទាត់សម្រាប់ QR code នេះនៅឡើយ",
   "cannot get config": "មិនអាចទាញយក config បាន",
   "footer notation description": (allowAmount: number) => `
     គេហទំព័រនេះមិនមែនជាអ្នកចែកចាយកាតស្មាតជាផ្លូវការនោះទេ។ គេហទំព័រនេះគ្រាន់តែធ្វើការលក់ជាបណ្ដោះអាសន្ន ដោយផ្ដល់ជូនលោកអ្នកនូវ កាតបញ្ចូលទូរស័ព្ទជាមួយនឹងការបញ្ចុះតម្លៃមួយ។
@@ -30,7 +30,7 @@ const km = {
   "email": "អ៊ីម៉ែល: flashcontact10@gmail.com",
   "sure close scan": () => <>
     តើអ្នកពិតជាចង់បិទការស្កែននេះមែនទេ?<br />
-    អ្នកមិនទាន់បានចុច<span className="font-medium">ផ្ទៀងផ្ទាត់ការទូទាត់</span>នៅឡើយ។
+    អ្នកមិនទាន់បាន <span className="font-medium">ផ្ទៀងផ្ទាត់ការទូទាត់</span> នៅឡើយ។
   </>,
   "cancel scanning": "បិទការស្កែន!",
   "delete card": "លុបកាត!",
@@ -41,16 +41,16 @@ const km = {
   'delete all': (cardLength: number) => `លុបចោល${cardLength > 1 ? 'ទាំងអស់' : ''}`,
   "delete your cards": "លុបចោលកាតរបស់អ្នក",
   "qr code expired": "ផុតកំណត់ QR Code!",
-  "generating qr code": "កំពុងទាញយក qr code...",
-  "fail generate qr code": "មិនអាចទាញយក qr code បាន!",
+  "generating qr code": "កំពុងទាញយក QR code...",
+  "fail generate qr code": "មិនអាចទាញយក QR code បាន!",
   "click try again": () => <>
-    ចុច<span className="font-medium uppercase">ព្យាយាមម្ដងទៀត</span>ដើម្បីទាញយក qr code ថ្មី
+    ចុច <span className="font-medium uppercase">ព្យាយាមម្ដងទៀត</span> ដើម្បីទាញយក <span className="font-poppins">QR code</span> ថ្មី
   </>,
   "try again": "ព្យាយាមម្ដងទៀត",
   "khqr payment": "ការបង់ប្រាក់តាម KHQR",
   "click verify transaction": () => <>
-    ស្កែនជាមួយកម្មវិធីធនាគារដែលគាំទ្រ KHQR<br />
-    បន្ទាប់មកសូមចុច<span className=" font-bold uppercase">ផ្ទៀងផ្ទាត់ការទូទាត់</span>ដើម្បីផ្ទៀងផ្ទាត់ការបង់ប្រាក់របស់អ្នក។
+    ស្កែនជាមួយកម្មវិធីធនាគារដែលគាំទ្រ <span className="font-poppins">KHQR</span><br />
+    បន្ទាប់មកសូមចុច <span className=" font-bold uppercase">ផ្ទៀងផ្ទាត់ការទូទាត់</span> ដើម្បីផ្ទៀងផ្ទាត់ការបង់ប្រាក់របស់អ្នក។
   </>,
   'verify transaction': 'ផ្ទៀងផ្ទាត់ការទូទាត់',
   'buy card': 'ទិញកាតមួយ',
@@ -61,9 +61,9 @@ const km = {
   "proceed action": "ធ្វើប្រតិបត្តិការ",
   "cancel action": "បោះបង់ប្រតិបត្តិការ",
   "close popup": "បិទ popup",
-  "generate new qr": "បង្កើត qr code ថ្មី",
+  "generate new qr": "បង្កើត QR code ថ្មី",
   "show cards": "បង្ហាញកាតរបស់អ្នក",
-  "show qr": "បើក qr code",
+  "show qr": "បើក QR code",
 };
 
 export default km;
