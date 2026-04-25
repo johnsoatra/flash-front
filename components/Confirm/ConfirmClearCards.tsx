@@ -1,3 +1,4 @@
+import useTranslate from "@/hooks/useTranslate";
 import Confirm from "../Confirm";
 
 export default function ConfirmClearCards({
@@ -9,14 +10,15 @@ export default function ConfirmClearCards({
   onClickNo: () => void;
   onClickYes: () => void;
 }) {
+  const t = useTranslate();
   return (
     <Confirm
       open={open}
       danger={true}
-      title='Delete Cards!'
+      title={t('delete card')}
       description={
         <span>
-          Once you click "YES" your all cards's information will be deleted.
+          {t('click yes delete')}
         </span>
       }
       onClickNo={onClickNo}

@@ -12,6 +12,7 @@ import useSaveOrder from "@/service/useSaveOrder";
 import useCheckTransaction from "@/service/useCheckTransaction";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 import { AddLockResponse } from "@/dto/addLock";
+import useTranslate from "@/hooks/useTranslate";
 
 export default function PopupScanQR({
   open,
@@ -26,6 +27,7 @@ export default function PopupScanQR({
   onExpired: () => void;
   onClose: () => void;
 }) {
+  const t = useTranslate();
   const [openConfirmCancel, setOpenConfirmCancel] = useState(false);
   const {
     response: qrCode,
@@ -54,7 +56,7 @@ export default function PopupScanQR({
           saveOrder(res.transaction_id);
           return true;
         }
-        toast.error(Message.No_Transaction_Found);
+        toast.error(t(Message.No_Transaction_Found));
         return false;
       });
   }
@@ -68,9 +70,9 @@ export default function PopupScanQR({
         onCompletedOrder(res);
       });
     toast.promise(process, {
-      loading: Message.Ordering_Card,
-      success: Message.Order_Success,
-      error: Message.Something_Wrong,
+      loading: t(Message.Ordering_Card),
+      success: t(Message.Order_Success),
+      error: t(Message.Something_Wrong),
     });
   }
   function handleQrCodeExpired() {
@@ -126,11 +128,11 @@ export default function PopupScanQR({
       onClose={handleClickClose}>
       <div className="w-full min-h-67 flex flex-col items-center pt-7 pb-7.5">
         {pendingGenerateQr !== false ?
-          <CenterCol><StatusText>Generating qr code...</StatusText></CenterCol> :
+          <CenterCol><StatusText>{t('generating qr code')}</StatusText></CenterCol> :
           !qrCode ?
-            <CenterCol><StatusText>Fail to generate qr code!</StatusText></CenterCol> :
+            <CenterCol><StatusText>{t('fail generate qr code')}</StatusText></CenterCol> :
             <div className="w-full flex flex-col items-center">
-              <span className="font-medium text-xl text-center">KHQR Payment</span>
+              <span className="font-medium text-xl text-center">{t('khqr payment')}</span>
               <div className="w-full flex justify-center mt-6.5">
                 <KhQr
                   qrCode={qrCode}
@@ -138,15 +140,14 @@ export default function PopupScanQR({
                 />
               </div>
               <span className="text-five text-center text-sm mt-4">
-                Scan with any banking app that supports KHQR,<br />
-                then click <span className=" font-bold uppercase">Verify Transaction</span> to verify your payment.
+                {t('click verify transaction')()}
               </span>
               <button
-                title="Let us know your payment"
+                title={t('tell your payment')}
                 disabled={!!checkingTransaction}
                 className="rounded-xl py-1.5 px-8 mt-6 text-back tran-bg-front"
                 onClick={handleClickVerify}>
-                Verify Transaction
+                {t('verify transaction')}
               </button>
             </div>
         }

@@ -1,5 +1,6 @@
 import React from "react";
 import Popup from "./Popup";
+import useTranslate from "@/hooks/useTranslate";
 
 export default function Confirm({
   open,
@@ -16,6 +17,7 @@ export default function Confirm({
   onClickYes: () => void;
   onClickNo: () => void;
 }) {
+  const t = useTranslate();
   return (
     <Popup
       open={open}
@@ -28,19 +30,19 @@ export default function Confirm({
         <div className="flex-1 mt-6 mb-11.5 text-start">{description}</div>
         <div className="w-full flex items-center justify-end gap-x-2.5">
           <button
-            title="Proceed this action"
+            title={t('proceed action')}
             className={`
               rounded-xl py-1.5 px-8 text-back
               ${danger ? 'tran-bg-danger' : 'bg-primary-600'}
             `}
             onClick={onClickYes}>
-            Yes
+            {t('yes')}
           </button>
           <button
-            title="Cancel this action"
+            title={t('cancel action')}
             className="border rounded-xl py-1.5 px-8 tran-bg-back"
             onClick={onClickNo}>
-            No
+            {t('no')}
           </button>
         </div>
       </div>

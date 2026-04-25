@@ -1,4 +1,4 @@
-import Message from "@/constants/message";
+import { Label } from "@/constants";
 import { useCallback, useMemo, useRef } from "react";
 
 function useSignal() {
@@ -6,7 +6,7 @@ function useSignal() {
 
   const renew = useCallback(() => {
     controller.current.abort({
-      message: Message.AbortError,
+      message: Label.AbortError,
     });
     controller.current = new AbortController();
   }, []);

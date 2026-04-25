@@ -5,6 +5,7 @@ import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
 import Card from "../Card";
 import useGetCards from "@/service/useGetCards";
+import useTranslate from "@/hooks/useTranslate";
 
 export default function PopupCards({
   onClickClear,
@@ -16,6 +17,7 @@ export default function PopupCards({
   onClickMask: () => void;
 }) {
   const context = useMainContext();
+  const t = useTranslate();
   const {
     data: cards,
     pending: gettingCards,
@@ -37,12 +39,12 @@ export default function PopupCards({
       onClickMask={onClickMask}>
       <div className="w-full min-h-67 flex flex-col items-center gap-y-6 pt-6 text-center">
         {gettingCards !== false ?
-          <CenterCol><StatusText>Getting cards...</StatusText></CenterCol> :
+          <CenterCol><StatusText>{t('getting cards')}</StatusText></CenterCol> :
           <div className="w-full flex-1 flex flex-col justify-center items-center gap-y-6">
             {!cards ?
-              <CenterCol><StatusText>Fail to get cards!</StatusText></CenterCol> :
+              <CenterCol><StatusText>{t('fail get cards')}</StatusText></CenterCol> :
               cards.length === 0 ?
-                <CenterCol><StatusText>No card found!</StatusText></CenterCol> :
+                <CenterCol><StatusText>{t('no card found')}</StatusText></CenterCol> :
                 <CenterCol>
                   <ul className="w-full flex flex-col items-center gap-y-5">
                     {cards.map(card => <li
@@ -54,10 +56,10 @@ export default function PopupCards({
                 </CenterCol>
             }
             <button
-              title="Delete your card(s)"
+              title={t('delete your cards')}
               className="rounded-lg px-3 py-1 text-danger-500 tran-bg-back-danger"
               onClick={onClickClear}>
-              delete {cards && cards.length > 1 && 'all'}
+              {t('delete all')(cards?.length ?? 0)}
             </button>
           </div>
         }

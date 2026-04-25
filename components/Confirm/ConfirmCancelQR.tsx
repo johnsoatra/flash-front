@@ -1,3 +1,4 @@
+import useTranslate from "@/hooks/useTranslate";
 import Confirm from "../Confirm";
 
 export default function ConfirmCancelQR({
@@ -9,14 +10,14 @@ export default function ConfirmCancelQR({
   onClickNo: () => void;
   onClickYes: () => void;
 }) {
+  const t = useTranslate();
   return (
     <Confirm
       open={open}
-      title='Cancel Scanning!'
+      title={t('cancel scanning')}
       description={
         <span>
-          Are you sure to close this qr code scanning?<br />
-          Since you haven’t <span className="font-medium">verified transaction</span> yet.
+          {t('sure close scan')()}
         </span>
       }
       danger={true}

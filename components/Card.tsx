@@ -9,19 +9,21 @@ import { localDate } from "@/utils/date.";
 import { fullCardCode } from "@/utils/card";
 import CenterRow from "./Center/CenterRow";
 import { type Card } from "@/dto/getCards";
+import useTranslate from "@/hooks/useTranslate";
 
 export default function Card({
   card,
 }: {
   card: Card;
 }) {
+  const t = useTranslate();
   const { value: cardQrCode, generate: generateCardQrCode } = useQrCode();
 
   function handleClickCard() {
     navigator.clipboard
       .writeText(fullCardCode(card))
       .then(() => {
-        toast.success(Message.Copied_To_Clipboard);
+        toast.success(t(Message.Copied_To_Clipboard));
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +56,7 @@ export default function Card({
             />}
           </div>
         </div>
-        <span className="absolute bottom-0 right-2 text-[0.5rem] text-five xs:text-[0.625rem]">expired date: {localDate(card.expired_date)}</span>
+        <span className="absolute bottom-0 right-2 text-[0.5rem] text-five xs:text-[0.625rem]">{t('expired date')} {localDate(card.expired_date)}</span>
         <div className="absolute left-0 bottom-0 -translate-x-px">
           <div className="w-6 h-6 border-b-[1.5rem] border-r-[1.5rem] border-b-smart border-r-transparent" />
         </div>
