@@ -21,7 +21,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-poppins",
-  display: "swap",
+  display: "block",
 });
 const nunito = Nunito_Sans({
   subsets: ["latin"],
@@ -33,7 +33,7 @@ const notoSansKhmer = Noto_Sans_Khmer({
   subsets: ["khmer"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-noto-sans-kh",
-  display: "swap",
+  display: "block",
 });
 
 export const metadata = MetaData;
@@ -82,14 +82,14 @@ export default async function RootLayout({
               {children}
             </div>
             <Footer />
+            <ErrorLogger errors={errors} />
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                className: isKhmer(lang) ? 'font-noto-sans-kh' : '',
+              }}
+            />
           </Container>
-          <ErrorLogger errors={errors} />
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              className: 'font-noto-sans-kh',
-            }}
-          />
         </MainContextProvider>
       </body>
     </html>

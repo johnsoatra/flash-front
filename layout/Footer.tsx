@@ -19,7 +19,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center gap-y-1 text-center text-xs text-three">
+    <div className="flex flex-col items-center gap-y-1 text-center text-sm text-three">
       <p className="uppercase">{title}:</p>
       <span>{children}</span>
     </div>

@@ -1,10 +1,13 @@
+import { useRouter } from "next/navigation";
 import { useMainContext } from "@/context/mainContext";
 import { type Lang } from "@/types";
+import { setLang } from "@/utils/cookie/lang";
 
 function Lang({
   title,
   selected,
   className,
+  onSelect,
 }: {
   title: string;
   selected: boolean;
@@ -12,34 +15,44 @@ function Lang({
   onSelect: () => void;
 }) {
   return (
-    <div
+    <button
       className={`
         w-16.5 h-7.5 flex items-center justify-center rounded-xl
         ${selected ? 'bg-white' : 'tran-bg-transparent'}
         ${className ?? ''}
-      `}>
+      `}
+      onClick={onSelect}>
       <span className={"text-sm " + (selected ? 'text-front' : 'text-five')}>
         {title}
       </span>
-    </div>
+    </button>
   );
 }
 
 export default function SelectLang() {
   const context = useMainContext();
+  const router = useRouter();
+
+  function handleSelect(lang: Lang) {
+    if (context.lang !== lang) {
+      setLang(lang);
+      router.refresh();
+    }
+  }
+
   return (
     <div className="w-fit flex gap-x-1 py-1 px-1.5 bg-e3 rounded-xl">
       <Lang
         title="ខ្មែរ"
         selected={context.lang === 'kh'}
         className="font-noto-sans-kh"
-        onSelect={() => context.lang = 'kh'}
+        onSelect={() => handleSelect('kh')}
       />
       <Lang
         title="EN"
         selected={context.lang === 'en'}
         className="font-poppins"
-        onSelect={() => context.lang = 'en'}
+        onSelect={() => handleSelect('en')}
       />
     </div>
   );

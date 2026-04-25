@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext } from "react";
+import { createContext, useContext, useLayoutEffect } from "react";
 import useCurrent, { useTrack } from "react-use-current";
 import { getCards } from "@/utils/localStorage/cards";
 import { getToken } from "@/utils/localStorage/token";
@@ -10,7 +10,7 @@ import { Lang } from "@/types";
 export type MainContextType = {
   value: {
     lang: Lang;
-    readonly config: GetConfigResponse | undefined;
+    config: GetConfigResponse | undefined;
     token: string | null;
     cards: string[];
     checkedCard: boolean | null;
@@ -40,6 +40,11 @@ export function MainContextProvider({
     openProcessing: false,
   });
   const track = useTrack();
+
+  useLayoutEffect(() => {
+    context.lang = lang;
+    context.config = config;
+  }, [lang, config]);
 
   return (
     <MainContext.Provider value={track({ value: context }) as MainContextType}>

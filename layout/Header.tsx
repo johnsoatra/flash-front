@@ -36,18 +36,18 @@ export default function Header() {
   return (<>
     <header
       className="w-full min-h-18 flex items-center justify-center bg-back border-b px-4">
-      <div className="w-full max-w-114 relative flex items-center justify-center gap-x-1.5">
+      <div className="w-full max-w-252 relative flex items-center justify-center gap-x-1.5">
         <div className="flex-1" />
         <h2 className="font-bold text-[2rem] tracking-[25%] font-poppins">FLASH</h2>
         <div className="flex-1 flex items-center justify-end">
           <div className="w-full max-w-57.25 flex items-center justify-between gap-x-1.5">
-            {context.cards.length > 0 && <button
+            {context.cards.length > 0 ? <button
               title={t('show cards')}
               className="rounded-full tran-bg-back"
               onClick={handleClickBadge}>
               <Product />
               {!context.checkedCard && <Badge />}
-            </button>}
+            </button> : <div />}
             <SelectLang />
           </div>
         </div>
