@@ -44,9 +44,9 @@ export default function SelectLang() {
     <div className="w-fit flex gap-x-1 py-1 px-1.5 bg-e3 rounded-xl">
       <Lang
         title="ខ្មែរ"
-        selected={context.lang === 'kh'}
-        className="font-noto-sans-kh"
-        onSelect={() => handleSelect('kh')}
+        selected={context.lang === 'km'}
+        className="font-noto-sans-km"
+        onSelect={() => handleSelect('km')}
       />
       <Lang
         title="EN"

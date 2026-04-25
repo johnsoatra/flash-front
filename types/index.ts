@@ -5,4 +5,4 @@ export type ErrorResponse = {
   url: string;
 }
 
-export type Lang = 'en' | 'kh';
+export type Lang = 'en' | 'km';

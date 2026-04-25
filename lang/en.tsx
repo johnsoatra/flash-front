@@ -1,6 +1,6 @@
-import kh from "./kh";
+import km from "./km";
 
-const en: typeof kh = {
+const en: typeof km = {
   "page not found": "404 - Page Not Found",
   "flash hero title": (cardPrice: number) => <>
     Flash provides you one<br />

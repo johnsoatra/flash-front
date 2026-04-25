@@ -32,7 +32,7 @@ const nunito = Nunito_Sans({
 const notoSansKhmer = Noto_Sans_Khmer({
   subsets: ["khmer"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-noto-sans-kh",
+  variable: "--font-noto-sans-km",
   display: "block",
 });
 
@@ -40,7 +40,7 @@ export const metadata = MetaData;
 
 async function getLangServer() {
   const lang = (await cookies()).get(Label.Lang)?.value;
-  return lang ? validateLang(lang) : 'kh';
+  return lang ? validateLang(lang) : 'km';
 }
 
 export default async function RootLayout({
@@ -64,7 +64,7 @@ export default async function RootLayout({
         message: 'Error get lang',
         url: '',
       });
-      return 'kh';
+      return 'km';
     }
   );
 
@@ -72,7 +72,7 @@ export default async function RootLayout({
     <html
       lang={lang}
       className={`${poppins.variable} ${nunito.variable} ${notoSansKhmer.variable} h-full antialiased`}>
-      <body className={`min-h-full flex flex-col ${isKhmer(lang) ? 'font-noto-sans-kh' : 'font-poppins'}`}>
+      <body className={`min-h-full flex flex-col ${isKhmer(lang) ? 'font-noto-sans-km' : 'font-poppins'}`}>
         <MainContextProvider
           lang={lang}
           config={config}>
@@ -86,7 +86,7 @@ export default async function RootLayout({
             <Toaster
               position="top-right"
               toastOptions={{
-                className: isKhmer(lang) ? 'font-noto-sans-kh' : '',
+                className: isKhmer(lang) ? 'font-noto-sans-km' : '',
               }}
             />
           </Container>

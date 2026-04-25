@@ -20,5 +20,5 @@ export function isProd() {
 }
 
 export function isKhmer(lang: Lang) {
-  return lang === 'kh';
+  return lang === 'km';
 }

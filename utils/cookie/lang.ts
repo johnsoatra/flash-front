@@ -5,10 +5,10 @@ import { Lang } from "@/types";
 import { isClient } from "../window";
 
 export function validateLang(lang: string): Lang {
-  if (lang === 'en' || lang === 'kh') {
+  if (lang === 'en' || lang === 'km') {
     return lang;
   }
-  return 'kh';
+  return 'km';
 }
 
 export function getLang(): Lang {
@@ -16,7 +16,7 @@ export function getLang(): Lang {
   if (isClient()) {
     lang = Cookie.get(Label.Lang);
   }
-  return lang ? validateLang(lang) : 'kh';
+  return lang ? validateLang(lang) : 'km';
 }
 
 export async function setLang(lang: Lang) {

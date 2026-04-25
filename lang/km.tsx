@@ -1,4 +1,4 @@
-const kh = {
+const km = {
   "page not found": "មិនអាចស្វែងរកទំព័រឃើញ",
   "flash hero title": (cardPrice: number) => <>
     <span className="font-poppins">Flash</span> ផ្ដល់ជូនលោកអ្នកនូវ<br />
@@ -66,4 +66,4 @@ const kh = {
   "show qr": "បើក qr code",
 };
 
-export default kh;
+export default km;

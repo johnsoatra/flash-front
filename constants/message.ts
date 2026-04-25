@@ -1,4 +1,4 @@
-import kh from "@/lang/kh";
+import km from "@/lang/km";
 
 const Message = {
   Clear_Your_Card: 'delete card for token',
@@ -9,7 +9,7 @@ const Message = {
   No_Transaction_Found: 'no transaction',
   Cannot_Get_Config: 'cannot get config',
 } as const satisfies {
-  [key: string]: keyof typeof kh;
+  [key: string]: keyof typeof km;
 };
 
 export default Message;

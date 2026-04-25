@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { useMainContext } from "@/context/mainContext";
 import { ProviderCode } from "@/constants";
 import Message from "@/constants/message";
 import Dollar1 from "@/assets/svg/Dollar1";
@@ -16,6 +17,7 @@ export default function Card({
 }: {
   card: Card;
 }) {
+  const context = useMainContext();
   const t = useTranslate();
   const { value: cardQrCode, generate: generateCardQrCode } = useQrCode();
 
@@ -56,7 +58,9 @@ export default function Card({
             />}
           </div>
         </div>
-        <span className="absolute bottom-0 right-2 text-[0.5rem] text-five xs:text-[0.625rem]">{t('expired date')} {localDate(card.expired_date)}</span>
+        <span className="absolute bottom-0 right-2 text-[0.5rem] text-five xs:text-[0.625rem]">
+          {t('expired date')} {localDate(card.expired_date, context.lang)}
+        </span>
         <div className="absolute left-0 bottom-0 -translate-x-px">
           <div className="w-6 h-6 border-b-[1.5rem] border-r-[1.5rem] border-b-smart border-r-transparent" />
         </div>
