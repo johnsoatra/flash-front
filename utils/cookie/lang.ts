@@ -22,7 +22,7 @@ export function getLang(): Lang {
 export async function setLang(lang: Lang) {
   if (isClient()) {
     Cookie.set(Label.Lang, lang, {
-      expires: Date.now() + Config.ExpiredLangIn,
+      expires: Config.ExpiredLangIn,
     });
   }
 }

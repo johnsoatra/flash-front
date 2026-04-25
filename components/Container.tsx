@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useRef } from "react";
 import { useTrack } from "react-use-current";
 import { toast } from "sonner";
 import { useMainContext } from "@/context/mainContext";
@@ -18,11 +19,17 @@ export default function Container({
 }) {
   const context = useMainContext();
   const track = useTrack();
+  const router = useRouter();
   const t = useTranslate();
+  const prevLang = useRef(context.lang);
   const { request: requestGenerateToken } = useGenerateToken();
 
   useEffect(() => {
-    setLang(context.lang);
+    if (prevLang.current !== context.lang) {
+      prevLang.current = context.lang;
+      setLang(context.lang);
+      router.reload();
+    }
   }, [context.lang]);
   useEffect(() => {
     setToken(context.token);
