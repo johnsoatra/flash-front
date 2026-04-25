@@ -1,3 +1,4 @@
+'use client';
 import useTranslate from "@/hooks/useTranslate";
 
 export default function NotFound() {
