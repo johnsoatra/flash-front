@@ -39,15 +39,15 @@ export default function Card({
       className="w-full min-w-67.75 max-w-104 aspect-[3.57] group flex items-center bg-smart rounded-2xl cursor-default"
       onClick={handleClickCard}>
       <div className="flex-1 text-back flex flex-col items-center justify-center gap-y-1.25">
-        <p className="text-xs leading-none! xs:text-base">{ProviderCode[card.provider]}</p>
+        <p className="text-xs leading-none! xs:text-base font-poppins">{ProviderCode[card.provider]}</p>
         <p className="w-9 h-9 flex items-center justify-center bg-back/25 xs:w-11 xs:h-11">
           <Dollar1 />
         </p>
       </div>
       <div className="w-[80%] relative self-stretch flex items-center justify-center px-2 bg-back border-t border-r border-b border-smart rounded-tr-2xl group-hover:bg-light-gray group-active:bg-dark-gray">
-        <span className="absolute top-0 left-2 text-smart font-semibold capitalize xs:text-xl">{card.provider}</span>
+        <span className="absolute top-0 left-2 text-smart font-semibold capitalize xs:text-xl font-poppins">{card.provider}</span>
         <div className="w-full flex items-center justify-between gap-x-2.25">
-          <CenterRow className="xs:text-xl">{card.code}#</CenterRow>
+          <CenterRow className="xs:text-xl font-poppins">{card.code}#</CenterRow>
           <div className="relative min-w-9.5 min-h-9.5 bg-border xs:w-12.5 xs:h-12.5">
             {cardQrCode && <Image
               alt='qr-code'

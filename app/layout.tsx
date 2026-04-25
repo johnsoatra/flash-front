@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Poppins, Nunito_Sans, Noto_Sans_Khmer } from "next/font/google";
+import { cookies } from "next/headers";
 import { Toaster } from "sonner";
+import { Label } from "@/constants";
 import { ErrorResponse, Lang } from "@/types";
 import { MainContextProvider } from "@/context/mainContext";
 import MetaData from "@/constants/metadata";
@@ -11,7 +13,7 @@ import Container from "@/components/Container";
 import ErrorLogger from "@/components/ErrorLogger";
 import { GetConfigResponse } from "@/dto/getConfig";
 import request, { errorJson } from "@/utils/request";
-import { getLang } from "@/utils/cookie/lang";
+import { validateLang } from "@/utils/cookie/lang";
 import tryCatch from "@/utils/tryCatch";
 import { isKhmer } from "@/utils/utils";
 
@@ -36,6 +38,11 @@ const notoSansKhmer = Noto_Sans_Khmer({
 
 export const metadata = MetaData;
 
+async function getLangServer() {
+  const lang = (await cookies()).get(Label.Lang)?.value;
+  return lang ? validateLang(lang) : 'kh';
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -50,7 +57,7 @@ export default async function RootLayout({
     }
   );
   let lang = await tryCatch<Lang>(() =>
-    getLang(),
+    getLangServer(),
     async () => {
       errors.push({
         statusCode: 500,
@@ -77,7 +84,12 @@ export default async function RootLayout({
             <Footer />
           </Container>
           <ErrorLogger errors={errors} />
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              className: 'font-noto-sans-kh',
+            }}
+          />
         </MainContextProvider>
       </body>
     </html>
