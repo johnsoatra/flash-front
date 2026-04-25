@@ -85,8 +85,12 @@ export default async function RootLayout({
             <ErrorLogger errors={errors} />
             <Toaster
               position="top-right"
+              closeButton={true}
               toastOptions={{
-                className: isKhmer(lang) ? 'font-noto-sans-km' : '',
+                classNames: {
+                  toast: isKhmer(lang) ? 'font-noto-sans-km' : 'font-poppins',
+                  closeButton: 'left-auto! right-0! top-1/2! translate-x-0! -translate-y-1/2!',
+                }
               }}
             />
           </Container>

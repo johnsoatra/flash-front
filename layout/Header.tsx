@@ -41,13 +41,17 @@ export default function Header() {
         <h2 className="font-bold text-[2rem] tracking-[25%] font-poppins">FLASH</h2>
         <div className="flex-1 flex items-center justify-end">
           <div className="w-full max-w-57.25 flex items-center justify-between gap-x-1.5">
-            {context.cards.length > 0 ? <button
-              title={t('show cards')}
-              className="rounded-full tran-bg-back"
-              onClick={handleClickBadge}>
-              <Product />
-              {!context.checkedCard && <Badge />}
-            </button> : <div />}
+            <div className="relative flex">
+              {context.cards.length > 0 && <>
+                <button
+                  title={t('show cards')}
+                  className="rounded-full tran-bg-back"
+                  onClick={handleClickBadge}>
+                  <Product />
+                </button>
+                {!context.checkedCard && <Badge />}
+              </>}
+            </div>
             <SelectLang />
           </div>
         </div>
