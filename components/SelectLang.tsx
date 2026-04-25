@@ -18,7 +18,7 @@ function Lang({
     <button
       className={`
         w-16.5 h-7.5 flex items-center justify-center rounded-xl
-        ${selected ? 'bg-white' : 'tran-bg-transparent'}
+        ${selected ? 'bg-back' : 'tran-bg-transparent'}
         ${className ?? ''}
       `}
       onClick={onSelect}>
