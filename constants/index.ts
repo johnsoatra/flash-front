@@ -7,6 +7,8 @@ export const Label = {
   Cards: 'cards',
   Token: 'token',
   Checked: 'checked',
+  Lang: 'lang',
+  AbortError: 'AbortError',
 } as const;
 
 export const ProviderCode = {

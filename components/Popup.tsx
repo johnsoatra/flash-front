@@ -1,5 +1,6 @@
 import React from "react";
 import XMark from "@/assets/svg/XMark";
+import useTranslate from "@/hooks/useTranslate";
 
 export type PopupProps = {
   open: boolean;
@@ -18,6 +19,7 @@ export default function Popup({
   onClose,
   onClickMask,
 }: PopupProps) {
+  const t = useTranslate();
   return (open &&
     <div className={'fixed inset-0 flex justify-center items-center z-50 p-4'}>
       <div
@@ -28,7 +30,7 @@ export default function Popup({
         className={"w-full max-w-131 max-h-[calc(100%-7rem)] relative bg-back rounded-xl border p-4 overflow-auto " + (className ?? '')}
         onClick={evt => evt.preventDefault()}>
         {!noCloseButton && <button
-          title="Close this popup"
+          title={t('close popup')}
           className="absolute top-4 right-4 flex justify-center items-center rounded-full text-five p-1 hover:text-front hover:bg-light-gray active:bg-dark-gray"
           onClick={onClose}>
           <div className="w-6 h-6">

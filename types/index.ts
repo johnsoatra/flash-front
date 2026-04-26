@@ -4,3 +4,5 @@ export type ErrorResponse = {
   message: string;
   url: string;
 }
+
+export type Lang = 'en' | 'km';

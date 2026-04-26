@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { useMainContext } from '@/context/mainContext';
+import { Label } from '@/constants';
 import Api from '@/constants/api';
 import Message from '@/constants/message';
 import requestApi from '@/utils/request';
+import useTranslate from './useTranslate';
 
 type RecordAny = Record<string, any>;
 export type RequestInitial = Omit<RequestInit, 'body'> & {
@@ -30,6 +32,7 @@ export default function useRequest<Res, Req = unknown, Data = never>(
   props: UseRequestProps<Res, Req, Data>,
 ): UseRequest<Res, Req, Data> {
   const context = useMainContext();
+  const t = useTranslate();
   const [response, setResponse] = useState<Res>();
   const [error, setError] = useState<unknown>();
   const [pending, setPending] = useState<boolean>();
@@ -68,7 +71,7 @@ export default function useRequest<Res, Req = unknown, Data = never>(
         .catch((error: any) => {
           if (error.status === 401) {
             if (context.cards.length) {
-              alert(Message.Clear_Your_Card);
+              alert(t(Message.Clear_Your_Card));
               context.openCards = true;
               rej(error);
             } else {
@@ -87,10 +90,10 @@ export default function useRequest<Res, Req = unknown, Data = never>(
             res(request(payload, options));
             return;
           }
-          if (error.message !== Message.AbortError) {
+          if (error.message !== Label.AbortError) {
             setResponse(undefined);
             if (alertSomethingWrong === undefined || alertSomethingWrong) {
-              toast.error(Message.Something_Wrong);
+              toast.error(t(Message.Something_Wrong));
             }
           }
           setError(error);

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMainContext } from "@/context/mainContext";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
@@ -10,12 +10,14 @@ import useIsAllowed from "@/service/useIsAllowed";
 import useAddLock from "@/service/useAddLock";
 import useRemoveLock from "@/service/useRemoveLock";
 import { SaveOrderResponse } from "@/dto/saveOrder";
+import useTranslate from "@/hooks/useTranslate";
 
 export default function Home() {
   const context = useMainContext();
   const [openScanQR, setOpenScanQR] = useState(false);
   const [openQrExpired, setOpenQrExpired] = useState(false);
   const [boughtNew, setBoughtNew] = useState(false);
+  const t = useTranslate();
   const {
     data: lock,
     pending: locking,
@@ -33,15 +35,6 @@ export default function Home() {
     data: allowedOrder,
     request: requestAllowedOrder,
   } = useIsAllowed();
-
-  const cardWord = useMemo(() => {
-    if (availableAmount) {
-      if (availableAmount.amount > 1) {
-        return 'cards';
-      }
-      return 'card';
-    }
-  }, [availableAmount]);
 
   function openQr() {
     requestAddLock()
@@ -98,22 +91,21 @@ export default function Home() {
     <div className="w-full flex flex-col items-center">
       <div className="w-full max-w-168.5 flex flex-col items-center gap-y-12.5 mt-12 mb-5">
         <h1 className="text-5xl text-center">
-          Flash provides you one<br />
-          <b>Smart $1 Top Up Card</b> every month for only <b>៛{context.config?.card_price}</b>
+          {t('flash hero title')(context.config?.card_price ?? 0)}
         </h1>
         {allowedOrder && ((allowedOrder.allowed && !boughtNew) ?
           (availableAmount && (availableAmount.amount === 0 ?
-            <p>There are no card left.</p> :
+            <p>{t('no card left')}</p> :
             <>
               <ButtonGetTopUp onClick={handleClickGetTopUp} />
               <p className="text-center text-4xl">
-                There are only <span className="text-[4rem]">{availableAmount.amount}</span> {cardWord} left.
+                {t('card only left')(availableAmount.amount)}
               </p>
             </>
           )) :
           <div className="text-center">
-            <p>You've already made an order for this month.</p>
-            <p>Please check again on next month.</p>
+            <p>{t('already ordered')}</p>
+            <p>{t('check next month')}</p>
           </div>
         )}
       </div>

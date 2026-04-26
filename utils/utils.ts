@@ -1,3 +1,4 @@
+import { Lang } from "@/types";
 import Env from "../constants/env";
 
 export function isDevelopment() {
@@ -16,4 +17,8 @@ export function commaSeparator(amount: number) {
 
 export function isProd() {
   return Env.SiteUrl === 'https://flash.soatra.com';
+}
+
+export function isKhmer(lang: Lang) {
+  return lang === 'km';
 }

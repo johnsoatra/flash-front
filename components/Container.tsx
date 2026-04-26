@@ -8,6 +8,7 @@ import useGenerateToken from "@/service/useGenerateToken";
 import { setCards } from "@/utils/localStorage/cards";
 import { setToken } from "@/utils/localStorage/token";
 import { setChecked } from "@/utils/localStorage/checked";
+import useTranslate from "@/hooks/useTranslate";
 
 export default function Container({
   children,
@@ -16,6 +17,7 @@ export default function Container({
 }) {
   const context = useMainContext();
   const track = useTrack();
+  const t = useTranslate();
   const { request: requestGenerateToken } = useGenerateToken();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export default function Container({
   useEffect(() => {
     if (context.config === undefined) {
       requestAnimationFrame(() => {
-        toast.error(Message.Cannot_Get_Config);
+        toast.error(t(Message.Cannot_Get_Config));
       });
     }
   }, [context.config]);
@@ -43,7 +45,5 @@ export default function Container({
     }
   }, []);
 
-  return (
-    <>{children}</>
-  );
+  return children;
 }
