@@ -11,6 +11,7 @@ import Header from "@/layout/Header";
 import Footer from "@/layout/Footer";
 import Container from "@/components/Container";
 import ErrorLogger from "@/components/ErrorLogger";
+import AppBlocker from "@/components/Blocker/AppBlocker";
 import { GetConfigResponse } from "@/dto/getConfig";
 import request, { errorJson } from "@/utils/request";
 import { validateLang } from "@/utils/cookie/lang";
@@ -93,6 +94,7 @@ export default async function RootLayout({
                 }
               }}
             />
+            <AppBlocker />
           </Container>
         </MainContextProvider>
       </body>

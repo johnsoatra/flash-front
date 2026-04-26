@@ -25,19 +25,21 @@ const en: typeof km = {
   "no transaction": "No transaction found for this QR code",
   "cannot get config": "Could not get config",
   "footer notation description": (allowAmount: number) => `
-    This website does not officially sell smart top up cards, this website temporarily provides top up cards in at discounted price.
-    It provides only ${allowAmount} cards per month and each person could get only 1 card.
+    This website temporarily sells top up cards at a discounted price.
+    It provides only ${allowAmount} cards per month and each person can only get 1 card.
   `,
   "notation": "Note",
   "contacts": "Contacts",
   "email": "Email: flashcontact10@gmail.com",
-  "sure close scan": () => <>
+  "sure close scan": <>
     Are you sure you want to close this QR code scanning?<br />
     Since you haven’t <span className="font-medium">verified transaction</span> yet.
   </>,
   "cancel scanning": "Cancel Scanning!",
   "delete card": "Delete Cards!",
-  "click yes delete": "Once you click \"YES\" all your cards' information will be deleted.",
+  "click yes delete": <>
+    Once you click <span className="font-medium uppercase">yes</span> all your cards' information will be deleted.
+  </>,
   "getting cards": "Getting cards...",
   "fail get cards": "Failed to get cards!",
   "no card found": "No card found!",
@@ -46,12 +48,12 @@ const en: typeof km = {
   "qr code expired": "QR Code Expired!",
   "generating qr code": "Generating QR code...",
   "fail generate qr code": "Failed to generate QR code!",
-  "click try again": () => <>
+  "click try again": <>
     Click <span className="font-medium uppercase">Try Again</span> to generate new QR code
   </>,
   "try again": "Try Again",
   "khqr payment": "KHQR Payment",
-  "click verify transaction": () => <>
+  "click verify transaction": <>
     Scan with any banking app that supports KHQR,<br />
     then click <span className=" font-bold uppercase">Verify Transaction</span> to verify your payment.
   </>,

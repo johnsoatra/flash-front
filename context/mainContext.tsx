@@ -15,7 +15,7 @@ export type MainContextType = {
     cards: string[];
     checkedCard: boolean | null;
     openCards: boolean;
-    openProcessing: boolean;
+    showAppBlocker: boolean;
   }
 };
 
@@ -37,7 +37,7 @@ export function MainContextProvider({
     cards: getCards(),
     checkedCard: getChecked(),
     openCards: false,
-    openProcessing: false,
+    showAppBlocker: false,
   });
   const track = useTrack();
 

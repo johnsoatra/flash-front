@@ -17,7 +17,7 @@ export default function ConfirmCancelQR({
       title={t('cancel scanning')}
       description={
         <span>
-          {t('sure close scan')()}
+          {t('sure close scan')}
         </span>
       }
       danger={true}

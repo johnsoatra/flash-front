@@ -140,7 +140,7 @@ export default function PopupScanQR({
                 />
               </div>
               <span className="text-five text-center text-sm mt-4">
-                {t('click verify transaction')()}
+                {t('click verify transaction')}
               </span>
               <button
                 title={t('tell your payment')}
