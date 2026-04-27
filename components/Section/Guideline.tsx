@@ -25,7 +25,7 @@ function Step({
         <span className="font-medium text-lg">{t('step')(step.number)}</span>
         <span>{step.description}</span>
       </div>
-      <div className="w-full aspect-[2.54] flex items-center justify-center rounded-xl bg-white border p-6 pointer-events-none">
+      <div className="w-full aspect-[2.54] flex items-center justify-center rounded-xl bg-back border p-6 pointer-events-none">
         {step.content}
       </div>
     </div>
