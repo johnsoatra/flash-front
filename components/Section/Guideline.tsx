@@ -1,13 +1,16 @@
-import Image, { StaticImageData } from "next/image";
-import { useMemo } from "react";
+import Image from "next/image";
+import React, { useMemo } from "react";
 import Images from "@/constants/image";
+import Sample from "@/constants/sample";
+import ButtonGetTopUp from "../ButtonGetTopUp";
+import ButtonVerifyTransaction from "../ButtonVerifyTransaction";
+import Card from "../Card";
 import useTranslate from "@/hooks/useTranslate";
 
 type Step = {
   number: number;
   description: string;
-  image: StaticImageData;
-  priority?: boolean;
+  content: React.ReactNode;
 }
 
 function Step({
@@ -22,13 +25,8 @@ function Step({
         <span className="font-medium text-lg">{t('step')(step.number)}</span>
         <span>{step.description}</span>
       </div>
-      <div className="w-full aspect-[2.54] flex items-center justify-center rounded-xl bg-white border p-6">
-        <Image
-          src={step.image}
-          alt={`step-${step.number}`}
-          priority={step.priority}
-          className="w-[50%]"
-        />
+      <div className="w-full aspect-[2.54] flex items-center justify-center rounded-xl bg-white border p-6 pointer-events-none">
+        {step.content}
       </div>
     </div>
   );
@@ -41,23 +39,29 @@ export default function Guideline() {
     {
       number: 1,
       description: t('click buy button'),
-      image: Images.BuyCardButton,
-      priority: true,
+      content: <ButtonGetTopUp onClick={() => { }} />,
     },
     {
       number: 2,
       description: t('scan khqr code'),
-      image: Images.PresentKhqr,
+      content: <Image
+        src={Images.PresentKhqr}
+        alt='present-khqr'
+        className="w-[50%]"
+      />,
     },
     {
       number: 3,
       description: t('after paid click'),
-      image: Images.VerifyTransactionButton,
+      content: <ButtonVerifyTransaction
+        disabled={true}
+        onClick={() => { }}
+      />,
     },
     {
       number: 4,
       description: `${t('after verified get card')}.`,
-      image: Images.SampleSmartCard,
+      content: <Card card={Sample.Card} />,
     },
   ], [t]);
 

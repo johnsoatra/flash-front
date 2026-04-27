@@ -5,6 +5,7 @@ import Popup from "../Popup";
 import KhQr from "../KhQr";
 import StatusText from "../StatusText";
 import CenterCol from "../Center/CenterCol";
+import ButtonVerifyTransaction from "../ButtonVerifyTransaction";
 import ConfirmCancelQR from "../Confirm/ConfirmCancelQR";
 import Blocker from "../Blocker";
 import useGenerateQr from "@/service/useGenerateQr";
@@ -142,13 +143,12 @@ export default function PopupScanQR({
               <span className="text-five text-center text-sm mt-4">
                 {t('click verify transaction')}
               </span>
-              <button
-                title={t('tell your payment')}
-                disabled={!!checkingTransaction}
-                className="rounded-xl py-1.5 px-8 mt-6 text-back tran-bg-front"
-                onClick={handleClickVerify}>
-                {t('verify transaction')}
-              </button>
+              <div className="mt-6">
+                <ButtonVerifyTransaction
+                  disabled={!!checkingTransaction}
+                  onClick={handleClickVerify}
+                />
+              </div>
             </div>
         }
       </div>
