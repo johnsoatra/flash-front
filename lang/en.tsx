@@ -69,6 +69,12 @@ const en: typeof km = {
   "generate new qr": "Generate a new QR code",
   "show cards": "Show your card(s)",
   "show qr": "Show QR code to scan",
+  "how to use": "How to use this application",
+  "step": (numberOrder: number) => `Step ${numberOrder}:`,
+  "click buy button": "Click on this button to open the QR code",
+  "scan khqr code": "Scan this QR code with your banking app, then confirm payment",
+  "after paid click": "After paying, click on this button",
+  "after verified get card": "After verification, you will get a $1 top up card",
 };
 
 export default en;

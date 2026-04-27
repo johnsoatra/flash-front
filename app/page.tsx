@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useMainContext } from "@/context/mainContext";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";
+import Guideline from "@/components/Section/Guideline";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
 import PopupQrExpired from "@/components/Popups/PopupQrExpired";
 import Blocker from "@/components/Blocker";
@@ -88,8 +89,8 @@ export default function Home() {
   }, [openScanQR, lock]);
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-12.5 mt-12 mb-5">
+    <div className="w-full flex flex-col items-center mt-12 mb-15">
+      <div className="w-full max-w-168.5 flex flex-col items-center gap-y-12.5">
         <h1 className="text-5xl text-center">
           {t('flash hero title')(context.config?.card_price ?? 0)}
         </h1>
@@ -109,6 +110,8 @@ export default function Home() {
           </div>
         )}
       </div>
+      <hr className="w-full mt-12 mb-11"/>
+      <Guideline />
       {lock && <PopupScanQR
         open={openScanQR}
         lock={lock}
