@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import XMark from "@/assets/svg/XMark";
 import useTranslate from "@/hooks/useTranslate";
 
@@ -20,6 +20,17 @@ export default function Popup({
   onClickMask,
 }: PopupProps) {
   const t = useTranslate();
+
+  useEffect(() => {
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      }
+    }
+  }, [open]);
+
   return (open &&
     <div className={'fixed inset-0 flex justify-center items-center z-50 p-4'}>
       <div
