@@ -1,7 +1,7 @@
+import { useCallback } from "react";
 import { useMainContext } from "@/context/mainContext";
 import km from "@/lang/km";
 import en from "@/lang/en";
-import { useCallback } from "react";
 
 const Translation = {
   km,
@@ -9,12 +9,12 @@ const Translation = {
 } as const;
 
 export default function useTranslate() {
-  const { lang } = useMainContext();
+  const context = useMainContext();
   const translate = useCallback(
     function <T extends keyof typeof km>(key: T) {
-      return Translation[lang][key];
+      return Translation[context.lang][key] ?? key;
     },
-    [lang],
+    [context.lang],
   );
   return translate;
 }

@@ -14,6 +14,7 @@ import useCheckTransaction from "@/service/useCheckTransaction";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 import { AddLockResponse } from "@/dto/addLock";
 import useTranslate from "@/hooks/useTranslate";
+import { downloadQr as downloadQrCode } from "@/utils/url";
 
 export default function PopupScanQR({
   open,
@@ -30,6 +31,7 @@ export default function PopupScanQR({
 }) {
   const t = useTranslate();
   const [openConfirmCancel, setOpenConfirmCancel] = useState(false);
+  const [qrUrl, setQrUrl] = useState<string>();
   const {
     response: qrCode,
     pending: pendingGenerateQr,
@@ -48,6 +50,10 @@ export default function PopupScanQR({
     return !!checkingTransaction || !!savingOrder;
   }, [checkingTransaction, savingOrder]);
 
+  function resetStates() {
+    setOpenConfirmCancel(false);
+    setQrUrl(undefined);
+  }
   async function checkTransaction() {
     return requestCheckTransaction({
       qrId: qrCode?.id ?? '',
@@ -105,8 +111,8 @@ export default function PopupScanQR({
     setOpenConfirmCancel(false);
     onClose();
   }
-  function resetStates() {
-    setOpenConfirmCancel(false);
+  function handleClickDownload() {
+    downloadQrCode(qrUrl!);
   }
 
   useLayoutEffect(() => {
@@ -134,11 +140,18 @@ export default function PopupScanQR({
             <CenterCol><StatusText>{t('fail generate qr code')}</StatusText></CenterCol> :
             <div className="w-full flex flex-col items-center">
               <span className="font-medium text-xl text-center">{t('khqr payment')}</span>
-              <div className="w-full flex justify-center mt-6.5">
+              <div className="w-full flex flex-col items-center gap-y-2 mt-6.5">
                 <KhQr
                   qrCode={qrCode}
                   onExpired={handleQrCodeExpired}
+                  onQrUrlLoaded={(url) => setQrUrl(url)}
                 />
+                <button
+                  disabled={!qrUrl}
+                  className={"capitalize text-sm border-b border-dashed font-normal disabled:opacity-75 disabled:cursor-not-allowed"}
+                  onClick={handleClickDownload}>
+                  {t('download qr')}
+                </button>
               </div>
               <span className="text-five text-center text-sm mt-4">
                 {t('click verify transaction')}

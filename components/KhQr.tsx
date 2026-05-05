@@ -12,9 +12,11 @@ import { commaSeparator, secondToTime } from "@/utils/utils";
 export default function KhQr({
   qrCode,
   onExpired,
+  onQrUrlLoaded,
 }: {
   qrCode: GenerateQrResponse;
   onExpired: () => void;
+  onQrUrlLoaded?: (url: string) => void;
 }) {
   const context = useMainContext();
   const { value: countdown, start: startCountdown } = useCountdown();
@@ -22,9 +24,10 @@ export default function KhQr({
 
   useEffect(() => {
     generateQrCode(qrCode.data.data.qr)
-      .then(() => {
+      .then((url) => {
         const duration = Math.floor((qrCode.expired_at - Date.now()) / 1000);
         startCountdown(duration);
+        onQrUrlLoaded?.(url);
       });
   }, [qrCode]);
   useEffect(() => {

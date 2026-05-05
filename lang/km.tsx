@@ -66,6 +66,7 @@ const km = {
   "scan khqr code": "សូមស្កែន QR code ជាមួយកម្មវិធីធនាគាររបស់អ្នក ហើយបញ្ជាក់ការបង់ប្រាក់",
   "after paid click": "បន្ទាប់ពីបង់ប្រាក់រួច សូមចុចលើប៊ូតុងនេះ",
   "after verified get card": "បន្ទាប់ពីបានផ្ទៀងផ្ទាត់រួច អ្នកនឹងទទួលបានកាតស្មាត $1 ចំនួន 1 សន្លឹក",
+  "download qr": "ទាញយក QR code",
 };
 
 export default km;

@@ -36,7 +36,7 @@ export async function errorJson(response: Response, endpoint: string): Promise<E
       ...data,
       url: response.url,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       error: String(error),
       statusCode: 403,

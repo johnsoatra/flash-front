@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState } from "react";
 import { useMainContext } from "@/context/mainContext";
 import ButtonGetTopUp from "@/components/ButtonGetTopUp";

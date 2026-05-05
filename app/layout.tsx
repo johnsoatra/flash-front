@@ -50,14 +50,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const errors: ErrorResponse[] = [];
-  let config = await tryCatch<GetConfigResponse, undefined>(() =>
+  const config = await tryCatch<GetConfigResponse, undefined>(() =>
     request(Api.GetConfig),
     async (error: any) => {
       const _error = await errorJson(error, Api.GetConfig);
       errors.push(_error);
     }
   );
-  let lang = await tryCatch<Lang>(() =>
+  const lang = await tryCatch<Lang>(() =>
     getLangServer(),
     async () => {
       errors.push({

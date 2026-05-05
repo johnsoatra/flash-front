@@ -75,6 +75,7 @@ const en: typeof km = {
   "scan khqr code": "Scan this QR code with your banking app, then confirm payment",
   "after paid click": "After paying, click on this button",
   "after verified get card": "After verification, you will get a $1 top up card",
+  "download qr": "Download QR code",
 };
 
 export default en;
