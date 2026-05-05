@@ -6,6 +6,7 @@ import Guideline from "@/components/Section/Guideline";
 import PopupScanQR from "@/components/Popups/PopupScanQR";
 import PopupQrExpired from "@/components/Popups/PopupQrExpired";
 import Blocker from "@/components/Blocker";
+import ShimmerArticle from "@/components/Shimmer/ShimmerArticle";
 import useAvailableCardAmount from "@/service/useAvailableCardAmount";
 import useIsAllowed from "@/service/useIsAllowed";
 import useAddLock from "@/service/useAddLock";
@@ -94,23 +95,29 @@ export default function Home() {
         <h1 className="text-5xl text-center">
           {t('flash hero title')(context.config?.card_price ?? 0)}
         </h1>
-        {allowedOrder && ((allowedOrder.allowed && !boughtNew) ?
-          (availableAmount && (availableAmount.amount === 0 ?
-            <p>{t('no card left')}</p> :
-            <>
-              <ButtonGetTopUp onClick={handleClickGetTopUp} />
-              <p className="text-center text-4xl">
-                {t('card only left')(availableAmount.amount)}
-              </p>
-            </>
-          )) :
-          <div className="text-center">
-            <p>{t('already ordered')}</p>
-            <p>{t('check next month')}</p>
-          </div>
-        )}
+        {allowedOrder ?
+          ((allowedOrder.allowed && !boughtNew) ?
+            (availableAmount ?
+              (availableAmount.amount === 0 ?
+                <p>{t('no card left')}</p> :
+                <>
+                  <ButtonGetTopUp onClick={handleClickGetTopUp} />
+                  <p className="text-center text-4xl">
+                    {t('card only left')(availableAmount.amount)}
+                  </p>
+                </>
+              ) :
+              <ShimmerArticle />
+            ) :
+            <div className="text-center">
+              <p>{t('already ordered')}</p>
+              <p>{t('check next month')}</p>
+            </div>
+          ) :
+          <ShimmerArticle />
+        }
       </div>
-      <hr className="w-full mt-12 mb-11"/>
+      <hr className="w-full mt-12 mb-11" />
       <Guideline />
       {lock && <PopupScanQR
         open={openScanQR}
