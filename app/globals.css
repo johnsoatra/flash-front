@@ -15,6 +15,7 @@
   --color-light-gray: oklch(0.961 0 0);
   --color-dark-gray: oklch(0.907 0 0);
   --color-e3: oklch(0.949 0 0);
+  --color-ec3: oklch(0.9431 0 0);
   --color-fa: oklch(0.985 0 0);
   --color-success-50: oklch(0.971 0.021 161.486);
   --color-success-100: oklch(0.942 0.042 161.686);
@@ -72,6 +73,7 @@
   --color-five: var(--color-five);
   --color-smart: var(--color-smart);
   --color-e3: var(--color-e3);
+  --color-ec3: var(--color-ec3);
   --color-fa: var(--color-fa);
   --color-light-gray: var(--color-light-gray);
   --color-dark-gray: var(--color-dark-gray);
@@ -181,4 +183,13 @@
 
 @utility tran-bg-transparent {
   @apply bg-transparent hover:bg-light-gray active:bg-fa;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translate(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }

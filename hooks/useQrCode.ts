@@ -13,8 +13,7 @@ export default function useQrCode() {
       })
       .catch(error => {
         setValue(undefined);
-        console.log(error);
-        return undefined;
+        throw error;
       });
   }
 
