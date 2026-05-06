@@ -7,7 +7,7 @@ export function fillParams(
   });
 }
 
-export function downloadQr(url: string) {
+export function downloadQrCode(url: string) {
   const a = document.createElement('a');
   a.href = url;
   a.download = 'qr-code-smart-1.png';

@@ -14,7 +14,7 @@ import useCheckTransaction from "@/service/useCheckTransaction";
 import { SaveOrderResponse } from "@/dto/saveOrder";
 import { AddLockResponse } from "@/dto/addLock";
 import useTranslate from "@/hooks/useTranslate";
-import { downloadQr as downloadQrCode } from "@/utils/url";
+import { downloadQrCode } from "@/utils/url";
 
 export default function PopupScanQR({
   open,
